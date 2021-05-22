@@ -2,12 +2,13 @@ package me.aurium.opentutorial.centralized;
 
 import me.aurium.opentutorial.stage.Stage;
 
+import java.util.Set;
 import java.util.UUID;
 
 public interface Tutorial {
 
     /**
-     * Get the unique identifier of whatever is sending this
+     * Get the unique identifier of this tutorial (and player)
      * @return the identifier of what spawned the tutorial
      */
     UUID getIdentifier();
@@ -17,8 +18,6 @@ public interface Tutorial {
      * @return the identifier
      */
     String getTemplateIdentifier();
-
-    Stage getCurrentStage();
 
     void fireNext();
     void fireCancel();

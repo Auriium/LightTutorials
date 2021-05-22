@@ -12,13 +12,4 @@ public interface StageConsumer<T extends Stage> extends UUIDCloseable {
 
     Class<T> stageClass();
 
-    @Override
-    default void closeAll() {
-        //noops
-    }
-
-    @Override
-    default void closeSingle(UUID uuid) {
-        //noops
-    }
 }

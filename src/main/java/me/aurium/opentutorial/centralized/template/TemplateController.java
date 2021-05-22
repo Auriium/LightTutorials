@@ -2,14 +2,15 @@ package me.aurium.opentutorial.centralized.template;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class TemplateController {
 
-    Template loadTemplate(String identifier) {
+    public Optional<Template> loadTemplate(String identifier) {
         return null;
     }
 
-    Template loadFromConfig() {
+    public Template loadFromConfig() {
         return null;
     }
 

@@ -3,19 +3,17 @@ package me.aurium.opentutorial.centralized;
 import me.aurium.opentutorial.stage.Stage;
 
 import java.util.Queue;
+import java.util.Set;
 import java.util.UUID;
 
 public class CommonTutorial implements Tutorial {
 
-    private final String tutorialModel;
     private final UUID uuid;
 
     private final Queue<Stage> stageQueue;
-
     private final TutorialController controller;
 
-    public CommonTutorial(String tutorialModel, UUID uuid, Queue<Stage> stageQueue, TutorialController controller) {
-        this.tutorialModel = tutorialModel;
+    public CommonTutorial(UUID uuid, Queue<Stage> stageQueue, TutorialController controller) {
         this.uuid = uuid;
         this.stageQueue = stageQueue;
         this.controller = controller;
@@ -32,23 +30,22 @@ public class CommonTutorial implements Tutorial {
     }
 
     @Override
-    public Stage getCurrentStage() {
-        return stageQueue.peek();
-    }
-
-    @Override
     public void fireNext() {
         //TODO if the queue is empty, the tutorial is over
 
         if (stageQueue.isEmpty()) {
             //cum all over the floor uwu
+            controller.cancelByUUID(uuid);
+
+            return;
+
         }
 
-        controller.getRegistry().consumeStage(stageQueue.remove());
+        controller.getRegistry().consumeStage(stageQueue.remove(), this);
     }
 
     @Override
     public void fireCancel() {
-
+        controller.cancelByUUID(uuid);
     }
 }

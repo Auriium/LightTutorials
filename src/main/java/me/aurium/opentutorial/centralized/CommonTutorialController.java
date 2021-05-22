@@ -30,16 +30,21 @@ public class CommonTutorialController implements TutorialController {
     }
 
     @Override
-    public Tutorial createNew(Template template) {
-       Queue<Stage> queue = new ArrayDeque<>(template.getStages());
-       String templateType = template.getIdentifier();
-       UUID uuid = UUID.randomUUID();
+    public Tutorial createNew(Template template, UUID owner) {
+       Tutorial tutorial = new CommonTutorial(owner,new ArrayDeque<>(template.getStages()),this);
 
-       Tutorial tutorial = new CommonTutorial(templateType,uuid,queue,this);
-
-       map.put(uuid, tutorial);
+       map.put(owner, tutorial);
 
        return tutorial;
     }
 
+    @Override
+    public void closeSingle(UUID uuid) {
+        cancelByUUID(uuid);
+    }
+
+    @Override
+    public void closeAll() {
+        registry.closeAll();
+    }
 }

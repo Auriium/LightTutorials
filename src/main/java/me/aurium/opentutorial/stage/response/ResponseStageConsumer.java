@@ -2,47 +2,32 @@ package me.aurium.opentutorial.stage.response;
 
 import me.aurium.opentutorial.centralized.Tutorial;
 import me.aurium.opentutorial.stage.await.AbstractAwaitConsumer;
+import me.aurium.opentutorial.stage.await.DelayedAwaitConsumer;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
  * Handles response stages by checking if they aaa eee ooo uuu cum
  */
-public class ResponseStageConsumer extends AbstractAwaitConsumer<ResponseStage,DelegateChatEvent> {
+public class ResponseStageConsumer extends DelayedAwaitConsumer<ResponseStage,DelegateChatEvent> {
 
-    private final JavaPlugin plugin;
+    protected ResponseStageConsumer(JavaPlugin plugin) {
+        super(plugin);
+    }
 
-    //Java was a mistake
-    private final Map<UUID, BukkitTask> mistakes = new HashMap<>();
+    @Override
+    public void endStarted(ResponseStage options, Tutorial continuable) {
 
-    public ResponseStageConsumer(JavaPlugin plugin) {
-        this.plugin = plugin;
     }
 
     @Override
     public Class<ResponseStage> stageClass() {
         return ResponseStage.class;
-    }
-
-    @Override
-    public void started(ResponseStage options, Tutorial continuable) {
-        super.started(options, continuable);
-
-        UUID uuid = continuable.getIdentifier();
-
-        if (options.getMaxDelay() != -1) {
-            mistakes.put(uuid,plugin.getServer().getScheduler().runTaskLater(plugin,
-                    () -> {
-                        continuable.fireCancel();
-                        mistakes.remove(uuid);
-                    },
-                    options.getMaxDelay()));
-        }
-
     }
 
     @Override
@@ -65,4 +50,5 @@ public class ResponseStageConsumer extends AbstractAwaitConsumer<ResponseStage,D
     public Class<DelegateChatEvent> eventClass() {
         return DelegateChatEvent.class;
     }
+
 }

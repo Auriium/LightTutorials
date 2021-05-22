@@ -14,25 +14,29 @@ public abstract class AbstractAwaitConsumer<T extends Stage,E extends Event> imp
      *
      * (This is an old todo from before this was a delegatingmap.)
      */
-    protected final CloseableOptionalMap<UUID,T> cache = new CloseableOptionalMap<>();
+    private final CloseableOptionalMap<UUID,T> existenceCache = new CloseableOptionalMap<>();
 
     @Override
     public void started(T options, Tutorial continuable) {
-        cache.delegate().put(continuable.getIdentifier(),options);
+        existenceCache.delegate().put(continuable.getIdentifier(),options);
+
+        postStarted(options, continuable);
     }
+
+    abstract void postStarted(T options, Tutorial continuable);
 
     @Override
     public void consume(E event, Tutorial tutorial) {
-        cache.removeIfPresent(tutorial.getIdentifier(), stage -> consume(stage,event,tutorial));
+        existenceCache.removeIfPresent(tutorial.getIdentifier(), stage -> consume(stage,event,tutorial));
     }
 
     @Override
     public void closeAll() {
-        cache.closeAll();
+        existenceCache.closeAll();
     }
 
     @Override
     public void closeSingle(UUID uuid) {
-        cache.closeSingle(uuid);
+        existenceCache.closeSingle(uuid);
     }
 }

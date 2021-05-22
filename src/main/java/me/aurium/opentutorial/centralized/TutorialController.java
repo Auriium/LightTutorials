@@ -1,15 +1,17 @@
 package me.aurium.opentutorial.centralized;
 
+import me.aurium.opentutorial.aspect.UUIDCloseable;
 import me.aurium.opentutorial.centralized.registry.ConsumerRegistry;
 import me.aurium.opentutorial.centralized.template.Template;
 
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 /**
- * Manages all tutorials
+ * Manages all tutorials. Center of the plugin.
  */
-public interface TutorialController {
+public interface TutorialController extends UUIDCloseable {
 
     /**
      * Cancels by UUID
@@ -34,6 +36,6 @@ public interface TutorialController {
      * @param template the template you want to use
      * @return the generated tutorial
      */
-    Tutorial createNew(Template template);
+    Tutorial createNew(Template template, UUID owner);
 
 }
