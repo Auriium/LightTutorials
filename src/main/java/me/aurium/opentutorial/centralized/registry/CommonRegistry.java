@@ -15,7 +15,11 @@ public class CommonRegistry implements ConsumerRegistry {
     private final Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers = new HashMap<>();
     private final Map<String, ConsumerSerializer<?>> serializers = new HashMap<>();
 
-    private EventBus bus;
+    private final EventBus bus;
+
+    public CommonRegistry(EventBus bus) {
+        this.bus = bus;
+    }
 
     @Override
     public void closeSingle(UUID uuid) {
