@@ -8,3 +8,4 @@ A further rendition of OpenTutorial may fix this.
 
 TODO: ingame tutorial generation
 TODO: perhaps stage keying?
+TODO: states: movementlocked, chatlocked, visible/inviisble, etc

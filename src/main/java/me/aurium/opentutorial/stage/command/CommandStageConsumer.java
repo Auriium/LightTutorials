@@ -2,6 +2,7 @@ package me.aurium.opentutorial.stage.command;
 
 import me.aurium.opentutorial.centralized.Tutorial;
 import me.aurium.opentutorial.stage.BasicStageConsumer;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandStageConsumer implements BasicStageConsumer<CommandStage> {
@@ -14,9 +15,15 @@ public class CommandStageConsumer implements BasicStageConsumer<CommandStage> {
 
     @Override
     public void started(CommandStage options, Tutorial continuable) {
-        plugin.getServer().getConsoleSender();
+        options.getRunAsConsole().ifPresent(toRun -> plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(), toRun));
+        options.getRunAsPlayer().ifPresent(toRun -> {
+            Player player = plugin.getServer().getPlayer(continuable.getIdentifier());
 
-        /// TODO: 5/21/2021 Run command from options, if it fails continue and log an error (not exception) to console
+            if (player != null) {
+                plugin.getServer().dispatchCommand(player, toRun.replaceAll("%PLAYER%", player.getName()));
+            }
+
+        });
 
         continuable.fireNext();
     }

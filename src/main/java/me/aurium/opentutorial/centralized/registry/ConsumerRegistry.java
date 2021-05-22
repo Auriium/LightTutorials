@@ -6,6 +6,7 @@ import me.aurium.opentutorial.centralized.Tutorial;
 import me.aurium.opentutorial.stage.ConsumerPackage;
 import me.aurium.opentutorial.stage.ConsumerSerializer;
 import me.aurium.opentutorial.stage.Stage;
+import me.aurium.opentutorial.stage.StageConsumer;
 
 import java.util.Optional;
 
@@ -27,6 +28,6 @@ public interface ConsumerRegistry extends UUIDCloseable {
      * Installs a consumer package
      * @param consumer the consumer package
      */
-    <T extends Event, E extends Stage> void register(ConsumerPackage<E> consumer);
+    <T extends Event, E extends Stage> void register(StageConsumer<E> stage, ConsumerSerializer<E> consumer);
 
 }

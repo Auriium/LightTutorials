@@ -25,6 +25,10 @@
             <version>1.2.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>me</groupId>
+            <artifactId>beetle-defaults</artifactId>
+        </dependency>
     </dependencies>
 
     <repositories>

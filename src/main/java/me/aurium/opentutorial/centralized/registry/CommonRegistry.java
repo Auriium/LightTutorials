@@ -51,15 +51,17 @@ public class CommonRegistry implements ConsumerRegistry {
     }
 
     @Override
-    public <T extends Event, E extends Stage> void register(ConsumerPackage<E> consumerPackage) {
+    public <T extends Event, E extends Stage> void register(StageConsumer<E> stageConsumer, ConsumerSerializer<E> serializer) {
 
-        consumers.put(consumerPackage.getConsumer().stageClass(),consumerPackage.getConsumer());
-        serializers.put(consumerPackage.getSerializer().identifier(),consumerPackage.getSerializer());
+        consumers.put(stageConsumer.stageClass(),stageConsumer);
+        serializers.put(serializer.identifier(),serializer);
 
-        if (consumerPackage.getConsumer() instanceof AwaitConsumer) {
-            AwaitConsumer<E,T> consumer = (AwaitConsumer<E, T>) consumerPackage.getConsumer();
+        if (stageConsumer instanceof AwaitConsumer) {
+            AwaitConsumer<E,T> consumer = (AwaitConsumer<E, T>) stageConsumer;
 
             bus.register(consumer.eventClass(),consumer);
         }
+
+
     }
 }
