@@ -1,7 +1,7 @@
 package me.aurium.opentutorial.stage.await;
 
 import me.aurium.opentutorial.centralized.Tutorial;
-import me.aurium.opentutorial.centralized.event.Event;
+import me.aurium.opentutorial.centralized.registry.Event;
 import me.aurium.opentutorial.stage.Stage;
 import me.aurium.opentutorial.util.CloseableOptionalMap;
 

@@ -1,8 +1,9 @@
 package me.aurium.opentutorial.centralized;
 
-import me.aurium.opentutorial.stage.Stage;
-import me.aurium.opentutorial.stage.StageConsumer;
+import me.aurium.opentutorial.centralized.registry.ConsumerRegistry;
+import me.aurium.opentutorial.centralized.template.Template;
 
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -10,10 +11,29 @@ import java.util.UUID;
  */
 public interface TutorialController {
 
-    Tutorial getByUUID(UUID uuid);
+    /**
+     * Cancels by UUID
+     * @param uuid the uuid
+     * @return cancelled tutorial
+     */
+    Optional<Tutorial> cancelByUUID(UUID uuid);
 
-    void consume(Stage stage);
+    /**
+     * Get the registry bound to this controller
+     * @return te reg
+     */
+    ConsumerRegistry getRegistry();
 
-    void register(StageConsumer<?> consumer);
+    /**
+     * Create a new tutorial and register it to the controller
+     *
+     * NOTE THAT THIS DOES NOT START THE TUTORIAL.
+     *
+     * Use the start method (which is literally just a less retarded way of spelling the fireContinue method.)
+     *
+     * @param template the template you want to use
+     * @return the generated tutorial
+     */
+    Tutorial createNew(Template template);
 
 }

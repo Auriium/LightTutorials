@@ -1,4 +1,4 @@
-package me.aurium.opentutorial.centralized.event;
+package me.aurium.opentutorial.centralized.registry;
 
 import me.aurium.opentutorial.centralized.Tutorial;
 

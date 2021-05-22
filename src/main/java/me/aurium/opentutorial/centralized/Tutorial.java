@@ -7,10 +7,16 @@ import java.util.UUID;
 public interface Tutorial {
 
     /**
-     * Get the underlying identifier of whatever is sending this
+     * Get the unique identifier of whatever is sending this
      * @return the identifier of what spawned the tutorial
      */
     UUID getIdentifier();
+
+    /**
+     * Gets the identifier of the template that represents this object
+     * @return the identifier
+     */
+    String getTemplateIdentifier();
 
     Stage getCurrentStage();
 

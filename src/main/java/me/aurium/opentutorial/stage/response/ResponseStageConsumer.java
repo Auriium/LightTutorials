@@ -32,8 +32,15 @@ public class ResponseStageConsumer extends AbstractAwaitConsumer<ResponseStage,D
     public void started(ResponseStage options, Tutorial continuable) {
         super.started(options, continuable);
 
+        UUID uuid = continuable.getIdentifier();
+
         if (options.getMaxDelay() != -1) {
-            mistakes.put(continuable.getIdentifier(),plugin.getServer().getScheduler().runTaskLater(plugin, continuable::fireCancel, options.getMaxDelay()));
+            mistakes.put(uuid,plugin.getServer().getScheduler().runTaskLater(plugin,
+                    () -> {
+                        continuable.fireCancel();
+                        mistakes.remove(uuid);
+                    },
+                    options.getMaxDelay()));
         }
 
     }

@@ -1,6 +1,6 @@
 package me.aurium.opentutorial.stage.response;
 
-import me.aurium.opentutorial.centralized.event.Event;
+import me.aurium.opentutorial.centralized.registry.Event;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 
 public class DelegateChatEvent implements Event {
