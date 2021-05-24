@@ -25,11 +25,6 @@ public class CommonTutorial implements Tutorial {
     }
 
     @Override
-    public String getTemplateIdentifier() {
-        return null;
-    }
-
-    @Override
     public void fireNext() {
         //TODO if the queue is empty, the tutorial is over
 

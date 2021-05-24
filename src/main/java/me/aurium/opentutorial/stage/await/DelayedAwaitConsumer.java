@@ -53,8 +53,8 @@ public abstract class DelayedAwaitConsumer<T extends AwaitStage,E extends Event>
     }
 
     @Override
-    public void closeAll() {
-        super.closeAll();
+    public void close() {
+        super.close();
 
         delayCache.forEach((e,s) -> {
             if (s != null) {

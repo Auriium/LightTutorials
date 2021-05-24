@@ -1,9 +1,11 @@
 package me.aurium.opentutorial.stage.await;
 
+import me.aurium.beetle.defaults.utility.map.optional.CloseableOptionalMap;
+import me.aurium.beetle.defaults.utility.map.optional.DelegatingOptionalMap;
+import me.aurium.beetle.defaults.utility.map.optional.OptionalMap;
 import me.aurium.opentutorial.centralized.Tutorial;
 import me.aurium.opentutorial.centralized.registry.Event;
 import me.aurium.opentutorial.stage.Stage;
-import me.aurium.opentutorial.util.CloseableOptionalMap;
 
 import java.util.UUID;
 
@@ -14,7 +16,7 @@ public abstract class AbstractAwaitConsumer<T extends Stage,E extends Event> imp
      *
      * (This is an old todo from before this was a delegatingmap.)
      */
-    private final CloseableOptionalMap<UUID,T> existenceCache = new CloseableOptionalMap<>();
+    private final OptionalMap<UUID,T> existenceCache = new DelegatingOptionalMap<>();
 
     @Override
     public void started(T options, Tutorial continuable) {
@@ -31,12 +33,12 @@ public abstract class AbstractAwaitConsumer<T extends Stage,E extends Event> imp
     }
 
     @Override
-    public void closeAll() {
-        existenceCache.closeAll();
+    public void close() {
+        existenceCache.delegate().clear();
     }
 
     @Override
     public void closeSingle(UUID uuid) {
-        existenceCache.closeSingle(uuid);
+        existenceCache.delegate().remove(uuid);
     }
 }

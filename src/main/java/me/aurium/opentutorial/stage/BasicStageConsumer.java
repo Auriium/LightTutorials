@@ -5,7 +5,7 @@ import java.util.UUID;
 public interface BasicStageConsumer<T extends Stage> extends StageConsumer<T> {
 
     @Override
-    default void closeAll() {
+    default void close() {
 
     }
 

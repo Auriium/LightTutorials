@@ -1,8 +1,7 @@
 package me.aurium.opentutorial.centralized;
 
-import me.aurium.opentutorial.stage.Stage;
+import me.aurium.opentutorial.centralized.states.StateMap;
 
-import java.util.Set;
 import java.util.UUID;
 
 public interface Tutorial {
@@ -13,13 +12,8 @@ public interface Tutorial {
      */
     UUID getIdentifier();
 
-    /**
-     * Gets the identifier of the template that represents this object
-     * @return the identifier
-     */
-    String getTemplateIdentifier();
-
     void fireNext();
     void fireCancel();
+
 
 }

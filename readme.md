@@ -7,3 +7,5 @@ OpenTutorial follows a sequential path and as such has a major limitation in tha
 A further rendition of OpenTutorial may fix this.
 
 //TODO: Said format must be migrated to Conversation and the ticket bot
+//TODO: multiplatform
+//TODO: "(only you can see this) An error occurred interpreting your tutorial config: 'x" 

@@ -1,25 +1,33 @@
 package me.aurium.opentutorial.centralized;
 
 import me.aurium.opentutorial.centralized.registry.ConsumerRegistry;
+import me.aurium.opentutorial.centralized.states.StateMap;
 import me.aurium.opentutorial.centralized.template.Template;
-import me.aurium.opentutorial.stage.Stage;
 
 import java.util.*;
 
+/**
+ * Controller as well as entry point for closeables
+ */
 public class CommonTutorialController implements TutorialController {
 
 
     private final Map<UUID, Tutorial> map;
-    private final ConsumerRegistry registry; //Prebuilt registry
 
-    public CommonTutorialController(ConsumerRegistry registry) {
+    private final ConsumerRegistry registry; //Prebuilt registry
+    private final StateMap stateMap;
+
+    public CommonTutorialController(ConsumerRegistry registry, StateMap stateMap) {
         this.map = new HashMap<>();
+
+        this.stateMap = stateMap;
         this.registry = registry;
     }
 
     @Override
     public Optional<Tutorial> cancelByUUID(UUID uuid) {
         registry.closeSingle(uuid);
+        stateMap.closeSingle(uuid);
 
         return Optional.ofNullable(map.remove(uuid));
     }
@@ -44,7 +52,8 @@ public class CommonTutorialController implements TutorialController {
     }
 
     @Override
-    public void closeAll() {
-        registry.closeAll();
+    public void close() {
+        registry.close();
+        stateMap.close();
     }
 }

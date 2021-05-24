@@ -1,6 +1,7 @@
 package me.aurium.opentutorial.centralized;
 
-import me.aurium.opentutorial.aspect.UUIDCloseable;
+
+import me.aurium.beetle.defaults.utility.aspect.UUIDCloseable;
 import me.aurium.opentutorial.centralized.registry.ConsumerRegistry;
 import me.aurium.opentutorial.centralized.template.Template;
 

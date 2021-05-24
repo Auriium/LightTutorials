@@ -8,7 +8,7 @@ public class ResponseStage implements AwaitStage {
     private final long maxDelay;
     private final boolean cancelOnFail;
 
-    public ResponseStage(String[] matchables, int maxDelay, boolean cancelOnFail) {
+    public ResponseStage(String[] matchables, long maxDelay, boolean cancelOnFail) {
         this.matchables = matchables;
         this.maxDelay = maxDelay;
         this.cancelOnFail = cancelOnFail;

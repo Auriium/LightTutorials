@@ -2,8 +2,7 @@ package me.aurium.opentutorial.centralized.registry;
 
 import me.aurium.opentutorial.centralized.NoConsumerException;
 import me.aurium.opentutorial.centralized.Tutorial;
-import me.aurium.opentutorial.stage.ConsumerPackage;
-import me.aurium.opentutorial.stage.ConsumerSerializer;
+import me.aurium.opentutorial.stage.StageSerializer;
 import me.aurium.opentutorial.stage.Stage;
 import me.aurium.opentutorial.stage.StageConsumer;
 import me.aurium.opentutorial.stage.await.AwaitConsumer;
@@ -13,7 +12,7 @@ import java.util.*;
 public class CommonRegistry implements ConsumerRegistry {
 
     private final Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers = new HashMap<>();
-    private final Map<String, ConsumerSerializer<?>> serializers = new HashMap<>();
+    private final Map<String, StageSerializer<?>> serializers = new HashMap<>();
 
     private final EventBus bus;
 
@@ -29,9 +28,9 @@ public class CommonRegistry implements ConsumerRegistry {
     }
 
     @Override
-    public void closeAll() {
+    public void close() {
         for (StageConsumer<? extends Stage> consumer : consumers.values()) {
-            consumer.closeAll();
+            consumer.close();
         }
     }
 
@@ -46,15 +45,15 @@ public class CommonRegistry implements ConsumerRegistry {
     }
 
     @Override
-    public Optional<ConsumerSerializer<?>> getSerializer(String identifier) {
-        return Optional.ofNullable(serializers.get(identifier));
+    public Optional<StageSerializer<?>> getSerializer(String identifier) {
+        return Optional.ofNullable(serializers.get(identifier.toLowerCase()));
     }
 
     @Override
-    public <T extends Event, E extends Stage> void register(StageConsumer<E> stageConsumer, ConsumerSerializer<E> serializer) {
+    public <T extends Event, E extends Stage> ConsumerRegistry register(StageConsumer<E> stageConsumer, StageSerializer<E> serializer) {
 
         consumers.put(stageConsumer.stageClass(),stageConsumer);
-        serializers.put(serializer.identifier(),serializer);
+        serializers.put(serializer.identifier().toLowerCase(),serializer);
 
         if (stageConsumer instanceof AwaitConsumer) {
             AwaitConsumer<E,T> consumer = (AwaitConsumer<E, T>) stageConsumer;
@@ -62,6 +61,6 @@ public class CommonRegistry implements ConsumerRegistry {
             bus.register(consumer.eventClass(),consumer);
         }
 
-
+        return this;
     }
 }

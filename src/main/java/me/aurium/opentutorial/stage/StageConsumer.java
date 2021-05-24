@@ -1,7 +1,6 @@
 package me.aurium.opentutorial.stage;
 
-import me.aurium.opentutorial.aspect.KeyCloseable;
-import me.aurium.opentutorial.aspect.UUIDCloseable;
+import me.aurium.beetle.defaults.utility.aspect.UUIDCloseable;
 import me.aurium.opentutorial.centralized.Tutorial;
 
 import java.util.UUID;

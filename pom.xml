@@ -18,6 +18,7 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.16.5-R0.1-SNAPSHOT</version>
+
         </dependency>
         <dependency>
             <groupId>space.arim.dazzleconf</groupId>
@@ -26,15 +27,26 @@
         </dependency>
 
         <dependency>
-            <groupId>me</groupId>
-            <artifactId>beetle-defaults</artifactId>
+            <groupId>me.aurium</groupId>
+            <artifactId>beetle-core-default</artifactId>
+            <version>1.1.2</version>
         </dependency>
+
     </dependencies>
 
     <repositories>
         <repository>
             <id>arim-mvn-lgpl3</id>
             <url>https://mvn-repo.arim.space/lesser-gpl3/</url>
+        </repository>
+        <repository>
+            <id>jfrog</id>
+            <name>a0phrw82hnl4g-artifactory-primary-0-releases</name>
+            <url>https://aurium.jfrog.io/artifactory/aurium-libs-release-local</url>
+        </repository>
+        <repository>
+            <id>spigot-repo</id>
+            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
     </repositories>
 
