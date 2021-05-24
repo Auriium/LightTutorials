@@ -4,9 +4,9 @@ package me.aurium.opentutorial.centralized.registry;
 import me.aurium.beetle.defaults.utility.aspect.UUIDCloseable;
 import me.aurium.opentutorial.centralized.NoConsumerException;
 import me.aurium.opentutorial.centralized.Tutorial;
-import me.aurium.opentutorial.stage.StageSerializer;
 import me.aurium.opentutorial.stage.Stage;
 import me.aurium.opentutorial.stage.StageConsumer;
+import me.aurium.opentutorial.stage.StageSerializer;
 
 import java.util.Optional;
 

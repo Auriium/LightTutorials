@@ -1,6 +1,5 @@
 package me.aurium.opentutorial.stage.await;
 
-import me.aurium.beetle.defaults.utility.map.optional.CloseableOptionalMap;
 import me.aurium.beetle.defaults.utility.map.optional.DelegatingOptionalMap;
 import me.aurium.beetle.defaults.utility.map.optional.OptionalMap;
 import me.aurium.opentutorial.centralized.Tutorial;

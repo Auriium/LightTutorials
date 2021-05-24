@@ -1,7 +1,6 @@
 package me.aurium.opentutorial.centralized.states.player;
 
 import me.aurium.opentutorial.PluginScheduler;
-import me.aurium.opentutorial.centralized.TutorialController;
 import me.aurium.opentutorial.centralized.states.StateKey;
 import me.aurium.opentutorial.centralized.states.WeakPlayer;
 

@@ -20,9 +20,6 @@ import me.aurium.opentutorial.stage.action.CommandStageSerializer;
 import me.aurium.opentutorial.stage.delay.DelaySerializer;
 import me.aurium.opentutorial.stage.delay.DelayStageConsumer;
 import org.bukkit.plugin.java.JavaPlugin;
-import space.arim.dazzleconf.ConfigurationOptions;
-import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlConfigurationFactory;
-import space.arim.dazzleconf.helper.ConfigurationHelper;
 
 public class OpenTutorial extends JavaPlugin {
 

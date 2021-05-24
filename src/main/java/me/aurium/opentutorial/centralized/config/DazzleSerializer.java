@@ -1,8 +1,8 @@
 package me.aurium.opentutorial.centralized.config;
 
 import me.aurium.opentutorial.centralized.registry.ConsumerRegistry;
-import me.aurium.opentutorial.stage.StageSerializer;
 import me.aurium.opentutorial.stage.Stage;
+import me.aurium.opentutorial.stage.StageSerializer;
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.Decomposer;
 import space.arim.dazzleconf.serialiser.FlexibleType;

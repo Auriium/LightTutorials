@@ -2,8 +2,6 @@ package me.aurium.opentutorial.stage.action;
 
 import me.aurium.opentutorial.stage.Stage;
 
-import java.util.Optional;
-
 public class ChatStage implements Stage {
 
     private final String chat;

@@ -1,7 +1,5 @@
 package me.aurium.opentutorial.centralized;
 
-import me.aurium.opentutorial.centralized.states.StateMap;
-
 import java.util.UUID;
 
 public interface Tutorial {

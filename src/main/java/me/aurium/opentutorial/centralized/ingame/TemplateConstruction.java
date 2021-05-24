@@ -2,7 +2,7 @@ package me.aurium.opentutorial.centralized.ingame;
 
 import me.aurium.opentutorial.stage.Stage;
 
-import java.util.*;
+import java.util.Queue;
 
 /**
  * Represents a construction pile for a tutorial that is being built by a player in game

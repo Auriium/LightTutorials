@@ -2,7 +2,6 @@ package me.aurium.opentutorial.centralized.states;
 
 import me.aurium.beetle.defaults.utility.aspect.UUIDCloseable;
 import me.aurium.opentutorial.PluginScheduler;
-import me.aurium.opentutorial.centralized.TutorialController;
 import me.aurium.opentutorial.centralized.server.UUIDRegistry;
 
 import java.util.HashMap;

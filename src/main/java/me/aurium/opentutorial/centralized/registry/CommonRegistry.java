@@ -2,12 +2,15 @@ package me.aurium.opentutorial.centralized.registry;
 
 import me.aurium.opentutorial.centralized.NoConsumerException;
 import me.aurium.opentutorial.centralized.Tutorial;
-import me.aurium.opentutorial.stage.StageSerializer;
 import me.aurium.opentutorial.stage.Stage;
 import me.aurium.opentutorial.stage.StageConsumer;
+import me.aurium.opentutorial.stage.StageSerializer;
 import me.aurium.opentutorial.stage.await.AwaitConsumer;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 public class CommonRegistry implements ConsumerRegistry {
 

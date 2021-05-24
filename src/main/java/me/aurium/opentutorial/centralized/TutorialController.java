@@ -6,7 +6,6 @@ import me.aurium.opentutorial.centralized.registry.ConsumerRegistry;
 import me.aurium.opentutorial.centralized.template.Template;
 
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 /**

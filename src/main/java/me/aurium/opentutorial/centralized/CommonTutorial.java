@@ -3,7 +3,6 @@ package me.aurium.opentutorial.centralized;
 import me.aurium.opentutorial.stage.Stage;
 
 import java.util.Queue;
-import java.util.Set;
 import java.util.UUID;
 
 public class CommonTutorial implements Tutorial {
