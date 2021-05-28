@@ -1,5 +1,6 @@
 package me.aurium.opentutorial;
 
+import co.aikar.commands.BukkitCommandManager;
 import me.aurium.opentutorial.centralized.CommonTutorialController;
 import me.aurium.opentutorial.centralized.TutorialController;
 import me.aurium.opentutorial.centralized.config.GeneralConfig;
@@ -11,6 +12,7 @@ import me.aurium.opentutorial.centralized.server.UUIDRegistry;
 import me.aurium.opentutorial.centralized.server.WrappedUUIDRegistry;
 import me.aurium.opentutorial.centralized.states.StateMap;
 import me.aurium.opentutorial.centralized.template.TemplateController;
+import me.aurium.opentutorial.command.TutorialCommand;
 import me.aurium.opentutorial.hook.EventBusHook;
 import me.aurium.opentutorial.hook.StartupHook;
 import me.aurium.opentutorial.stage.action.ChatStageConsumer;
@@ -48,9 +50,13 @@ public class OpenTutorial extends JavaPlugin {
     private final EventBusHook hook = new EventBusHook(bus);
     private final StartupHook startupHook = new StartupHook(tutorialController, templateController, null);
 
+    private final BukkitCommandManager manager = new BukkitCommandManager(this);
+
     @Override
     public void onEnable() {
         getServer().getPluginManager().registerEvents(hook,this);
         getServer().getPluginManager().registerEvents(startupHook,this);
+
+        manager.registerCommand(new TutorialCommand(this));
     }
 }
