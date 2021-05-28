@@ -1,6 +1,8 @@
 package me.aurium.opentutorial.centralized.states;
 
 import me.aurium.beetle.defaults.utility.aspect.UUIDCloseable;
+import me.aurium.beetle.defaults.utility.map.optional.DelegatingOptionalMap;
+import me.aurium.beetle.defaults.utility.map.optional.OptionalMap;
 import me.aurium.opentutorial.PluginScheduler;
 import me.aurium.opentutorial.centralized.server.UUIDRegistry;
 
@@ -10,7 +12,7 @@ import java.util.UUID;
 
 public class StateMap implements UUIDCloseable {
 
-    private final Map<UUID,Map<StateKey<?>, State>> map = new HashMap<>();
+    private final OptionalMap<UUID,Map<StateKey<?>, State>> newMap = new DelegatingOptionalMap<>();
 
     private final UUIDRegistry server; //TODO interface this away!
     private final PluginScheduler scheduler;
@@ -20,17 +22,12 @@ public class StateMap implements UUIDCloseable {
         this.scheduler = scheduler;
     }
 
+    public <T extends State> void startState(UUID player, StateKey<T> key) {
+        Map<StateKey<?>,State> minimap = newMap.delegate().computeIfAbsent(player, s -> new HashMap<>());
 
-    public void closeSingle(UUID uuid) {
-        map.get(uuid).forEach((stateKey, state) -> state.deactivate());
-        map.remove(uuid);
+        minimap.computeIfAbsent(key, s -> key.create(scheduler,new CommonWeakPlayer(server,player)));
     }
 
-
-    public void close() {
-        map.forEach((uuid,map1) -> map1.forEach((key, state) -> state.deactivate()));
-        map.clear();
-    }
 
 
     @SuppressWarnings("unchecked")
@@ -39,5 +36,15 @@ public class StateMap implements UUIDCloseable {
         return (T) map.computeIfAbsent(player, s -> new HashMap<>()).computeIfAbsent(key, s ->
                 key.create(scheduler, new CommonWeakPlayer(server,player))
         );
+    }
+
+    public void closeSingle(UUID uuid) {
+        newMap.remove(uuid).ifPresent(map -> map.values().forEach(State::deactivate));
+    }
+
+
+    public void close() {
+        newMap.delegate().values().forEach(map -> map.values().forEach(State::deactivate));
+        map.clear();
     }
 }

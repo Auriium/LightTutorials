@@ -14,11 +14,14 @@ import java.util.UUID;
 public interface TutorialController extends UUIDCloseable {
 
     /**
-     * Cancels by UUID
+     * Cancels by UUID if present or does nothing if not
+     *
      * @param uuid the uuid
      * @return cancelled tutorial
      */
     Optional<Tutorial> cancelByUUID(UUID uuid);
+
+    boolean isInTutorial(UUID uuid);
 
     /**
      * Get the registry bound to this controller
@@ -37,5 +40,17 @@ public interface TutorialController extends UUIDCloseable {
      * @return the generated tutorial
      */
     Tutorial createNew(Template template, UUID owner);
+
+    /**
+     * Creates a tutorial that consists of a single stage from a template
+     *
+     * Must be started manually
+     *
+     * @param template template used
+     * @param owner owner
+     * @param stage stage to select
+     * @return etc
+     */
+    Tutorial createStage(Template template, UUID owner, int stage);
 
 }

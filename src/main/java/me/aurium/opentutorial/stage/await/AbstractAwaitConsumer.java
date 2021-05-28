@@ -31,13 +31,5 @@ public abstract class AbstractAwaitConsumer<T extends Stage,E extends Event> imp
         existenceCache.removeIfPresent(tutorial.getIdentifier(), stage -> consume(stage,event,tutorial));
     }
 
-    @Override
-    public void close() {
-        existenceCache.delegate().clear();
-    }
 
-    @Override
-    public void closeSingle(UUID uuid) {
-        existenceCache.delegate().remove(uuid);
-    }
 }

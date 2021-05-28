@@ -33,17 +33,31 @@ public class CommonTutorialController implements TutorialController {
     }
 
     @Override
+    public boolean isInTutorial(UUID uuid) {
+        return map.containsKey(uuid);
+    }
+
+    @Override
     public ConsumerRegistry getRegistry() {
         return registry;
     }
 
     @Override
     public Tutorial createNew(Template template, UUID owner) {
+       if (map.containsKey(owner)) throw new IllegalStateException("User is already in a tutorial: " + owner);
+
        Tutorial tutorial = new CommonTutorial(owner,new ArrayDeque<>(template.getStages()),this);
 
        map.put(owner, tutorial);
 
        return tutorial;
+    }
+
+    @Override
+    public Tutorial createStage(Template template, UUID owner, int stage) {
+        if (map.containsKey(owner)) throw new IllegalStateException("User is already in a tutorial: " + owner);
+
+        return null; /// FIXME: 5/28/2021 add implementation
     }
 
     @Override
@@ -55,5 +69,6 @@ public class CommonTutorialController implements TutorialController {
     public void close() {
         registry.close();
         stateMap.close();
+        map.clear();
     }
 }

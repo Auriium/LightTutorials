@@ -43,8 +43,6 @@ public abstract class DelayedAwaitConsumer<T extends AwaitStage,E extends Event>
 
     @Override
     public void closeSingle(UUID uuid) {
-        super.closeSingle(uuid);
-
         BukkitTask task = delayCache.remove(uuid);
 
         if (task != null) {
@@ -54,8 +52,6 @@ public abstract class DelayedAwaitConsumer<T extends AwaitStage,E extends Event>
 
     @Override
     public void close() {
-        super.close();
-
         delayCache.forEach((e,s) -> {
             if (s != null) {
                 s.cancel();
