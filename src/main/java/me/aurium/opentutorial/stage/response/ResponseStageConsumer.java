@@ -1,21 +1,16 @@
 package me.aurium.opentutorial.stage.response;
 
 import me.aurium.opentutorial.centralized.Tutorial;
-import me.aurium.opentutorial.stage.await.DelayedAwaitConsumer;
+import me.aurium.opentutorial.stage.await.AbstractDelayConsumer;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Handles response stages by checking if they aaa eee ooo uuu cum
  */
-public class ResponseStageConsumer extends DelayedAwaitConsumer<ResponseStage,DelegateChatEvent> {
+public class ResponseStageConsumer extends AbstractDelayConsumer<ResponseStage,DelegateChatEvent> {
 
-    protected ResponseStageConsumer(JavaPlugin plugin) {
+    public ResponseStageConsumer(JavaPlugin plugin) {
         super(plugin);
-    }
-
-    @Override
-    public void endStarted(ResponseStage options, Tutorial continuable) {
-
     }
 
     @Override

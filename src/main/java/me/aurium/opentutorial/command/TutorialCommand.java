@@ -41,8 +41,25 @@ public class TutorialCommand extends BaseCommand {
     public void play(Player sender, @Optional Player target, String template) {
         Player user = target == null ? sender : target;
 
+        templateController.loadTemplate(template).ifPresentOrElse(
+                templ -> controller.createNew(templ, user.getUniqueId()).fireNext(),
+                () -> sender.sendMessage(color("&9OpenTutorial &7» &cNo template found with that identifier!")));
+    }
+
+    @Subcommand("playpoint")
+    public void playPoint(Player sender, @Optional Player target, String template, int point) {
+        Player user = target == null ? sender : target;
+
+
+
         templateController.loadTemplate(template).ifPresentOrElse(templ -> {
-            controller.createNew(templ, user.getUniqueId()).fireNext();
+            if (!templ.hasStage(point)) {
+                sender.sendMessage(color("&9OpenTutorial &7» &cNo stage found at that point number!"));
+                return;
+            }
+
+            controller.createStage(templ, user.getUniqueId(), point);
+
         }, () -> sender.sendMessage(color("&9OpenTutorial &7» &cNo template found with that identifier!")));
     }
 
@@ -52,13 +69,14 @@ public class TutorialCommand extends BaseCommand {
         UUID uuid = sender.getUniqueId();
 
         if (!controller.isInTutorial(uuid)) {
-
+            sender.sendMessage(color("&9OpenTutorial &7» &cYou are not in a tutorial!"));
+            return;
         }
+
+        controller.cancelByUUID(uuid);
     }
 
-    public void playPoint(Player sender, @Optional Player target, String template, int point) {
 
-    }
 
     String color(String string) {
         return ChatColor.translateAlternateColorCodes('&',string);

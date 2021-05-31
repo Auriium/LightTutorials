@@ -24,4 +24,8 @@ public class Template {
     public String getIdentifier() {
         return identifier;
     }
+
+    public boolean hasStage(int i ) {
+        return false;
+    }
 }

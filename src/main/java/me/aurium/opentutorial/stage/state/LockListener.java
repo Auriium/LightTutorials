@@ -1,7 +1,6 @@
-package me.aurium.opentutorial.centralized.states.listener;
+package me.aurium.opentutorial.stage.state;
 
 import org.bukkit.Location;
-import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
@@ -10,22 +9,17 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-/**
- * ugly ugly ugly shit - it is what it is.
- *
- * Still a disgusting class
- */
 public class LockListener implements Listener {
 
     private final Set<UUID> lockMovement = new HashSet<>();
     private final Set<UUID> lockView = new HashSet<>();
 
     //probably can just encapsulate properly and only provide add/remove access
-    public Set<UUID> getLockMovement() {
+    public final Set<UUID> getLockMovement() {
         return lockMovement;
     }
 
-    public Set<UUID> getLockView() {
+    public final Set<UUID> getLockView() {
         return lockView;
     }
 
@@ -53,5 +47,4 @@ public class LockListener implements Listener {
 
 
     }
-
 }

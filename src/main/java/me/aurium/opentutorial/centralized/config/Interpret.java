@@ -13,6 +13,7 @@ public class Interpret {
 
     public static String NO_STRING = "none";
     public static long NO_LONG = -1L; ///fixme this is bad but i dont know what to do about it
+    public static boolean NO_BOOL = true;
 
     public static <T> T getRequired(String identifier, Map<String,FlexibleType> typeMap, InterpretFunction<FlexibleType,T> func) throws BadValueException {
         FlexibleType type = typeMap.get(identifier);

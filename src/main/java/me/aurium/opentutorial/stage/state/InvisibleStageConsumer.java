@@ -1,28 +1,22 @@
 package me.aurium.opentutorial.stage.state;
 
 import me.aurium.opentutorial.centralized.Tutorial;
-import me.aurium.opentutorial.centralized.states.StateMap;
-import me.aurium.opentutorial.centralized.states.player.InvisibleKey;
-import me.aurium.opentutorial.centralized.states.player.InvisibleState;
+import me.aurium.opentutorial.centralized.server.UUIDRegistry;
 import me.aurium.opentutorial.stage.BasicStageConsumer;
 
 public class InvisibleStageConsumer implements BasicStageConsumer<InvisibleStage> {
 
-    private final StateMap map;
+    private final UUIDRegistry registry;
 
-    public InvisibleStageConsumer(StateMap map) {
-        this.map = map;
+    public InvisibleStageConsumer(UUIDRegistry registry) {
+        this.registry = registry;
     }
 
     @Override
     public void started(InvisibleStage options, Tutorial continuable) {
-        InvisibleState state = map.getState(continuable.getIdentifier(), InvisibleKey.INSTANCE);
+        registry.getPlayer(continuable.getIdentifier()).ifPresent(player -> player.setInvisible(options.isOn()));
 
-        if (options.isOn()) {
-            state.activate();
-        } else {
-            state.deactivate();
-        }
+        continuable.fireNext();
     }
 
     @Override
