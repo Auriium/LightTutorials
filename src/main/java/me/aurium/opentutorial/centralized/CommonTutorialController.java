@@ -1,7 +1,6 @@
 package me.aurium.opentutorial.centralized;
 
 import me.aurium.opentutorial.centralized.registry.ConsumerRegistry;
-import me.aurium.opentutorial.centralized.states.StateMap;
 import me.aurium.opentutorial.centralized.template.Template;
 
 import java.util.*;
@@ -15,26 +14,23 @@ public class CommonTutorialController implements TutorialController {
     private final Map<UUID, Tutorial> map;
 
     private final ConsumerRegistry registry; //Prebuilt registry
-    private final StateMap stateMap;
 
-    public CommonTutorialController(ConsumerRegistry registry, StateMap stateMap) {
+    public CommonTutorialController(ConsumerRegistry registry) {
         this.map = new HashMap<>();
 
-        this.stateMap = stateMap;
         this.registry = registry;
     }
 
     @Override
     public Optional<Tutorial> cancelByUUID(UUID uuid) {
         registry.closeSingle(uuid);
-        stateMap.closeSingle(uuid);
 
         return Optional.ofNullable(map.remove(uuid));
     }
 
     @Override
-    public boolean isInTutorial(UUID uuid) {
-        return map.containsKey(uuid);
+    public Optional<Tutorial> getByUUID(UUID uuid) {
+        return Optional.ofNullable(map.get(uuid));
     }
 
     @Override
@@ -68,7 +64,6 @@ public class CommonTutorialController implements TutorialController {
     @Override
     public void close() {
         registry.close();
-        stateMap.close();
         map.clear();
     }
 }

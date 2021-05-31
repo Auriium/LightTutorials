@@ -10,10 +10,10 @@ import me.aurium.opentutorial.centralized.registry.CommonRegistry;
 import me.aurium.opentutorial.centralized.registry.EventBus;
 import me.aurium.opentutorial.centralized.server.UUIDRegistry;
 import me.aurium.opentutorial.centralized.server.WrappedUUIDRegistry;
-import me.aurium.opentutorial.centralized.states.StateMap;
 import me.aurium.opentutorial.centralized.template.TemplateController;
 import me.aurium.opentutorial.command.TutorialCommand;
 import me.aurium.opentutorial.hook.EventBusHook;
+import me.aurium.opentutorial.hook.LockHook;
 import me.aurium.opentutorial.hook.StartupHook;
 import me.aurium.opentutorial.stage.action.ChatStageConsumer;
 import me.aurium.opentutorial.stage.action.ChatStageSerializer;
@@ -21,6 +21,7 @@ import me.aurium.opentutorial.stage.action.CommandStageConsumer;
 import me.aurium.opentutorial.stage.action.CommandStageSerializer;
 import me.aurium.opentutorial.stage.delay.DelaySerializer;
 import me.aurium.opentutorial.stage.delay.DelayStageConsumer;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class OpenTutorial extends JavaPlugin {
@@ -41,22 +42,25 @@ public class OpenTutorial extends JavaPlugin {
             new CommonRegistry(bus)
             .register(new ChatStageConsumer(this), new ChatStageSerializer())
             .register(new CommandStageConsumer(this), new CommandStageSerializer())
-            .register(new DelayStageConsumer(this), new DelaySerializer()),
-
-            new StateMap(uuidRegistry,scheduler)
+            .register(new DelayStageConsumer(this), new DelaySerializer())
 
     );
 
-    private final EventBusHook hook = new EventBusHook(bus);
+    private final LockHook lockHook = new LockHook();
+    private final EventBusHook eventHook = new EventBusHook(bus, this, tutorialController);
     private final StartupHook startupHook = new StartupHook(tutorialController, templateController, null);
 
-    private final BukkitCommandManager manager = new BukkitCommandManager(this);
+    private final BukkitCommandManager commandManager = new BukkitCommandManager(this);
 
     @Override
     public void onEnable() {
-        getServer().getPluginManager().registerEvents(hook,this);
-        getServer().getPluginManager().registerEvents(startupHook,this);
+        PluginManager manager = getServer().getPluginManager();
 
-        manager.registerCommand(new TutorialCommand(this));
+        manager.registerEvents(eventHook,this);
+        manager.registerEvents(startupHook,this);
+        manager.registerEvents(lockHook,this);
+
+        commandManager.registerCommand(new TutorialCommand(tutorialController,templateController));
+
     }
 }

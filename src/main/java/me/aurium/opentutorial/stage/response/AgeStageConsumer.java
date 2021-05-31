@@ -2,6 +2,7 @@ package me.aurium.opentutorial.stage.response;
 
 import me.aurium.opentutorial.centralized.Tutorial;
 import me.aurium.opentutorial.stage.await.AbstractDelayConsumer;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -22,21 +23,27 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateCh
 
     @Override
     public void consume(AgeStage stage, DelegateChatEvent event, Tutorial tutorial) {
-        String message = event.getEvent().getMessage().replaceAll("\\D+","");
-
-        int age = Integer.parseInt(message);
-
-
+        String message = event.getMessage().replaceAll("\\D+","");
         Player sender = plugin.getServer().getPlayer(tutorial.getIdentifier());
 
-        if (sender != null && age < stage.getBelowAge()) {
-            plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),stage.getRunOnFail().replaceAll("%PLAYER%",sender.getName()));
+        try {
+            int age = Integer.parseInt(message);
 
-            if (stage.isCancelOnFail()) {
-                tutorial.fireCancel();
-                return;
+            if (sender != null && age < stage.getBelowAge()) {
+                plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),stage.getRunOnFail().replaceAll("%PLAYER%",sender.getName()));
+
+                if (stage.isCancelOnFail()) {
+                    tutorial.fireCancel();
+                    return;
+                }
+            }
+
+        } catch (NumberFormatException e) {
+            if (sender != null) {
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',stage.getSendWhenNotAge()));
             }
         }
+
 
         tutorial.fireNext();
 

@@ -10,7 +10,7 @@ import java.util.Map;
 public class CommandStageSerializer implements StageSerializer<CommandStage> {
     @Override
     public String identifier() {
-        return "command_stage";
+        return "command";
     }
 
     @Override

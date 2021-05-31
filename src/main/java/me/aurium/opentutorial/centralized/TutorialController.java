@@ -21,7 +21,13 @@ public interface TutorialController extends UUIDCloseable {
      */
     Optional<Tutorial> cancelByUUID(UUID uuid);
 
-    boolean isInTutorial(UUID uuid);
+    /**
+     * Gets a tutorial by UUID
+     *
+     * @param uuid the id
+     * @return cancelled tutorial
+     */
+    Optional<Tutorial> getByUUID(UUID uuid);
 
     /**
      * Get the registry bound to this controller

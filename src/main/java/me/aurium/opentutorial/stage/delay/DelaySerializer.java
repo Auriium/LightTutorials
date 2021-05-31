@@ -10,7 +10,7 @@ import java.util.Map;
 public class DelaySerializer implements StageSerializer<DelayStage> {
     @Override
     public String identifier() {
-        return "wait_stage";
+        return "wait";
     }
 
     @Override

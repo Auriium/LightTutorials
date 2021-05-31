@@ -8,6 +8,7 @@ import space.arim.dazzleconf.serialiser.FlexibleType;
 import java.util.Map;
 
 public class InvisibleStageSerializer implements StageSerializer<InvisibleStage> {
+
     @Override
     public String identifier() {
         return "invisible";

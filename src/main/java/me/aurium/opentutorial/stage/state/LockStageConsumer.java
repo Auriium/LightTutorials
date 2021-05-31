@@ -1,16 +1,17 @@
 package me.aurium.opentutorial.stage.state;
 
 import me.aurium.opentutorial.centralized.Tutorial;
+import me.aurium.opentutorial.hook.LockHook;
 import me.aurium.opentutorial.stage.StageConsumer;
 
 import java.util.UUID;
 
 public class LockStageConsumer implements StageConsumer<LockStage> {
 
-    private final LockListener lockListener;
+    private final LockHook lockHook;
 
-    public LockStageConsumer(LockListener lockListener) {
-        this.lockListener = lockListener;
+    public LockStageConsumer(LockHook lockHook) {
+        this.lockHook = lockHook;
     }
 
     @Override
@@ -18,15 +19,15 @@ public class LockStageConsumer implements StageConsumer<LockStage> {
         UUID uuid = continuable.getIdentifier();
 
         if (options.isLockMovement()) {
-            lockListener.getLockMovement().add(uuid);
+            lockHook.getLockMovement().add(uuid);
         } else {
-            lockListener.getLockMovement().remove(uuid);
+            lockHook.getLockMovement().remove(uuid);
         }
 
         if (options.isLockView()) {
-            lockListener.getLockView().add(uuid);
+            lockHook.getLockView().add(uuid);
         } else {
-            lockListener.getLockView().remove(uuid);
+            lockHook.getLockView().remove(uuid);
         }
     }
 
@@ -37,13 +38,13 @@ public class LockStageConsumer implements StageConsumer<LockStage> {
 
     @Override
     public void closeSingle(UUID uuid) {
-        lockListener.getLockView().remove(uuid);
-        lockListener.getLockMovement().remove(uuid);
+        lockHook.getLockView().remove(uuid);
+        lockHook.getLockMovement().remove(uuid);
     }
 
     @Override
     public void close() {
-        lockListener.getLockMovement().clear();
-        lockListener.getLockView().clear();
+        lockHook.getLockMovement().clear();
+        lockHook.getLockView().clear();
     }
 }

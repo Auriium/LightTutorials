@@ -10,7 +10,7 @@ import java.util.Map;
 public class ChatStageSerializer implements StageSerializer<ChatStage> {
     @Override
     public String identifier() {
-        return "chat_stage";
+        return "chat";
     }
 
     @Override

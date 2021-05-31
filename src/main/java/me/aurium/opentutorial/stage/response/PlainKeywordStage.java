@@ -2,13 +2,14 @@ package me.aurium.opentutorial.stage.response;
 
 import me.aurium.opentutorial.stage.await.AwaitStage;
 
-public class ResponseStage implements AwaitStage {
+public class PlainKeywordStage implements AwaitStage {
 
     private final String[] matchables;
+
     private final long maxDelay;
     private final boolean cancelOnFail;
 
-    public ResponseStage(String[] matchables, long maxDelay, boolean cancelOnFail) {
+    public PlainKeywordStage(String[] matchables, long maxDelay, boolean cancelOnFail) {
         this.matchables = matchables;
         this.maxDelay = maxDelay;
         this.cancelOnFail = cancelOnFail;

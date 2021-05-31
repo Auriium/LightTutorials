@@ -1,4 +1,4 @@
-package me.aurium.opentutorial.stage.state;
+package me.aurium.opentutorial.hook;
 
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class LockListener implements Listener {
+public class LockHook implements Listener {
 
     private final Set<UUID> lockMovement = new HashSet<>();
     private final Set<UUID> lockView = new HashSet<>();

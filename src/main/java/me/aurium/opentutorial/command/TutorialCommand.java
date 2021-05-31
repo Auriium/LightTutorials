@@ -68,7 +68,7 @@ public class TutorialCommand extends BaseCommand {
     public void leave(Player sender) {
         UUID uuid = sender.getUniqueId();
 
-        if (!controller.isInTutorial(uuid)) {
+        if (controller.getByUUID(uuid).isEmpty()) {
             sender.sendMessage(color("&9OpenTutorial &7» &cYou are not in a tutorial!"));
             return;
         }

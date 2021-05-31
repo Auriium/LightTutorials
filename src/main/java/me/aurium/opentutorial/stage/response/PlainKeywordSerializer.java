@@ -6,14 +6,14 @@ import space.arim.dazzleconf.serialiser.FlexibleType;
 
 import java.util.Map;
 
-public class ResponseSerializer implements StageSerializer<ResponseStage> {
+public class PlainKeywordSerializer implements StageSerializer<PlainKeywordStage> {
     @Override
     public String identifier() {
-        return "response_stage";
+        return "plain_keyword";
     }
 
     @Override
-    public ResponseStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
+    public PlainKeywordStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
 
 
 

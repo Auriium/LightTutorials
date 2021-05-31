@@ -11,7 +11,7 @@ public class LockStageSerializer implements StageSerializer<LockStage> {
 
     @Override
     public String identifier() {
-        return "lock_stage";
+        return "lock";
     }
 
     @Override
