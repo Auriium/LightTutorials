@@ -1,0 +1,4 @@
+main: xyz.auriium.opentutorial.opentutorial
+version: ${project.version}
+name: OpenTutorial
+author: Auriium
