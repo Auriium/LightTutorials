@@ -4,9 +4,11 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import xyz.auriium.opentutorial.centralized.TutorialController;
+import xyz.auriium.opentutorial.centralized.registry.EventBus;
 import xyz.auriium.opentutorial.centralized.template.TemplateController;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import xyz.auriium.opentutorial.stage.response.ClickableEvent;
 
 import java.util.UUID;
 
@@ -17,10 +19,12 @@ public class TutorialCommand extends BaseCommand {
 
     private final TutorialController controller;
     private final TemplateController templateController;
+    private final EventBus bus;
 
-    public TutorialCommand(TutorialController controller, TemplateController templateController) {
+    public TutorialCommand(TutorialController controller, TemplateController templateController, EventBus bus) {
         this.controller = controller;
         this.templateController = templateController;
+        this.bus = bus;
     }
 
     @HelpCommand
@@ -61,6 +65,18 @@ public class TutorialCommand extends BaseCommand {
             controller.createStage(templ, user.getUniqueId(), point);
 
         }, () -> sender.sendMessage(color("&9OpenTutorial &7» &cNo template found with that identifier!")));
+    }
+
+    @Subcommand("option")
+    public void option(Player sender, int option) {
+        UUID uuid = sender.getUniqueId();
+
+        controller.getByUUID(uuid).ifPresentOrElse(
+                tutorial -> bus.fire(new ClickableEvent(option),tutorial),
+                () -> sender.sendMessage(color("&9OpenTutorial &7» &cYou are not in a tutorial!"))
+        );
+
+
     }
 
     @Subcommand("quit")

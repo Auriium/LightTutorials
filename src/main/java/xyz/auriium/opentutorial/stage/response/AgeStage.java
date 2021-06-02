@@ -8,21 +8,22 @@ import xyz.auriium.opentutorial.stage.await.AwaitStage;
 public class AgeStage implements AwaitStage {
 
     private final String runOnFail;
-    private final String sendWhenNotAge;
+    private final String notNumberMessage;
+    private final String outOfTimeMessage;
 
     private final int belowAge;
     private final long maxDelay;
 
     private final boolean isCancelOnFail;
 
-    public AgeStage(String runOnFail, String sendWhenNotAge, int belowAge, long maxDelay, boolean isCancelOnFail) {
+    public AgeStage(String runOnFail, String notNumberMessage, String outOfTimeMessage, int belowAge, long maxDelay, boolean isCancelOnFail) {
         this.runOnFail = runOnFail;
-        this.sendWhenNotAge = sendWhenNotAge;
+        this.notNumberMessage = notNumberMessage;
+        this.outOfTimeMessage = outOfTimeMessage;
         this.belowAge = belowAge;
         this.maxDelay = maxDelay;
         this.isCancelOnFail = isCancelOnFail;
     }
-
 
     public String getRunOnFail() {
         return runOnFail;
@@ -37,8 +38,13 @@ public class AgeStage implements AwaitStage {
         return maxDelay;
     }
 
-    public String getSendWhenNotAge() {
-        return sendWhenNotAge;
+    @Override
+    public String getOutOfTimeMessage() {
+        return outOfTimeMessage;
+    }
+
+    public String getNotNumberMessage() {
+        return notNumberMessage;
     }
 
     public boolean isCancelOnFail() {

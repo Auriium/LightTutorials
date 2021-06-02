@@ -14,6 +14,8 @@ public class Interpret {
     public static String NO_STRING = "none";
     public static long NO_LONG = -1L; ///fixme this is bad but i dont know what to do about it
     public static boolean NO_BOOL = true;
+    public static int NO_INT = -1;
+    public static String DEFAULT_OUT_OF_TIME = "&cYou are out of time to complete this tutorial stage!";
 
     public static <T> T getRequired(String identifier, Map<String,FlexibleType> typeMap, InterpretFunction<FlexibleType,T> func) throws BadValueException {
         FlexibleType type = typeMap.get(identifier);

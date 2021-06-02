@@ -21,3 +21,5 @@ i'll have to think it through more but it will follow the opentutorial standard
 I may release a huge opentutorial update once convapi is done
 
 //TODO: command for /opentutorial location just outputs a conf-copyable x: 1 y: 1 z: 1 for use in location stages
+//TODO: User Interfacing system: if a "message" of a stage is left blank a UIRegistry can provide a default message, otherwise the stage can provide the message.
+//TODO: configurable messages for all messages

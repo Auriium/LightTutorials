@@ -1,6 +1,7 @@
 package xyz.auriium.opentutorial.stage.response;
 
 import xyz.auriium.opentutorial.centralized.Tutorial;
+import xyz.auriium.opentutorial.centralized.config.tutorials.Interpret;
 import xyz.auriium.opentutorial.stage.await.AbstractDelayConsumer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -30,17 +31,22 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateCh
             int age = Integer.parseInt(message);
 
             if (sender != null && age < stage.getBelowAge()) {
-                plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),stage.getRunOnFail().replaceAll("%PLAYER%",sender.getName()));
+
+                Interpret.ifStringPresent(stage.getRunOnFail(),cmd -> {
+                    plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),cmd.replaceAll("%PLAYER%",sender.getName()));
+                });
 
                 if (stage.isCancelOnFail()) {
                     tutorial.fireCancel();
                     return;
                 }
+
+
             }
 
         } catch (NumberFormatException e) {
             if (sender != null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',stage.getSendWhenNotAge()));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',stage.getNotNumberMessage()));
             }
         }
 

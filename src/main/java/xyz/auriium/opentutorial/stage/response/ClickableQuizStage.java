@@ -11,10 +11,13 @@ public class ClickableQuizStage implements AwaitStage {
     private final int maxDelay;
     private final int correctOption;
 
-    public ClickableQuizStage(List<String> options, int maxDelay, int correctOption) {
+    private final String outOfTimeMessage;
+
+    public ClickableQuizStage(List<String> options, int maxDelay, int correctOption, String outOfTimeMessage) {
         this.options = options;
         this.maxDelay = maxDelay;
         this.correctOption = correctOption;
+        this.outOfTimeMessage = outOfTimeMessage;
     }
 
     public List<String> getOptions() {
@@ -28,5 +31,10 @@ public class ClickableQuizStage implements AwaitStage {
     @Override
     public long getMaxDelay() {
         return maxDelay;
+    }
+
+    @Override
+    public String getOutOfTimeMessage() {
+        return outOfTimeMessage;
     }
 }

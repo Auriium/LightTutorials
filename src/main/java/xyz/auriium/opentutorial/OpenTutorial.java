@@ -24,6 +24,12 @@ import xyz.auriium.opentutorial.stage.delay.DelaySerializer;
 import xyz.auriium.opentutorial.stage.delay.DelayStageConsumer;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
+import xyz.auriium.opentutorial.stage.response.AgeStageConsumer;
+import xyz.auriium.opentutorial.stage.response.AgeStageSerializer;
+import xyz.auriium.opentutorial.stage.response.PlainKeywordSerializer;
+import xyz.auriium.opentutorial.stage.response.PlainKeywordStageConsumer;
+import xyz.auriium.opentutorial.stage.spigot.ClickBlockConsumer;
+import xyz.auriium.opentutorial.stage.state.InvisibleStageConsumer;
 
 public class OpenTutorial extends JavaPlugin {
 
@@ -46,9 +52,14 @@ public class OpenTutorial extends JavaPlugin {
     private final TutorialController tutorialController = new CommonTutorialController(
 
             new CommonRegistry(bus)
+                    //action
             .register(new ChatStageConsumer(this), new ChatStageSerializer())
             .register(new CommandStageConsumer(this), new CommandStageSerializer())
+                    //delay
             .register(new DelayStageConsumer(this), new DelaySerializer())
+            .register(new AgeStageConsumer(this), new AgeStageSerializer())
+            .register(new PlainKeywordStageConsumer(this), new PlainKeywordSerializer())
+            .register(new InvisibleStageConsumer(uuidRegistry),)
 
     );
 
@@ -66,7 +77,7 @@ public class OpenTutorial extends JavaPlugin {
         manager.registerEvents(startupHook,this);
         manager.registerEvents(lockHook,this);
 
-        commandManager.registerCommand(new TutorialCommand(tutorialController,templateController));
+        commandManager.registerCommand(new TutorialCommand(tutorialController,templateController, bus));
 
     }
 }
