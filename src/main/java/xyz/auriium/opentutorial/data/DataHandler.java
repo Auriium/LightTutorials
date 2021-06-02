@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.data;
 
-import me.aurium.beetle.api.datacore.DataCore;
+import xyz.auriium.beetle.datacore.DataCore;
 import xyz.auriium.opentutorial.centralized.template.Template;
 
 import java.sql.PreparedStatement;

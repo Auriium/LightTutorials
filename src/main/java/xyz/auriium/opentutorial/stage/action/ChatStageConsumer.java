@@ -2,24 +2,22 @@ package xyz.auriium.opentutorial.stage.action;
 
 import xyz.auriium.opentutorial.centralized.Tutorial;
 import xyz.auriium.opentutorial.centralized.config.tutorials.Interpret;
+import xyz.auriium.opentutorial.centralized.server.UUIDRegistry;
 import xyz.auriium.opentutorial.stage.BasicStageConsumer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class ChatStageConsumer implements BasicStageConsumer<ChatStage> {
 
-    private final JavaPlugin plugin;
+    private final UUIDRegistry registry;
 
-    public ChatStageConsumer(JavaPlugin plugin) {
-        this.plugin = plugin;
+    public ChatStageConsumer(UUIDRegistry registry) {
+        this.registry = registry;
     }
 
     @Override
     public void started(ChatStage options, Tutorial continuable) {
-        Player player = plugin.getServer().getPlayer(continuable.getIdentifier());
-
-        if (player != null) {
+        registry.getPlayer(continuable.getIdentifier()).ifPresent(player -> {
             String title = options.getTitle();
             String subtitle = options.getSubtitle();
 
@@ -30,9 +28,7 @@ public class ChatStageConsumer implements BasicStageConsumer<ChatStage> {
                     !title.equals(Interpret.NO_STRING) ? title : "",
                     !subtitle.equals(Interpret.NO_STRING) ? subtitle : "",
                     0,10,0);
-        }
-
-
+        });
 
         continuable.fireNext();
     }

@@ -4,14 +4,20 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>xyz.auriium</groupId>
+    <parent>
+        <artifactId>insect</artifactId>
+        <groupId>xyz.auriium</groupId>
+        <version>0.3.0</version>
+    </parent>
+
     <artifactId>opentutorial</artifactId>
     <version>1.0.0-SNAPSHOT</version>
 
+    <scm>
+        <developerConnection>scm:git:https://github.com/Auriium/Beetle.git</developerConnection>
+    </scm>
+
     <properties>
-        <compiler.version>11</compiler.version>
-
-
         <maven.compiler.source>${compiler.version}</maven.compiler.source>
         <maven.compiler.target>${compiler.version}</maven.compiler.target>
     </properties>
@@ -71,9 +77,9 @@
             <version>1.2.0</version>
         </dependency>
         <dependency>
-            <groupId>me.aurium</groupId>
-            <artifactId>beetle-core-default</artifactId>
-            <version>1.1.2</version>
+            <groupId>xyz.auriium</groupId>
+            <artifactId>beetle-spigot-commons</artifactId>
+            <version>2.0.0</version>
         </dependency>
         <dependency>
             <groupId>co.aikar</groupId>
@@ -95,9 +101,8 @@
             <url>https://mvn-repo.arim.space/lesser-gpl3/</url>
         </repository>
         <repository>
-            <id>jfrog</id>
-            <name>a0phrw82hnl4g-artifactory-primary-0-releases</name>
-            <url>https://aurium.jfrog.io/artifactory/aurium-libs-release-local</url>
+            <id>central-repo</id>
+            <url>https://repo.auriium.xyz/releases</url>
         </repository>
         <repository>
             <id>spigot-repo</id>

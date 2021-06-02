@@ -1,14 +1,16 @@
 package xyz.auriium.opentutorial.stage.spigot;
 
 import org.bukkit.plugin.java.JavaPlugin;
+import xyz.auriium.opentutorial.PluginScheduler;
 import xyz.auriium.opentutorial.centralized.Tutorial;
 import xyz.auriium.opentutorial.stage.await.AbstractAwaitConsumer;
 import xyz.auriium.opentutorial.stage.await.AbstractDelayConsumer;
 
 public class ClickBlockConsumer extends AbstractDelayConsumer<ClickBlockStage,ClickBlockEvent> {
 
-    public ClickBlockConsumer(JavaPlugin plugin) {
-        super(plugin);
+
+    public ClickBlockConsumer(PluginScheduler scheduler) {
+        super(scheduler);
     }
 
     @Override

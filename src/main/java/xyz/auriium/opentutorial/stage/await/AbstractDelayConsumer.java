@@ -1,10 +1,10 @@
 package xyz.auriium.opentutorial.stage.await;
 
-import me.aurium.beetle.defaults.utility.map.optional.DelegatingOptionalMap;
-import me.aurium.beetle.defaults.utility.map.optional.OptionalMap;
+import xyz.auriium.beetle.utility.map.optional.DelegatingOptionalMap;
+import xyz.auriium.beetle.utility.map.optional.OptionalMap;
+import xyz.auriium.opentutorial.PluginScheduler;
 import xyz.auriium.opentutorial.centralized.Tutorial;
 import xyz.auriium.opentutorial.centralized.registry.Event;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
@@ -15,10 +15,11 @@ public abstract class AbstractDelayConsumer<T extends AwaitStage,E extends Event
 
     private final OptionalMap<UUID,T> existenceCache = new DelegatingOptionalMap<>();
     private final Map<UUID,BukkitTask> delayCache = new HashMap<>();
-    private final JavaPlugin plugin;
 
-    protected AbstractDelayConsumer(JavaPlugin plugin) {
-        this.plugin = plugin;
+    private final PluginScheduler scheduler;
+
+    public AbstractDelayConsumer(PluginScheduler scheduler) {
+        this.scheduler = scheduler;
     }
 
     @Override
@@ -33,7 +34,7 @@ public abstract class AbstractDelayConsumer<T extends AwaitStage,E extends Event
         UUID uuid = continuable.getIdentifier();
 
         if (options.getMaxDelay() != -1) {
-            delayCache.put(uuid,plugin.getServer().getScheduler().runTaskLater(plugin,
+            delayCache.put(uuid,scheduler.runLater(
                     () -> {
                         continuable.fireCancel();
                         delayCache.remove(uuid);

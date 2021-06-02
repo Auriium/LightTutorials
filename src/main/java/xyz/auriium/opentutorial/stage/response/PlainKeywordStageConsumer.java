@@ -1,5 +1,6 @@
 package xyz.auriium.opentutorial.stage.response;
 
+import xyz.auriium.opentutorial.PluginScheduler;
 import xyz.auriium.opentutorial.centralized.Tutorial;
 import xyz.auriium.opentutorial.stage.await.AbstractDelayConsumer;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -9,8 +10,8 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class PlainKeywordStageConsumer extends AbstractDelayConsumer<PlainKeywordStage,DelegateChatEvent> {
 
-    public PlainKeywordStageConsumer(JavaPlugin plugin) {
-        super(plugin);
+    public PlainKeywordStageConsumer(PluginScheduler scheduler) {
+        super(scheduler);
     }
 
     @Override

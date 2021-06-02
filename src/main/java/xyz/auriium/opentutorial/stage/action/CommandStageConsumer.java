@@ -1,33 +1,32 @@
 package xyz.auriium.opentutorial.stage.action;
 
+import xyz.auriium.opentutorial.PluginCommand;
 import xyz.auriium.opentutorial.centralized.Tutorial;
 import xyz.auriium.opentutorial.centralized.config.tutorials.Interpret;
+import xyz.auriium.opentutorial.centralized.server.UUIDRegistry;
 import xyz.auriium.opentutorial.stage.BasicStageConsumer;
-import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 public class CommandStageConsumer implements BasicStageConsumer<CommandStage> {
 
-    private final JavaPlugin plugin;
+    private final UUIDRegistry registry;
+    private final PluginCommand dispatcher;
 
-    public CommandStageConsumer(JavaPlugin plugin) {
-        this.plugin = plugin;
+    public CommandStageConsumer(UUIDRegistry registry, PluginCommand dispatcher) {
+        this.registry = registry;
+        this.dispatcher = dispatcher;
     }
 
     @Override
     public void started(CommandStage options, Tutorial continuable) {
 
-        Player player = plugin.getServer().getPlayer(continuable.getIdentifier());
+        registry.getPlayer(continuable.getIdentifier()).ifPresent(player -> {
+            Interpret.ifStringPresent(options.getRunAsConsole(), string -> {
+                dispatcher.runCommand(string.replaceAll("%PLAYER%",player.getName()));
+            });
 
-
-        //cryptic unreadable shit
-        Interpret.ifStringPresent(options.getRunAsConsole(), (string) -> plugin.getServer().dispatchCommand(
-                plugin.getServer().getConsoleSender(), player != null ? string.replaceAll("%PLAYER%",player.getName()) : string));
-
-        Interpret.ifStringPresent(options.getRunAsPlayer(), (string) -> {
-            if (player != null) {
-                plugin.getServer().dispatchCommand(player, string.replaceAll("%PLAYER%", player.getName()));
-            }
+            Interpret.ifStringPresent(options.getRunAsPlayer(), string -> {
+                dispatcher.runAs(player,string.replaceAll("%PLAYER%",player.getName()));
+            });
         });
 
         continuable.fireNext();

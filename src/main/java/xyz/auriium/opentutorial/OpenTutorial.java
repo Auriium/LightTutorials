@@ -28,8 +28,10 @@ import xyz.auriium.opentutorial.stage.response.AgeStageConsumer;
 import xyz.auriium.opentutorial.stage.response.AgeStageSerializer;
 import xyz.auriium.opentutorial.stage.response.PlainKeywordSerializer;
 import xyz.auriium.opentutorial.stage.response.PlainKeywordStageConsumer;
-import xyz.auriium.opentutorial.stage.spigot.ClickBlockConsumer;
 import xyz.auriium.opentutorial.stage.state.InvisibleStageConsumer;
+import xyz.auriium.opentutorial.stage.state.InvisibleStageSerializer;
+import xyz.auriium.opentutorial.stage.state.LockStageConsumer;
+import xyz.auriium.opentutorial.stage.state.LockStageSerializer;
 
 public class OpenTutorial extends JavaPlugin {
 
@@ -43,9 +45,12 @@ public class OpenTutorial extends JavaPlugin {
                     ConfigurationOptions.defaults()
             );
 
-    private final PluginScheduler scheduler = new PluginScheduler(this);
+    private final PluginScheduler pluginScheduler = new PluginScheduler(this);
     private final UUIDRegistry uuidRegistry = new WrappedUUIDRegistry(this);
+    private final PluginCommand pluginDispatcher = new PluginCommand(this);
     private final EventBus bus = new CommonEventBus();
+
+    private final LockHook lockHook = new LockHook();
 
     //TODO template loading - registry must have all things registered beforehand
     private final TemplateController templateController = new TemplateController();
@@ -53,18 +58,21 @@ public class OpenTutorial extends JavaPlugin {
 
             new CommonRegistry(bus)
                     //action
-            .register(new ChatStageConsumer(this), new ChatStageSerializer())
-            .register(new CommandStageConsumer(this), new CommandStageSerializer())
+            .register(new ChatStageConsumer(uuidRegistry), new ChatStageSerializer())
+            .register(new CommandStageConsumer(uuidRegistry,pluginDispatcher), new CommandStageSerializer())
                     //delay
-            .register(new DelayStageConsumer(this), new DelaySerializer())
-            .register(new AgeStageConsumer(this), new AgeStageSerializer())
-            .register(new PlainKeywordStageConsumer(this), new PlainKeywordSerializer())
-            .register(new InvisibleStageConsumer(uuidRegistry),)
+            .register(new DelayStageConsumer(pluginScheduler), new DelaySerializer())
+                    //response
+            .register(new AgeStageConsumer(pluginScheduler, uuidRegistry, pluginDispatcher), new AgeStageSerializer())
+            .register(new PlainKeywordStageConsumer(pluginScheduler), new PlainKeywordSerializer())
+                    //state
+            .register(new InvisibleStageConsumer(uuidRegistry),new InvisibleStageSerializer())
+            .register(new LockStageConsumer(lockHook), new LockStageSerializer())
 
     );
 
-    private final LockHook lockHook = new LockHook();
-    private final EventBusHook eventHook = new EventBusHook(bus, this, tutorialController);
+
+    private final EventBusHook eventHook = new EventBusHook(bus, pluginScheduler, tutorialController);
     private final StartupHook startupHook = new StartupHook(tutorialController, templateController, null);
 
     private final BukkitCommandManager commandManager = new BukkitCommandManager(this);

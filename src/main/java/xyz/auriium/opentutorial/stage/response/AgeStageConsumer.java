@@ -1,20 +1,26 @@
 package xyz.auriium.opentutorial.stage.response;
 
+import xyz.auriium.opentutorial.PluginCommand;
+import xyz.auriium.opentutorial.PluginScheduler;
 import xyz.auriium.opentutorial.centralized.Tutorial;
 import xyz.auriium.opentutorial.centralized.config.tutorials.Interpret;
+import xyz.auriium.opentutorial.centralized.server.UUIDRegistry;
 import xyz.auriium.opentutorial.stage.await.AbstractDelayConsumer;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Optional;
 
 public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateChatEvent> {
 
-    private final JavaPlugin plugin;
+    private final UUIDRegistry registry;
+    private final PluginCommand dispatcher;
 
-    public AgeStageConsumer(JavaPlugin plugin) {
-        super(plugin);
+    public AgeStageConsumer(PluginScheduler scheduler, UUIDRegistry registry, PluginCommand dispatcher) {
+        super(scheduler);
 
-        this.plugin = plugin;
+        this.registry = registry;
+        this.dispatcher = dispatcher;
     }
 
     @Override
@@ -25,29 +31,27 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateCh
     @Override
     public void consume(AgeStage stage, DelegateChatEvent event, Tutorial tutorial) {
         String message = event.getMessage().replaceAll("\\D+","");
-        Player sender = plugin.getServer().getPlayer(tutorial.getIdentifier());
+        Optional<Player> sender = registry.getPlayer(tutorial.getIdentifier());
 
         try {
             int age = Integer.parseInt(message);
 
-            if (sender != null && age < stage.getBelowAge()) {
+            sender.ifPresent(player -> {
+                if (age < stage.getBelowAge()) {
+                    Interpret.ifStringPresent(stage.getRunOnFail(),cmd -> {
+                        dispatcher.runCommand(cmd.replaceAll("%PLAYER%",player.getName()));
+                    });
 
-                Interpret.ifStringPresent(stage.getRunOnFail(),cmd -> {
-                    plugin.getServer().dispatchCommand(plugin.getServer().getConsoleSender(),cmd.replaceAll("%PLAYER%",sender.getName()));
-                });
-
-                if (stage.isCancelOnFail()) {
-                    tutorial.fireCancel();
-                    return;
+                    if (stage.isCancelOnFail()) {
+                        tutorial.fireCancel();
+                    }
                 }
-
-
-            }
+            });
 
         } catch (NumberFormatException e) {
-            if (sender != null) {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&',stage.getNotNumberMessage()));
-            }
+            sender.ifPresent(player -> {
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&',stage.getNotNumberMessage()));
+            });
         }
 
 

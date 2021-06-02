@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.stage.await;
 
-import me.aurium.beetle.defaults.utility.map.optional.DelegatingOptionalMap;
-import me.aurium.beetle.defaults.utility.map.optional.OptionalMap;
+import xyz.auriium.beetle.utility.map.optional.DelegatingOptionalMap;
+import xyz.auriium.beetle.utility.map.optional.OptionalMap;
 import xyz.auriium.opentutorial.centralized.Tutorial;
 import xyz.auriium.opentutorial.centralized.registry.Event;
 import xyz.auriium.opentutorial.stage.Stage;

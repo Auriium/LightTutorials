@@ -1,8 +1,8 @@
 package xyz.auriium.opentutorial.stage.delay;
 
+import xyz.auriium.opentutorial.PluginScheduler;
 import xyz.auriium.opentutorial.centralized.Tutorial;
 import xyz.auriium.opentutorial.stage.StageConsumer;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
@@ -11,17 +11,23 @@ import java.util.UUID;
 
 public class DelayStageConsumer implements StageConsumer<DelayStage> {
 
-    private final JavaPlugin plugin;
+    private final PluginScheduler scheduler;
 
     private final Map<UUID, BukkitTask> map = new HashMap<>();
 
-    public DelayStageConsumer(JavaPlugin plugin) {
-        this.plugin = plugin;
+    public DelayStageConsumer(PluginScheduler scheduler) {
+        this.scheduler = scheduler;
     }
 
     @Override
     public void started(DelayStage stage, Tutorial continuable) {
-        plugin.getServer().getScheduler().runTaskLater(plugin, continuable::fireNext, stage.getDelay());
+        UUID uuid = continuable.getIdentifier();
+
+        map.put(uuid, scheduler.runLater( () -> {
+            continuable.fireNext();
+
+            map.remove(uuid).cancel();
+        }, stage.getDelay()));
     }
 
     @Override

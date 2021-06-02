@@ -1,12 +1,12 @@
 package xyz.auriium.opentutorial.centralized.registry;
 
-import me.aurium.beetle.defaults.utility.map.multi.MultiMap;
-import me.aurium.beetle.defaults.utility.map.multi.OrderedMultiMap;
+import xyz.auriium.beetle.utility.map.multi.DelegatingMultiMap;
+import xyz.auriium.beetle.utility.map.multi.MultiMap;
 import xyz.auriium.opentutorial.centralized.Tutorial;
 
 public class CommonEventBus implements EventBus {
 
-    private final MultiMap<Class<? extends Event>, EventConsumer<? extends Event>> map = new OrderedMultiMap<>();
+    private final MultiMap<Class<? extends Event>, EventConsumer<? extends Event>> map = new DelegatingMultiMap<>();
 
     @SuppressWarnings("unchecked") //insertion is ""checked"": see register();
     @Override
