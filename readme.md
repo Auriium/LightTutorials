@@ -8,7 +8,6 @@ A further rendition of OpenTutorial may fix this.
 
 //TODO: Said format must be migrated to Conversation and the ticket bot
 //TODO: multiplatform
-//TODO: "(only you can see this) An error occurred interpreting your tutorial config: 'x" 
 
 //TODO: market it as both a quiz plugin, job interview plugin AND tutorial plugin - that's what it is!
 

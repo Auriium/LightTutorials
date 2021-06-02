@@ -11,7 +11,7 @@ import java.io.IOException;
 public class PrettyExceptionHandler implements ConfigExceptionHandler{
 
     private final JavaPlugin plugin;
-    private final Logger logger = LoggerFactory.getLogger("OpenTutorial PrettyFont");
+    private final Logger logger = LoggerFactory.getLogger("OpenTutorial");
 
     public PrettyExceptionHandler(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -20,13 +20,13 @@ public class PrettyExceptionHandler implements ConfigExceptionHandler{
     @Override
     public void handle(InvalidConfigException exception) {
         logger.error("An error occurred reading the config! (Config is invalid)", exception);
-        sendToOps("&9OpenTutorial &7> &cAn error occurred while trying to read the configuration! Please check console for the full stacktrace and review your configuration!");
+        sendToOps("&cAn error occurred while trying to read the configuration for OpenTutorial! Please check console for the full stacktrace and review your configuration!");
     }
 
     @Override
     public void handle(IOException exception) {
         logger.error("An error occurred reading the config! (Input/Output)", exception);
-        sendToOps("&9OpenTutorial &7> &cAn error occurred while trying to read the configuration! A fatal exception occurred, please make an issue on our GitHub!");
+        sendToOps("&9OpenTutorial &7> &cAn error occurred while trying to read the configuration for OpenTutorial! A fatal exception occurred, please make an issue on our GitHub!");
     }
 
     public void sendToOps(String string) {

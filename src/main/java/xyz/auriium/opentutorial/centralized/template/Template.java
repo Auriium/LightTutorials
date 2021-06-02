@@ -10,11 +10,18 @@ import java.util.List;
 public class Template {
 
     private final String identifier;
+    private final String permission;
+
     private final List<Stage> stages;
 
-    public Template(String identifier, List<Stage> stages) {
+    public Template(String identifier, String permission, List<Stage> stages) {
         this.identifier = identifier;
+        this.permission = permission;
         this.stages = stages;
+    }
+
+    public String getPermission() {
+        return permission;
     }
 
     public List<Stage> getStages() {

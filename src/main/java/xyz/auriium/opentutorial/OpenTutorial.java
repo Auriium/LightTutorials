@@ -5,9 +5,13 @@ import space.arim.dazzleconf.ConfigurationOptions;
 import xyz.auriium.opentutorial.centralized.CommonTutorialController;
 import xyz.auriium.opentutorial.centralized.TutorialController;
 import xyz.auriium.opentutorial.centralized.config.ConfGeneral;
+import xyz.auriium.opentutorial.centralized.config.PrettyExceptionHandler;
 import xyz.auriium.opentutorial.centralized.config.ReloadableHelper;
+import xyz.auriium.opentutorial.centralized.config.messages.ConfMessages;
+import xyz.auriium.opentutorial.centralized.config.messages.MessageConfSerializer;
 import xyz.auriium.opentutorial.centralized.registry.CommonEventBus;
 import xyz.auriium.opentutorial.centralized.registry.CommonRegistry;
+import xyz.auriium.opentutorial.centralized.registry.ConsumerRegistry;
 import xyz.auriium.opentutorial.centralized.registry.EventBus;
 import xyz.auriium.opentutorial.centralized.server.UUIDRegistry;
 import xyz.auriium.opentutorial.centralized.server.WrappedUUIDRegistry;
@@ -37,13 +41,26 @@ public class OpenTutorial extends JavaPlugin {
 
     //Base level dependencies
 
+    private final PrettyExceptionHandler prettyExceptionHandler = new PrettyExceptionHandler(this);
+
+
+
     private final ReloadableHelper<ConfGeneral> generalConfig =
             new ReloadableHelper<>(
                     ConfGeneral.class,getDataFolder().toPath(),
                     "general.yml",
-                    null,
+                    prettyExceptionHandler,
                     ConfigurationOptions.defaults()
             );
+
+    private final ReloadableHelper<ConfMessages> messageConfig =
+            new ReloadableHelper<>(
+                    ConfMessages.class,getDataFolder().toPath(),
+                    "messages.yml",
+                    prettyExceptionHandler,
+                    new ConfigurationOptions.Builder().addSerialiser(new MessageConfSerializer()).build()
+            );
+
 
     private final PluginScheduler pluginScheduler = new PluginScheduler(this);
     private final UUIDRegistry uuidRegistry = new WrappedUUIDRegistry(this);
@@ -52,25 +69,27 @@ public class OpenTutorial extends JavaPlugin {
 
     private final LockHook lockHook = new LockHook();
 
-    //TODO template loading - registry must have all things registered beforehand
-    private final TemplateController templateController = new TemplateController();
-    private final TutorialController tutorialController = new CommonTutorialController(
-
-            new CommonRegistry(bus)
-                    //action
+    private final ConsumerRegistry registry = new CommonRegistry(bus)
+            //action
             .register(new ChatStageConsumer(uuidRegistry), new ChatStageSerializer())
             .register(new CommandStageConsumer(uuidRegistry,pluginDispatcher), new CommandStageSerializer())
-                    //delay
+            //delay
             .register(new DelayStageConsumer(pluginScheduler), new DelaySerializer())
-                    //response
+            //response
             .register(new AgeStageConsumer(pluginScheduler, uuidRegistry, pluginDispatcher), new AgeStageSerializer())
             .register(new PlainKeywordStageConsumer(pluginScheduler), new PlainKeywordSerializer())
-                    //state
+            //state
             .register(new InvisibleStageConsumer(uuidRegistry),new InvisibleStageSerializer())
-            .register(new LockStageConsumer(lockHook), new LockStageSerializer())
+            .register(new LockStageConsumer(lockHook), new LockStageSerializer());
 
+    private final TemplateController templateController = new TemplateController (
+            getDataFolder().toPath(),
+            "tutorials.yml",
+            prettyExceptionHandler,
+            registry
     );
 
+    private final TutorialController tutorialController = new CommonTutorialController(registry);
 
     private final EventBusHook eventHook = new EventBusHook(bus, pluginScheduler, tutorialController);
     private final StartupHook startupHook = new StartupHook(tutorialController, templateController, null);
@@ -79,13 +98,18 @@ public class OpenTutorial extends JavaPlugin {
 
     @Override
     public void onEnable() {
+
+        generalConfig.reload();
+        messageConfig.reload();
+        templateController.reload(); //sloppy and bad but i don't care at this point - still 100% better than all of our competitors
+
         PluginManager manager = getServer().getPluginManager();
 
         manager.registerEvents(eventHook,this);
         manager.registerEvents(startupHook,this);
         manager.registerEvents(lockHook,this);
 
-        commandManager.registerCommand(new TutorialCommand(tutorialController,templateController, bus));
+        commandManager.registerCommand(new TutorialCommand(tutorialController,templateController, messages, bus));
 
     }
 }

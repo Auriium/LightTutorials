@@ -4,6 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import xyz.auriium.opentutorial.centralized.TutorialController;
+import xyz.auriium.opentutorial.centralized.config.messages.ConfMessages;
 import xyz.auriium.opentutorial.centralized.registry.EventBus;
 import xyz.auriium.opentutorial.centralized.template.TemplateController;
 import org.bukkit.ChatColor;
@@ -17,17 +18,23 @@ import java.util.UUID;
  */
 public class TutorialCommand extends BaseCommand {
 
+
     private final TutorialController controller;
     private final TemplateController templateController;
+
+    private final ConfMessages messages;
+
     private final EventBus bus;
 
-    public TutorialCommand(TutorialController controller, TemplateController templateController, EventBus bus) {
+    public TutorialCommand(TutorialController controller, TemplateController templateController, ConfMessages messages, EventBus bus) {
         this.controller = controller;
         this.templateController = templateController;
+        this.messages = messages;
         this.bus = bus;
     }
 
     @HelpCommand
+    @CommandPermission("opentutorial.help")
     public void help(Player player, CommandHelp help) {
         player.sendMessage(color("&7-------[ &9OpenTutorial&7 ]-------"));
 

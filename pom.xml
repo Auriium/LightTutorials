@@ -14,7 +14,7 @@
     <version>1.0.0-SNAPSHOT</version>
 
     <scm>
-        <developerConnection>scm:git:https://github.com/Auriium/Beetle.git</developerConnection>
+        <developerConnection>scm:git:https://github.com/Auriium/OpenTutorial.git</developerConnection>
     </scm>
 
     <properties>

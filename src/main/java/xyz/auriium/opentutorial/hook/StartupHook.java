@@ -38,6 +38,8 @@ public class StartupHook implements Listener {
 
             }, () -> {
                 /// FIXME: 5/21/2021 log to slf4j first an exception and then the pretty error
+
+                throw new IllegalStateException("cum");
             });
         }
     }

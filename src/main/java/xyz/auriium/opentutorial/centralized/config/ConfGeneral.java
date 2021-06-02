@@ -16,8 +16,4 @@ public interface ConfGeneral {
     @ConfKey("options.default_enabled")
     boolean defaultEnabled();
 
-    @ConfComments("Whether to use the custom config error handler or not. If it is, you will get a pretty message during config failures sent to both the console and you. Otherwise, you will get an exception in the console that can be sent to me, the developer for analysis and repair!")
-    @ConfDefault.DefaultBoolean(true)
-    @ConfKey("options.use_custom_config_errors")
-    boolean useCustomExceptionHandler();
 }
