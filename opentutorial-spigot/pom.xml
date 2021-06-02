@@ -9,19 +9,19 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>opentutorial-core</artifactId>
+    <artifactId>opentutorial-spigot</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>xyz.auriium</groupId>
+            <artifactId>opentutorial-core</artifactId>
+            <version>0.1.0-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
-
-    <dependencies>
-        <dependency>
-            <groupId>space.arim.dazzleconf</groupId>
-            <artifactId>dazzleconf-ext-snakeyaml</artifactId>
-            <version>1.2.0</version>
-        </dependency>
-    </dependencies>
 
 </project>
