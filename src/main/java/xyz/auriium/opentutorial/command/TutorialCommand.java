@@ -54,24 +54,23 @@ public class TutorialCommand extends BaseCommand {
 
         templateController.loadTemplate(template).ifPresentOrElse(
                 templ -> controller.createNew(templ, user.getUniqueId()).fireNext(),
-                () -> sender.sendMessage(color("&9OpenTutorial &7» &cNo template found with that identifier!")));
+                () -> messages.invalidTemplateMessage().send(sender, template)
+        );
     }
 
     @Subcommand("playpoint")
     public void playPoint(Player sender, @Optional Player target, String template, int point) {
         Player user = target == null ? sender : target;
 
-
-
         templateController.loadTemplate(template).ifPresentOrElse(templ -> {
             if (!templ.hasStage(point)) {
-                sender.sendMessage(color("&9OpenTutorial &7» &cNo stage found at that point number!"));
+                messages.invalidStageMessage().send(sender,point,template);
                 return;
             }
 
             controller.createStage(templ, user.getUniqueId(), point);
 
-        }, () -> sender.sendMessage(color("&9OpenTutorial &7» &cNo template found with that identifier!")));
+        }, () -> messages.invalidTemplateMessage().send(sender,template));
     }
 
     @Subcommand("option")
@@ -80,7 +79,7 @@ public class TutorialCommand extends BaseCommand {
 
         controller.getByUUID(uuid).ifPresentOrElse(
                 tutorial -> bus.fire(new ClickableEvent(option),tutorial),
-                () -> sender.sendMessage(color("&9OpenTutorial &7» &cYou are not in a tutorial!"))
+                () -> messages.notInTutorialMessage().send(sender)
         );
 
 
@@ -92,7 +91,7 @@ public class TutorialCommand extends BaseCommand {
         UUID uuid = sender.getUniqueId();
 
         if (controller.getByUUID(uuid).isEmpty()) {
-            sender.sendMessage(color("&9OpenTutorial &7» &cYou are not in a tutorial!"));
+            messages.notInTutorialMessage().send(sender);
             return;
         }
 

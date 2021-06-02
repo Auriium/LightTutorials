@@ -109,7 +109,12 @@ public class OpenTutorial extends JavaPlugin {
         manager.registerEvents(startupHook,this);
         manager.registerEvents(lockHook,this);
 
-        commandManager.registerCommand(new TutorialCommand(tutorialController,templateController, messages, bus));
+        commandManager.registerCommand(new TutorialCommand(tutorialController,templateController, messageConfig.getConfig(), bus));
 
+    }
+
+    @Override
+    public void onDisable() {
+        tutorialController.close();
     }
 }
