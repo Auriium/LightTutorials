@@ -1,5 +1,7 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
+import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 import xyz.auriium.opentutorial.core.tutorial.template.Template;
 
 import java.util.*;
@@ -18,6 +20,14 @@ public class CommonTutorialController implements TutorialController {
         this.map = new HashMap<>();
 
         this.registry = registry;
+    }
+
+
+    public <T extends Stage> void consumeStage(T stage, Tutorial tutorial) {
+
+        StageConsumer<T> c = registry.getConsumer(stage).orElseThrow(() -> new NoConsumerException("No logic found for stage of type " + stage.getClass().getName()));
+
+        c.started(stage,tutorial);
     }
 
     @Override

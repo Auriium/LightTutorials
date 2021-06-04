@@ -2,7 +2,6 @@ package xyz.auriium.opentutorial.core.tutorial.stage;
 
 import xyz.auriium.beetle.utility.map.optional.DelegatingOptionalMap;
 import xyz.auriium.beetle.utility.map.optional.OptionalMap;
-import org.bukkit.scheduler.BukkitTask;
 import xyz.auriium.opentutorial.core.model.Scheduler;
 import xyz.auriium.opentutorial.core.model.SchedulerTask;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;

@@ -36,14 +36,11 @@ public class CommonConsumerRegistry implements ConsumerRegistry {
         }
     }
 
-    @Override
-    public <T extends Stage> void consumeStage(T stage, Tutorial tutorial) {
-        StageConsumer<T> consumer = (StageConsumer<T>) consumers.get(stage);
+    @SuppressWarnings("unchecked")
+    public <T extends Stage> Optional<StageConsumer<T>> getConsumer(T stage) {
+        StageConsumer<T> consumer = (StageConsumer<T>) consumers.get(stage.getClass());
 
-        if (consumer == null) throw new NoConsumerException("Consumer for stage of type " + stage.getClass() + " not found!");
-        if (!consumer.stageClass().isInstance(stage)) throw new IllegalStateException("How did this happen? StageConsumer does not take type T!");
-
-        consumer.started(stage, tutorial);
+        return Optional.ofNullable(consumer);
     }
 
     @Override

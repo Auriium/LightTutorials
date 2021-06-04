@@ -11,12 +11,7 @@ import java.util.UUID;
 
 public interface ConsumerRegistry extends Cycleable, KeyCloseable<UUID> {
 
-    /**
-     * Allows a stage to be processed by a consumer
-     * @param stage the stage
-     * @throws NoConsumerException if there is no consumer ready to handle the stage submitted
-     */
-    <T extends Stage> void consumeStage(T stage, Tutorial tutorial);
+    <T extends Stage> Optional<StageConsumer<T>> getConsumer(T stage);
 
     Optional<StageSerializer<?>> getSerializer(String identifier);
 

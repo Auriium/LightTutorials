@@ -1,20 +1,22 @@
 package xyz.auriium.opentutorial.core.config.types.messages;
 
-import org.bukkit.ChatColor;
-import org.bukkit.command.CommandSender;
+import xyz.auriium.opentutorial.core.model.Audience;
+import xyz.auriium.opentutorial.core.model.Colorer;
 
 public class Message {
 
+    private final Colorer colorer;
     private final String translatable;
 
-    public Message(String translatable) {
+    public Message(Colorer colorer, String translatable) {
+        this.colorer = colorer;
         this.translatable = translatable;
     }
 
-    public void send(CommandSender sender, Object... strings) {
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',String.format(translatable,strings)));
+    public void send(Audience sender, Object... strings) {
+        sender.sendMessage(colorer.color(String.format(translatable,strings))); //TODO color
     }
-    public void send(CommandSender sender) {
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&',translatable));
+    public void send(Audience sender) {
+        sender.sendMessage(colorer.color(translatable));
     }
 }

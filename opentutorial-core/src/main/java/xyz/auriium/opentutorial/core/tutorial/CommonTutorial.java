@@ -34,7 +34,7 @@ public class CommonTutorial implements Tutorial {
 
         }
 
-        controller.getRegistry().consumeStage(stageQueue.remove(), this);
+        controller.consumeStage(stageQueue.remove(), this);
     }
 
     @Override

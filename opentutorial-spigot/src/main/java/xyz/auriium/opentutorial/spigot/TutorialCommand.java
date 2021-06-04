@@ -54,23 +54,24 @@ public class TutorialCommand extends BaseCommand {
 
         templateController.getByIdentifier(template).ifPresentOrElse(
                 templ -> controller.createNew(templ, user.getUniqueId()).fireNext(),
-                () -> messages.invalidTemplateMessage().send(sender, template)
+                () -> messages.invalidTemplateMessage().send(SpigotAudience.wrap(sender), template)
         );
     }
 
     @Subcommand("playpoint")
+    @CommandPermission("opentutorial.play")
     public void playPoint(Player sender, @Optional Player target, String template, int point) {
         Player user = target == null ? sender : target;
 
         templateController.getByIdentifier(template).ifPresentOrElse(templ -> {
             if (!templ.hasStage(point)) {
-                messages.invalidStageMessage().send(sender,point,template);
+                messages.invalidStageMessage().send(SpigotAudience.wrap(sender),point,template);
                 return;
             }
 
             controller.createStage(templ, user.getUniqueId(), point);
 
-        }, () -> messages.invalidTemplateMessage().send(sender,template));
+        }, () -> messages.invalidTemplateMessage().send(SpigotAudience.wrap(sender),template));
     }
 
     @Subcommand("option")
@@ -79,7 +80,7 @@ public class TutorialCommand extends BaseCommand {
 
         controller.getByUUID(uuid).ifPresentOrElse(
                 tutorial -> bus.fire(new ClickableEvent(option),tutorial),
-                () -> messages.notInTutorialMessage().send(sender)
+                () -> messages.notInTutorialMessage().send(SpigotAudience.wrap(sender))
         );
 
 
@@ -91,7 +92,7 @@ public class TutorialCommand extends BaseCommand {
         UUID uuid = sender.getUniqueId();
 
         if (controller.getByUUID(uuid).isEmpty()) {
-            messages.notInTutorialMessage().send(sender);
+            messages.notInTutorialMessage().send(SpigotAudience.wrap(sender));
             return;
         }
 

@@ -9,19 +9,26 @@ import xyz.auriium.opentutorial.core.config.ConfigCentralizer;
 import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
 import xyz.auriium.opentutorial.core.event.inner.CommonEventBus;
 import xyz.auriium.opentutorial.core.event.inner.InnerEventBus;
+import xyz.auriium.opentutorial.core.model.Colorer;
 import xyz.auriium.opentutorial.core.tutorial.CommonConsumerRegistry;
+import xyz.auriium.opentutorial.core.tutorial.CommonTutorialController;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
+import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 
 public class SpigotPluginBootstrap extends JavaPlugin {
 
     private final InnerEventBus eventBus = new CommonEventBus();
+    private final Colorer colorer = new SpigotColorer();
+
     private final UserRegistry<Player> userRegistry = new SpigotUserRegistry(this);
     private final ConsumerRegistry consumerRegistry = new CommonConsumerRegistry(eventBus);
 
     private final ConfigExceptionHandler exceptionHandler = new SpigotExceptionHandler(userRegistry);
-    private final ConfigCentralizer configCentralizer = new CommonConfigCentralizer(exceptionHandler,consumerRegistry,getDataFolder().toPath());
+    private final ConfigCentralizer configCentralizer = new CommonConfigCentralizer(exceptionHandler, consumerRegistry, colorer, getDataFolder().toPath());
 
-    private final InitialCentralizer centralizer = new InitialCentralizer(configCentralizer,consumerRegistry);
+    private final TutorialController controller = new CommonTutorialController(consumerRegistry);
+
+    private final InitialCentralizer centralizer = new InitialCentralizer(configCentralizer, consumerRegistry, controller);
 
     @Override
     public void onEnable() {
