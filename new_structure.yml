@@ -1,0 +1,10 @@
+order of initialization
+
+dependent - dependent on platform resources
+independent - the opposite
+
+a. register base level dependencies (independent)
+b. register consumer registry (independent)
+c. register base configs [messages and general] (dependent / independent)
+d. register all registerable consumers to the registry (independent)
+e. register tutorials config

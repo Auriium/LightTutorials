@@ -14,10 +14,9 @@ import java.nio.file.Path;
 public class CommonConfigCentralizer implements ConfigCentralizer {
 
     private final ReloadableHelper<MessageConfig> messageConfig;
-    private final ReloadableHelper<TutorialsConfig> tutorialsConfig;
     private final ReloadableHelper<GeneralConfig> generalConfig;
 
-    public CommonConfigCentralizer(ConfigExceptionHandler handler, ConsumerRegistry registry, Colorer colorer, Path directory) {
+    public CommonConfigCentralizer(ConfigExceptionHandler handler, Colorer colorer, Path directory) {
         this.messageConfig = new ReloadableHelper<>(
                 MessageConfig.class,
                 directory,
@@ -26,13 +25,6 @@ public class CommonConfigCentralizer implements ConfigCentralizer {
                 new ConfigurationOptions.Builder().addSerialiser(new MessageConfSerializer(colorer)).build()
         );
 
-        this.tutorialsConfig = new ReloadableHelper<>(
-                TutorialsConfig.class,
-                directory,
-                "tutorials.yml",
-                handler,
-                new ConfigurationOptions.Builder().addSerialiser(new StageConfSerializer(registry)).build()
-        );
 
         this.generalConfig = new ReloadableHelper<>(
                 GeneralConfig.class,
@@ -52,18 +44,12 @@ public class CommonConfigCentralizer implements ConfigCentralizer {
     }
 
     @Override
-    public TutorialsConfig getTutorialsConfig() {
-        return tutorialsConfig.getConfig();
-    }
-
-    @Override
     public GeneralConfig getGeneralConfig() {
         return generalConfig.getConfig();
     }
 
     @Override
     public void startup() {
-        tutorialsConfig.reload();
         messageConfig.reload();
         generalConfig.reload();
     }

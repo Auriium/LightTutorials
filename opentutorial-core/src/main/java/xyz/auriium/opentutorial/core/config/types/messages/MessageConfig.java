@@ -17,9 +17,17 @@ public interface MessageConfig {
     @ConfDefault.DefaultString("&9OpenTutorial &7> &cYou are not in a tutorial!")
     Message notInTutorialMessage();
 
+    @ConfKey("messages.tutorials.already_in_tutorial")
+    @ConfDefault.DefaultString("&9OpenTutorial &7> &cYou are already in a tutorial!")
+    Message alreadyInTutorialMessage();
+
     @ConfKey("messages.stage_defaults.out_of_time")
     @ConfDefault.DefaultString("&9OpenTutorial &7> &cOut of time! You have failed the %s tutorial!")
     Message outOfTimeMessage();
+
+    @ConfKey("messages.stage_defaults.not_a_number")
+    @ConfDefault.DefaultString("&9OpenTutorial &7> &cThat is not a valid number!")
+    Message notNumberMessage();
 
 
 

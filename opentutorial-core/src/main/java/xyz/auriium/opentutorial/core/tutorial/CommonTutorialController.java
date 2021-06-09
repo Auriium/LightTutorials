@@ -56,8 +56,16 @@ public class CommonTutorialController implements TutorialController {
     @Override
     public Tutorial createStage(Template template, UUID owner, int stage) {
         if (map.containsKey(owner)) throw new IllegalStateException("User is already in a tutorial: " + owner);
+        if (!template.hasStage(stage)) throw new IllegalStateException("No stage exists at that index!");
 
-        return null; /// FIXME: 5/28/2021 add implementation
+        Deque<Stage> stages = new ArrayDeque<>();
+        stages.add(template.getStages().get(stage));
+
+        Tutorial tutorial = new CommonTutorial(owner,new ArrayDeque<>(stages),this);
+
+        map.put(owner, tutorial);
+
+        return tutorial;
     }
 
     @Override

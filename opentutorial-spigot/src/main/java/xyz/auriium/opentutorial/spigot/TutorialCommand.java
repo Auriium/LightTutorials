@@ -19,15 +19,15 @@ import java.util.UUID;
 public class TutorialCommand extends BaseCommand {
 
 
-    private final TutorialController controller;
+    private final TutorialController tutorialController;
     private final TemplateController templateController;
 
     private final MessageConfig messages;
 
     private final InnerEventBus bus;
 
-    public TutorialCommand(TutorialController controller, TemplateController templateController, MessageConfig messages, InnerEventBus bus) {
-        this.controller = controller;
+    public TutorialCommand(TutorialController tutorialController, TemplateController templateController, MessageConfig messages, InnerEventBus bus) {
+        this.tutorialController = tutorialController;
         this.templateController = templateController;
         this.messages = messages;
         this.bus = bus;
@@ -36,7 +36,7 @@ public class TutorialCommand extends BaseCommand {
     @HelpCommand
     @CommandPermission("opentutorial.help")
     public void help(Player player, CommandHelp help) {
-        player.sendMessage(color("&7-------[ &9OpenTutorial&7 ]-------"));
+        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7-------[ &9OpenTutorial&7 ]-------"));
 
         help.showHelp();
     }
@@ -52,8 +52,13 @@ public class TutorialCommand extends BaseCommand {
     public void play(Player sender, @Optional Player target, String template) {
         Player user = target == null ? sender : target;
 
+        if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
+            messages.alreadyInTutorialMessage().send(SpigotAudience.wrap(sender));
+            return;
+        }
+
         templateController.getByIdentifier(template).ifPresentOrElse(
-                templ -> controller.createNew(templ, user.getUniqueId()).fireNext(),
+                templ -> tutorialController.createNew(templ, user.getUniqueId()).fireNext(),
                 () -> messages.invalidTemplateMessage().send(SpigotAudience.wrap(sender), template)
         );
     }
@@ -63,13 +68,18 @@ public class TutorialCommand extends BaseCommand {
     public void playPoint(Player sender, @Optional Player target, String template, int point) {
         Player user = target == null ? sender : target;
 
+        if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
+            messages.alreadyInTutorialMessage().send(SpigotAudience.wrap(sender));
+            return;
+        }
+
         templateController.getByIdentifier(template).ifPresentOrElse(templ -> {
             if (!templ.hasStage(point)) {
                 messages.invalidStageMessage().send(SpigotAudience.wrap(sender),point,template);
                 return;
             }
 
-            controller.createStage(templ, user.getUniqueId(), point);
+            tutorialController.createStage(templ, user.getUniqueId(), point);
 
         }, () -> messages.invalidTemplateMessage().send(SpigotAudience.wrap(sender),template));
     }
@@ -78,7 +88,7 @@ public class TutorialCommand extends BaseCommand {
     public void option(Player sender, int option) {
         UUID uuid = sender.getUniqueId();
 
-        controller.getByUUID(uuid).ifPresentOrElse(
+        tutorialController.getByUUID(uuid).ifPresentOrElse(
                 tutorial -> bus.fire(new ClickableEvent(option),tutorial),
                 () -> messages.notInTutorialMessage().send(SpigotAudience.wrap(sender))
         );
@@ -91,18 +101,12 @@ public class TutorialCommand extends BaseCommand {
     public void leave(Player sender) {
         UUID uuid = sender.getUniqueId();
 
-        if (controller.getByUUID(uuid).isEmpty()) {
+        if (tutorialController.getByUUID(uuid).isEmpty()) {
             messages.notInTutorialMessage().send(SpigotAudience.wrap(sender));
             return;
         }
 
-        controller.cancelByUUID(uuid);
-    }
-
-
-
-    String color(String string) {
-        return ChatColor.translateAlternateColorCodes('&',string);
+        tutorialController.cancelByUUID(uuid);
     }
 
 }

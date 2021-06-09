@@ -31,8 +31,7 @@ public class PlainKeywordSerializer implements StageSerializer<PlainKeywordStage
 
         int maxDelay = Interpret.getEllusive("maxDelay",map,FlexibleType::getInteger,Interpret.NO_INT);
         boolean isCancelOnFail = Interpret.getEllusive("isCancelOnFail",map,FlexibleType::getBoolean,false);
-        String outOfTimeMessage = Interpret.getEllusive("outOfTimeMessage",map,FlexibleType::getString,Interpret.DEFAULT_OUT_OF_TIME);
 
-        return new PlainKeywordStage(keywords,maxDelay,isCancelOnFail, outOfTimeMessage);
+        return new PlainKeywordStage(keywords,maxDelay,isCancelOnFail);
     }
 }

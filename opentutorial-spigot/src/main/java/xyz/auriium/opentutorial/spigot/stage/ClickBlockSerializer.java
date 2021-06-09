@@ -2,6 +2,7 @@ package xyz.auriium.opentutorial.spigot.stage;
 
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
+import xyz.auriium.opentutorial.core.config.types.tutorials.Interpret;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageSerializer;
 
 import java.util.Map;
@@ -14,6 +15,12 @@ public class ClickBlockSerializer implements StageSerializer<ClickBlockStage> {
 
     @Override
     public ClickBlockStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
-        return null;
+
+        int x = Interpret.getRequired("x",map,FlexibleType::getInteger);
+        int y = Interpret.getRequired("y",map,FlexibleType::getInteger);
+        int z = Interpret.getRequired("z",map,FlexibleType::getInteger);
+        int maxDelay = Interpret.getEllusive("maxDelay",map,FlexibleType::getInteger,Interpret.NO_INT);
+
+        return new ClickBlockStage(x,y,z,maxDelay);
     }
 }

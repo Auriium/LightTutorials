@@ -19,6 +19,7 @@ public abstract class PrettyExceptionHandler<T> implements ConfigExceptionHandle
     @Override
     public void handle(InvalidConfigException exception) {
         logger.error("An error occurred reading the config! (Config is invalid)", exception);
+        logger.error("Please repair your config and restart the server!");
 
         relayError("&cAn error occurred while trying to read the configuration for OpenTutorial! Please check console for the full stacktrace and review your configuration!");
     }
@@ -26,6 +27,7 @@ public abstract class PrettyExceptionHandler<T> implements ConfigExceptionHandle
     @Override
     public void handle(IOException exception) {
         logger.error("An error occurred reading the config! (Input/Output)", exception);
+        logger.error("Please contact the developer, an irrepairable error has occured during execution!");
 
         relayError("&9OpenTutorial &7> &cAn error occurred while trying to read the configuration for OpenTutorial! A fatal exception occurred, please make an issue on our GitHub!");
     }

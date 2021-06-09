@@ -1,0 +1,6 @@
+tutorials:
+  defaultTutorial:
+    permission: opentutorial.tutorials.default
+    stages:
+      - type: chat_stage
+        chat: "hi"

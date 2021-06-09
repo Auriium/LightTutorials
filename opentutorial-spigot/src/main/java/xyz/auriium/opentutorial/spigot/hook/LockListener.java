@@ -9,7 +9,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class LockHook implements Listener {
+public class LockListener implements Listener {
 
     private final Set<UUID> lockMovement = new HashSet<>();
     private final Set<UUID> lockView = new HashSet<>();

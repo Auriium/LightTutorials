@@ -12,8 +12,23 @@ public class SpigotAudience implements Audience {
     }
 
     @Override
+    public String getName() {
+        return delegate.getName();
+    }
+
+    @Override
     public void sendMessage(String string) {
         delegate.sendMessage(string);
+    }
+
+    @Override
+    public void runAs(String command) {
+        delegate.getServer().dispatchCommand(delegate,command);
+    }
+
+    @Override
+    public void runConsole(String command) {
+        delegate.getServer().dispatchCommand(delegate.getServer().getConsoleSender(),command);
     }
 
     public static SpigotAudience wrap(CommandSender sender) {

@@ -1,14 +1,20 @@
 package xyz.auriium.opentutorial.spigot.stage;
 
-import xyz.auriium.opentutorial.PluginScheduler;
-import xyz.auriium.opentutorial.centralized.Tutorial;
-import xyz.auriium.opentutorial.stage.await.AbstractDelayConsumer;
+import org.bukkit.entity.Player;
+import xyz.auriium.opentutorial.core.AudienceRegistry;
+import xyz.auriium.opentutorial.core.UserRegistry;
+import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
+import xyz.auriium.opentutorial.core.model.Scheduler;
+import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
+import xyz.auriium.opentutorial.spigot.SpigotAudience;
+
+import java.util.UUID;
 
 public class ClickBlockConsumer extends AbstractDelayConsumer<ClickBlockStage,ClickBlockEvent> {
 
-
-    public ClickBlockConsumer(PluginScheduler scheduler) {
-        super(scheduler);
+    public ClickBlockConsumer(Scheduler scheduler, AudienceRegistry registry, MessageConfig config) {
+        super(scheduler, registry, config);
     }
 
     @Override

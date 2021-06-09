@@ -26,6 +26,6 @@ public class MessageConfSerializer implements ValueSerialiser<Message> {
 
     @Override
     public Object serialise(Message message, Decomposer decomposer) {
-        throw new UnsupportedOperationException("no point until dazzleconf adds defaultvals!");
+        return message.getTranslatable();
     }
 }

@@ -2,7 +2,9 @@ package xyz.auriium.opentutorial.core.config;
 
 import space.arim.dazzleconf.ConfigurationOptions;
 import space.arim.dazzleconf.error.InvalidConfigException;
+import space.arim.dazzleconf.ext.snakeyaml.CommentMode;
 import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlConfigurationFactory;
+import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlOptions;
 import space.arim.dazzleconf.helper.ConfigurationHelper;
 
 import java.io.IOException;
@@ -16,7 +18,9 @@ public class ReloadableHelper<T> {
     private T nullable;
 
     public ReloadableHelper(Class<T> clazz, Path path, String fileName, ConfigExceptionHandler handler, ConfigurationOptions options) {
-        this.helper = new ConfigurationHelper<>(path,fileName, SnakeYamlConfigurationFactory.create(clazz,options));
+        this.helper = new ConfigurationHelper<>(path,fileName, SnakeYamlConfigurationFactory.create(clazz,options,new SnakeYamlOptions.Builder()
+                .commentMode(CommentMode.alternativeWriter()) // Enables writing YAML comments
+                .build()));
         this.handler = handler;
     }
 
@@ -37,8 +41,10 @@ public class ReloadableHelper<T> {
 
         try {
             this.nullable = helper.reloadConfigData();
-        } catch (IOException | InvalidConfigException e) {
-            e.printStackTrace();
+        } catch (IOException e) {
+            handler.handle(e);
+        } catch (InvalidConfigException e) {
+            handler.handle(e);
         }
 
     }

@@ -1,6 +1,7 @@
 package xyz.auriium.opentutorial.spigot.stage;
 
 import xyz.auriium.opentutorial.core.tutorial.stage.AwaitStage;
+import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 
 import java.util.List;
 
@@ -11,13 +12,10 @@ public class PlainKeywordStage implements AwaitStage {
     private final long maxDelay;
     private final boolean cancelOnFail;
 
-    private final String outOfTimeMessage;
-
-    public PlainKeywordStage(List<String> matchables, long maxDelay, boolean cancelOnFail, String outOfTimeMessage) {
+    public PlainKeywordStage(List<String> matchables, long maxDelay, boolean cancelOnFail) {
         this.matchables = matchables;
         this.maxDelay = maxDelay;
         this.cancelOnFail = cancelOnFail;
-        this.outOfTimeMessage = outOfTimeMessage;
     }
 
     public List<String> getMatchables() {
@@ -26,11 +24,6 @@ public class PlainKeywordStage implements AwaitStage {
 
     public long getMaxDelay() {
         return maxDelay;
-    }
-
-    @Override
-    public String getOutOfTimeMessage() {
-        return outOfTimeMessage;
     }
 
     public boolean isCancelOnFail() {

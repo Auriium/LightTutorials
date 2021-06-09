@@ -8,7 +8,6 @@ import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
 public interface ConfigCentralizer extends Cycleable {
 
     MessageConfig getMessageConfig();
-    TutorialsConfig getTutorialsConfig();
     GeneralConfig getGeneralConfig();
 
 }

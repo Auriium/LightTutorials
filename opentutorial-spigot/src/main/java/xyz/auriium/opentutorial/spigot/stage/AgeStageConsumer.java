@@ -1,26 +1,21 @@
 package xyz.auriium.opentutorial.spigot.stage;
 
-import xyz.auriium.opentutorial.PluginCommand;
-import xyz.auriium.opentutorial.PluginScheduler;
-import xyz.auriium.opentutorial.centralized.Tutorial;
-import xyz.auriium.opentutorial.centralized.config.tutorials.Interpret;
-import xyz.auriium.opentutorial.centralized.server.UUIDRegistry;
-import xyz.auriium.opentutorial.stage.await.AbstractDelayConsumer;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+import xyz.auriium.opentutorial.core.AudienceRegistry;
+import xyz.auriium.opentutorial.core.UserRegistry;
+import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
+import xyz.auriium.opentutorial.core.config.types.tutorials.Interpret;
+import xyz.auriium.opentutorial.core.model.Audience;
+import xyz.auriium.opentutorial.core.model.Scheduler;
+import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
 
 import java.util.Optional;
 
 public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateChatEvent> {
 
-    private final UUIDRegistry registry;
-    private final PluginCommand dispatcher;
-
-    public AgeStageConsumer(PluginScheduler scheduler, UUIDRegistry registry, PluginCommand dispatcher) {
-        super(scheduler);
-
-        this.registry = registry;
-        this.dispatcher = dispatcher;
+    public AgeStageConsumer(Scheduler scheduler, AudienceRegistry registry, MessageConfig config) {
+        super(scheduler, registry, config);
     }
 
     @Override
@@ -31,16 +26,16 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateCh
     @Override
     public void consume(AgeStage stage, DelegateChatEvent event, Tutorial tutorial) {
         String message = event.getMessage().replaceAll("\\D+","");
-        Optional<Player> sender = registry.getPlayer(tutorial.getIdentifier());
+        Optional<Audience> sender = registry.getAudienceByUUID(tutorial.getIdentifier());
 
         try {
             int age = Integer.parseInt(message);
 
             sender.ifPresent(player -> {
                 if (age < stage.getBelowAge()) {
-                    Interpret.ifStringPresent(stage.getRunOnFail(),cmd -> {
-                        dispatcher.runCommand(cmd.replaceAll("%PLAYER%",player.getName()));
-                    });
+                    Interpret.ifStringPresent(stage.getRunOnFail(), cmd ->
+                            player.runConsole(cmd.replaceAll("%PLAYER%",player.getName()))
+                    );
 
                     if (stage.isCancelOnFail()) {
                         tutorial.fireCancel();
@@ -49,15 +44,10 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateCh
             });
 
         } catch (NumberFormatException e) {
-            sender.ifPresent(player -> {
-                player.sendMessage(ChatColor.translateAlternateColorCodes('&',stage.getNotNumberMessage()));
-            });
+            sender.ifPresent(player -> config.notNumberMessage().send(player));
         }
 
-
         tutorial.fireNext();
-
-
     }
 
     @Override
