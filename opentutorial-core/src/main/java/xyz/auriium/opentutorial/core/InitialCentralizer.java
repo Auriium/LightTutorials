@@ -1,7 +1,6 @@
 package xyz.auriium.opentutorial.core;
 
 import xyz.auriium.opentutorial.core.config.TutorialCentralizer;
-import xyz.auriium.opentutorial.core.control.CommandCentralizer;
 import xyz.auriium.opentutorial.core.event.outer.HookCentralizer;
 import xyz.auriium.opentutorial.core.model.Cycleable;
 import xyz.auriium.opentutorial.core.config.ConfigCentralizer;
@@ -15,15 +14,13 @@ public class InitialCentralizer implements Cycleable {
     private final TutorialCentralizer tutorialCentralizer;
     private final TutorialController tutorialController;
     private final HookCentralizer hookCentralizer;
-    private final CommandCentralizer commandCentralizer;
 
-    public InitialCentralizer(ConfigCentralizer configCentralizer, ConsumerRegistry consumerRegistry, TutorialCentralizer tutorialCentralizer, TutorialController tutorialController, HookCentralizer hookCentralizer, CommandCentralizer commandCentralizer) {
+    public InitialCentralizer(ConfigCentralizer configCentralizer, ConsumerRegistry consumerRegistry, TutorialCentralizer tutorialCentralizer, TutorialController tutorialController, HookCentralizer hookCentralizer) {
         this.configCentralizer = configCentralizer;
         this.consumerRegistry = consumerRegistry;
         this.tutorialCentralizer = tutorialCentralizer;
         this.tutorialController = tutorialController;
         this.hookCentralizer = hookCentralizer;
-        this.commandCentralizer = commandCentralizer;
     }
 
     @Override
@@ -33,7 +30,6 @@ public class InitialCentralizer implements Cycleable {
         tutorialCentralizer.startup();
         tutorialController.startup();
         hookCentralizer.startup();
-        commandCentralizer.startup();
     }
 
     @Override
@@ -43,7 +39,6 @@ public class InitialCentralizer implements Cycleable {
         tutorialCentralizer.reload();
         tutorialController.reload();
         hookCentralizer.reload();
-        commandCentralizer.reload();
     }
 
     @Override
@@ -53,6 +48,5 @@ public class InitialCentralizer implements Cycleable {
         tutorialCentralizer.shutdown();
         tutorialController.shutdown();
         hookCentralizer.shutdown();
-        commandCentralizer.shutdown();
     }
 }

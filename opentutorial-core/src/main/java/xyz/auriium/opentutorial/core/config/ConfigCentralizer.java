@@ -7,7 +7,8 @@ import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
 
 public interface ConfigCentralizer extends Cycleable {
 
-    MessageConfig getMessageConfig();
-    GeneralConfig getGeneralConfig();
+    //i hate working with null bullshit
+    ConfigHolder<MessageConfig> getMessageConfig();
+    ConfigHolder<GeneralConfig> getGeneralConfig();
 
 }

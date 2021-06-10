@@ -3,6 +3,7 @@ package xyz.auriium.opentutorial.core.tutorial.stage;
 import xyz.auriium.beetle.utility.map.optional.DelegatingOptionalMap;
 import xyz.auriium.beetle.utility.map.optional.OptionalMap;
 import xyz.auriium.opentutorial.core.AudienceRegistry;
+import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.model.Scheduler;
 import xyz.auriium.opentutorial.core.model.SchedulerTask;
@@ -19,9 +20,9 @@ public abstract class AbstractDelayConsumer<T extends AwaitStage,E> implements A
 
     private final Scheduler scheduler;
     protected final AudienceRegistry registry;
-    protected final MessageConfig config;
+    protected final ConfigHolder<MessageConfig> config;
 
-    protected AbstractDelayConsumer(Scheduler scheduler, AudienceRegistry registry, MessageConfig config) {
+    protected AbstractDelayConsumer(Scheduler scheduler, AudienceRegistry registry, ConfigHolder<MessageConfig> config) {
         this.scheduler = scheduler;
         this.registry = registry;
         this.config = config;
@@ -41,9 +42,9 @@ public abstract class AbstractDelayConsumer<T extends AwaitStage,E> implements A
         if (options.getMaxDelay() != -1) {
             delayCache.put(uuid,scheduler.runLater(
                     () -> {
+                        delayCache.remove(uuid).cancel();
+                        registry.getAudienceByUUID(uuid).ifPresent(audience -> config.get().outOfTimeMessage().send(audience));
                         continuable.fireCancel();
-                        delayCache.remove(uuid);
-                        registry.getAudienceByUUID(uuid).ifPresent(audience -> config.outOfTimeMessage().send(audience));
                     },
                     options.getMaxDelay()));
         }

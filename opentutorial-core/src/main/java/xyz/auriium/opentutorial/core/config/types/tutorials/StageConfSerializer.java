@@ -28,10 +28,10 @@ public class StageConfSerializer implements ValueSerialiser<Stage> {
     public Stage deserialise(FlexibleType value) throws BadValueException {
         Map<String, FlexibleType> stageConfigMap = value.getMap((key, v) -> Map.entry(key.getString(), v));
 
-        String type = Optional.ofNullable(stageConfigMap.get("type")).orElseThrow(() -> new BadValueException.Builder().key("type").message("Stage missing type!")
+        String type = Optional.ofNullable(stageConfigMap.get("type")).orElseThrow(() -> new BadValueException.Builder().key("type").message("Stage missing value for type! Add `type:` to the stage!")
                 .build()).getString();
 
-        StageSerializer<?> serializer = registry.getSerializer(type).orElseThrow(() -> new BadValueException.Builder().key(type).message("Invalid type - could not find a serializer of type!").build());
+        StageSerializer<?> serializer = registry.getSerializer(type).orElseThrow(() -> new BadValueException.Builder().key(type).message("Could not find a stage with that type!").build());
 
         return serializer.deserialize(stageConfigMap);
     }

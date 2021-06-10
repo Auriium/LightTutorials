@@ -10,7 +10,7 @@ import space.arim.dazzleconf.helper.ConfigurationHelper;
 import java.io.IOException;
 import java.nio.file.Path;
 
-public class ReloadableHelper<T> {
+public class ReloadableHelper<T> implements ConfigHolder<T> {
 
     private final ConfigurationHelper<T> helper;
     private final ConfigExceptionHandler handler;
@@ -29,7 +29,7 @@ public class ReloadableHelper<T> {
      * Returns the config as a raw value that can be null if the config is not initialized
      * @return the config
      */
-    public T getConfig() {
+    public T get() {
         return nullable;
     }
 

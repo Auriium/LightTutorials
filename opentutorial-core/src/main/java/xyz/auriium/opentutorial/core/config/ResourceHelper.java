@@ -6,9 +6,7 @@ import space.arim.dazzleconf.error.InvalidConfigException;
 import space.arim.dazzleconf.ext.snakeyaml.CommentMode;
 import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlConfigurationFactory;
 import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlOptions;
-import space.arim.dazzleconf.helper.ConfigurationHelper;
 
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
@@ -16,7 +14,6 @@ import java.net.URLConnection;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
 import java.nio.file.Files;
-import java.nio.file.LinkOption;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
 
@@ -24,9 +21,8 @@ import java.nio.file.StandardOpenOption;
  * all of this needs to be recoded when i'm more motivated to work on this
  * @param <T>
  */
-public class ResourceHelper<T> {
+public class ResourceHelper<T> implements ConfigHolder<T> {
 
-    private final Class<T> clazz;
     private final Path path;
     private final String fileName;
     private final ConfigExceptionHandler handler;
@@ -35,7 +31,6 @@ public class ResourceHelper<T> {
     private T nullable;
 
     public ResourceHelper(Class<T> clazz, Path path, String fileName, ConfigExceptionHandler handler, ConfigurationOptions options) {
-        this.clazz = clazz;
         this.path = path;
         this.fileName = fileName;
         this.handler = handler;
@@ -45,7 +40,7 @@ public class ResourceHelper<T> {
 
     }
 
-    public T getConfig() {
+    public T get() {
         return nullable;
     }
 
@@ -76,7 +71,6 @@ public class ResourceHelper<T> {
         }
 
         this.nullable = factory.load(path.toUri().toURL().openStream());
-
     }
 
     //copied

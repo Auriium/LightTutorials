@@ -2,9 +2,9 @@ package xyz.auriium.opentutorial.spigot;
 
 import co.aikar.commands.BukkitCommandManager;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.auriium.opentutorial.core.control.CommandCentralizer;
+import xyz.auriium.opentutorial.core.model.Cycleable;
 
-public class SpigotCommandCentralizer implements CommandCentralizer {
+public class SpigotCommandCentralizer implements Cycleable {
 
     private final JavaPlugin plugin;
     private final TutorialCommand tutorialCommand;
@@ -17,7 +17,7 @@ public class SpigotCommandCentralizer implements CommandCentralizer {
 
     @Override
     public void startup() {
-        new BukkitCommandManager(plugin).registerCommand(tutorialCommand);
+
     }
 
     @Override

@@ -25,9 +25,9 @@ public class DelayStageConsumer implements StageConsumer<DelayStage> {
         UUID uuid = continuable.getIdentifier();
 
         map.put(uuid, scheduler.runLater( () -> {
-            continuable.fireNext();
-
             map.remove(uuid).cancel();
+
+            continuable.fireNext();
         }, stage.getDelay()));
     }
 

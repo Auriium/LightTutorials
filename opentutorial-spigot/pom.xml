@@ -12,6 +12,12 @@
     <artifactId>opentutorial-spigot</artifactId>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -31,6 +37,14 @@
                 <version>3.2.4</version>
                 <configuration>
                     <dependencyReducedPomLocation>${project.build.directory}/dependency-reduced-pom.xml</dependencyReducedPomLocation>
+                    <artifactSet>
+                        <includes>
+                            <include>co.aikar</include>
+                            <include>space.arim.dazzleconf</include>
+                            <include>xyz.auriium:opentutorial-core</include>
+                            <include>xyz.auriium:beetle-core</include>
+                        </includes>
+                    </artifactSet>
                     <relocations>
                         <relocation>
                             <pattern>co.aikar.commands</pattern>
@@ -39,10 +53,6 @@
                         <relocation>
                             <pattern>co.aikar.locales</pattern>
                             <shadedPattern>xyz.auriium.opentutorial.libs.locales</shadedPattern> <!-- Replace this -->
-                        </relocation>
-                        <relocation>
-                            <pattern>xyz.auriium.beetle</pattern>
-                            <shadedPattern>xyz.auriium.opentutorial.libs.beetle</shadedPattern>
                         </relocation>
                         <relocation>
                             <pattern>space.arim.dazzleconf</pattern>
@@ -67,7 +77,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>1.7.25</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>xyz.auriium</groupId>
@@ -78,7 +87,6 @@
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.16.5-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>co.aikar</groupId>

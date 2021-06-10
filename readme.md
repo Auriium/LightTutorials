@@ -27,3 +27,4 @@ actually buggy shitcode that doesn't throw exceptions and hogs memory and cpu
 
 //TODO separate serializer from consumer (ugh) because i did not realize how orrible this would go - just make a new branch later
 //TODO separate tutorial logic back to the controller, tutorials need only be a clone of the template
+//TODO make stageserializer serialize a stage wrapping collection like Stages, so we can control indexes.

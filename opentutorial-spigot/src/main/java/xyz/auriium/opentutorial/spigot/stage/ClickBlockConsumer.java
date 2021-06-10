@@ -3,6 +3,7 @@ package xyz.auriium.opentutorial.spigot.stage;
 import org.bukkit.entity.Player;
 import xyz.auriium.opentutorial.core.AudienceRegistry;
 import xyz.auriium.opentutorial.core.UserRegistry;
+import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.model.Scheduler;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
@@ -13,7 +14,7 @@ import java.util.UUID;
 
 public class ClickBlockConsumer extends AbstractDelayConsumer<ClickBlockStage,ClickBlockEvent> {
 
-    public ClickBlockConsumer(Scheduler scheduler, AudienceRegistry registry, MessageConfig config) {
+    public ClickBlockConsumer(Scheduler scheduler, AudienceRegistry registry, ConfigHolder<MessageConfig> config) {
         super(scheduler, registry, config);
     }
 

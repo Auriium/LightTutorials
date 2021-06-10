@@ -3,6 +3,7 @@ package xyz.auriium.opentutorial.spigot.stage;
 import org.bukkit.entity.Player;
 import xyz.auriium.opentutorial.core.AudienceRegistry;
 import xyz.auriium.opentutorial.core.UserRegistry;
+import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.config.types.tutorials.Interpret;
 import xyz.auriium.opentutorial.core.model.Audience;
@@ -14,7 +15,7 @@ import java.util.Optional;
 
 public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateChatEvent> {
 
-    public AgeStageConsumer(Scheduler scheduler, AudienceRegistry registry, MessageConfig config) {
+    public AgeStageConsumer(Scheduler scheduler, AudienceRegistry registry, ConfigHolder<MessageConfig> config) {
         super(scheduler, registry, config);
     }
 
@@ -44,7 +45,7 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateCh
             });
 
         } catch (NumberFormatException e) {
-            sender.ifPresent(player -> config.notNumberMessage().send(player));
+            sender.ifPresent(player -> config.get().notNumberMessage().send(player));
         }
 
         tutorial.fireNext();

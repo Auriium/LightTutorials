@@ -4,10 +4,7 @@ import space.arim.dazzleconf.ConfigurationOptions;
 import xyz.auriium.opentutorial.core.config.types.general.GeneralConfig;
 import xyz.auriium.opentutorial.core.config.types.messages.MessageConfSerializer;
 import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
-import xyz.auriium.opentutorial.core.config.types.tutorials.StageConfSerializer;
-import xyz.auriium.opentutorial.core.config.types.tutorials.TutorialsConfig;
 import xyz.auriium.opentutorial.core.model.Colorer;
-import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
 
 import java.nio.file.Path;
 
@@ -35,17 +32,14 @@ public class CommonConfigCentralizer implements ConfigCentralizer {
         );
     }
 
-
-
-
     @Override
-    public MessageConfig getMessageConfig() {
-        return messageConfig.getConfig();
+    public ConfigHolder<MessageConfig> getMessageConfig() {
+        return messageConfig;
     }
 
     @Override
-    public GeneralConfig getGeneralConfig() {
-        return generalConfig.getConfig();
+    public ConfigHolder<GeneralConfig> getGeneralConfig() {
+        return generalConfig;
     }
 
     @Override

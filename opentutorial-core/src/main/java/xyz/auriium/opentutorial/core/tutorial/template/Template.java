@@ -26,7 +26,7 @@ public class Template {
         return stages;
     }
 
-    public boolean hasStage(int i ) {
-        return false;
+    public boolean stageNotPresent(int point) {
+        return point < stages.size();
     }
 }

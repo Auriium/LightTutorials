@@ -1,5 +1,10 @@
 package xyz.auriium.opentutorial.spigot;
 
+import co.aikar.commands.BukkitCommandManager;
+import co.aikar.commands.InvalidCommandArgument;
+import co.aikar.commands.MessageKeys;
+import co.aikar.commands.MessageType;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.auriium.opentutorial.core.InitialCentralizer;
@@ -8,7 +13,6 @@ import xyz.auriium.opentutorial.core.config.CommonConfigCentralizer;
 import xyz.auriium.opentutorial.core.config.ConfigCentralizer;
 import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
 import xyz.auriium.opentutorial.core.config.TutorialCentralizer;
-import xyz.auriium.opentutorial.core.control.CommandCentralizer;
 import xyz.auriium.opentutorial.core.event.inner.CommonEventBus;
 import xyz.auriium.opentutorial.core.event.inner.InnerEventBus;
 import xyz.auriium.opentutorial.core.event.outer.HookCentralizer;
@@ -19,6 +23,7 @@ import xyz.auriium.opentutorial.core.tutorial.CommonTutorialController;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.template.CommonTemplateController;
+import xyz.auriium.opentutorial.core.tutorial.template.Template;
 import xyz.auriium.opentutorial.core.tutorial.template.TemplateController;
 import xyz.auriium.opentutorial.spigot.hook.EventBusListener;
 import xyz.auriium.opentutorial.spigot.hook.LockListener;
@@ -51,24 +56,31 @@ public class SpigotPluginBootstrap extends JavaPlugin {
             .register(new LockStageConsumer(lockListener),new LockStageSerializer())
             .register(new PlainKeywordStageConsumer(scheduler,userRegistry,configCentralizer.getMessageConfig()),new PlainKeywordSerializer());
 
-
-
     private final TutorialCentralizer tutorialCentralizer = new TutorialCentralizer(consumerRegistry, getDataFolder().toPath(), exceptionHandler);
     private final TutorialController tutorialController = new CommonTutorialController(consumerRegistry);
-    private final TemplateController templateController = new CommonTemplateController(tutorialCentralizer.getTutorialsConfig().getConfig());
+    private final TemplateController templateController = new CommonTemplateController(tutorialCentralizer.getTutorialsConfig());
 
     private final StartupListener startupListener = new StartupListener(tutorialController,templateController, configCentralizer.getGeneralConfig());
     private final EventBusListener eventBusListener = new EventBusListener(eventBus, scheduler, tutorialController);
     private final HookCentralizer spigotHookCentralizer = new SpigotHookCentralizer(this,lockListener,startupListener, eventBusListener);
 
-    private final TutorialCommand command = new TutorialCommand(tutorialController,templateController,configCentralizer.getMessageConfig(),eventBus);
-    private final CommandCentralizer commandCentralizer = new SpigotCommandCentralizer(this,command);
+    private final InitialCentralizer centralizer = new InitialCentralizer(configCentralizer, consumerRegistry, tutorialCentralizer, tutorialController, spigotHookCentralizer);
 
-    private final InitialCentralizer centralizer = new InitialCentralizer(configCentralizer, consumerRegistry, tutorialCentralizer, tutorialController, spigotHookCentralizer, commandCentralizer);
+    private final TutorialCommand command = new TutorialCommand(centralizer, tutorialController,templateController,configCentralizer.getMessageConfig(),eventBus);
+
 
     @Override
     public void onEnable() {
         centralizer.startup();
+
+        BukkitCommandManager manager = new BukkitCommandManager(this);
+
+        manager.setFormat(MessageType.HELP, ChatColor.GRAY, ChatColor.BLUE, ChatColor.GRAY);
+        manager.setFormat(MessageType.ERROR, ChatColor.RED);
+        manager.setFormat(MessageType.SYNTAX, ChatColor.GRAY, ChatColor.BLUE);
+        manager.setFormat(MessageType.INFO, ChatColor.GRAY, ChatColor.BLUE);
+        manager.enableUnstableAPI("help");
+        manager.registerCommand(command);
     }
 
     @Override

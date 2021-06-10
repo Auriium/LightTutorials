@@ -29,6 +29,8 @@ public class LockStageConsumer implements StageConsumer<LockStage> {
         } else {
             lockListener.getLockView().remove(uuid);
         }
+
+        continuable.fireNext();
     }
 
     @Override
