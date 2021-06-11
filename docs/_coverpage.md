@@ -1,6 +1,6 @@
 ![logo](media/opentutorial.png)
 
-# OpenTutorial <small>1.0</small>
+# OpenTutorial <small>1.0.0</small>
 
 > The best open source tutorial plugin for Spigot!
 
@@ -8,5 +8,6 @@
 - Easily expandable, open to change
 - Open source and 100% free!
 
-[GitHub](https://github.com/OpenTutorial)
-[Get Started](#opentutorial)
+[Source Code](https://github.com/OpenTutorial)
+[Overview](#opentutorial)
+[Quick Start](#opentutorial)
