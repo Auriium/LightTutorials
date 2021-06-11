@@ -82,7 +82,7 @@ public class SpigotPluginBootstrap extends JavaPlugin {
             String arg = c.getFirstArg();
 
             return templateController.getByIdentifier(arg).orElseThrow(() -> {
-                configCentralizer.getMessageConfig().get().invalidTemplateMessage().send(SpigotAudience.wrap(c.getSender()));
+                configCentralizer.getMessageConfig().get().invalidTemplateMessage().send(SpigotAudience.wrap(c.getSender()),arg);
 
                 return new InvalidCommandArgument(false);
             });
