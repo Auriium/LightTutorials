@@ -9,6 +9,7 @@ import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.event.inner.InnerEventBus;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
+import xyz.auriium.opentutorial.core.tutorial.template.Template;
 import xyz.auriium.opentutorial.core.tutorial.template.TemplateController;
 import xyz.auriium.opentutorial.spigot.stage.ClickableEvent;
 
@@ -59,7 +60,8 @@ public class TutorialCommand extends BaseCommand {
 
     @Subcommand("play")
     @CommandPermission("opentutorial.play")
-    public void play(Player sender, String template, @Optional Player target) {
+    @CommandCompletion("@templates")
+    public void play(Player sender, Template template, @Optional Player target) {
         Player user = target == null ? sender : target;
 
         if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
@@ -67,15 +69,13 @@ public class TutorialCommand extends BaseCommand {
             return;
         }
 
-        templateController.getByIdentifier(template).ifPresentOrElse(
-                templ -> tutorialController.createNew(templ, user.getUniqueId()).fireNext(),
-                () -> messages.get().invalidTemplateMessage().send(SpigotAudience.wrap(sender), template)
-        );
+        tutorialController.createNew(template,user.getUniqueId()).fireNext();
     }
 
     @Subcommand("playpoint")
     @CommandPermission("opentutorial.play")
-    public void playPoint(Player sender, String template, int point, @Optional Player target) {
+    @CommandCompletion("@templates")
+    public void playPoint(Player sender, Template template, int point, @Optional Player target) {
         Player user = target == null ? sender : target;
 
         int subpoint = point - 1;
@@ -85,15 +85,9 @@ public class TutorialCommand extends BaseCommand {
             return;
         }
 
-        templateController.getByIdentifier(template).ifPresentOrElse(templ -> {
-            if (templ.stageNotPresent(subpoint)) {
-                messages.get().invalidStageMessage().send(SpigotAudience.wrap(sender),point,template);
-                return;
-            }
+        if (template.stageNotPresent(subpoint)) messages.get().invalidStageMessage().send(SpigotAudience.wrap(sender),point,template);
+        tutorialController.createStage(template, user.getUniqueId(), subpoint);
 
-            tutorialController.createStage(templ, user.getUniqueId(), subpoint);
-
-        }, () -> messages.get().invalidTemplateMessage().send(SpigotAudience.wrap(sender),template));
     }
 
     @Subcommand("option")

@@ -11,6 +11,11 @@ public interface GeneralConfig {
     @ConfKey("options.default_tutorial")
     String defaultTutorial();
 
+    @ConfComments("Permission required to be placed in the first join tutorial. Leave as none for no permission.")
+    @ConfDefault.DefaultString("opentutorial.first_join")
+    @ConfKey("options.default_tutorial_permission")
+    String defaultPermission();
+
     @ConfComments("Whether the default tutorial is enabled or not")
     @ConfDefault.DefaultBoolean(false)
     @ConfKey("options.default_enabled")

@@ -6,7 +6,7 @@ import space.arim.dazzleconf.annote.ConfKey;
 public interface MessageConfig {
 
     @ConfKey("messages.reload")
-    @ConfDefault.DefaultString("&9OpenTutorial &7> &cReload complete! &7[&e%s&7]")
+    @ConfDefault.DefaultString("&9OpenTutorial &7> &fReload complete! &7[&e%s&7]")
     Message reloadMessage();
 
     @ConfKey("messages.tutorials.invalid_template")
@@ -26,7 +26,7 @@ public interface MessageConfig {
     Message alreadyInTutorialMessage();
 
     @ConfKey("messages.tutorials.complete")
-    @ConfDefault.DefaultString("&9OpenTutorial &7> &cYou have completed the tutorial!")
+    @ConfDefault.DefaultString("&9OpenTutorial &7> &fYou have completed the tutorial!")
     Message completedTutorialMessage();
 
     @ConfKey("messages.stage_defaults.out_of_time")

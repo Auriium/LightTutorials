@@ -31,6 +31,8 @@ import xyz.auriium.opentutorial.spigot.hook.SpigotHookCentralizer;
 import xyz.auriium.opentutorial.spigot.hook.StartupListener;
 import xyz.auriium.opentutorial.spigot.stage.*;
 
+import java.util.*;
+
 public class SpigotPluginBootstrap extends JavaPlugin {
 
     //oh god it burns my eyes (move to dependency injection to avoid constructorhell or the alternate recursive constructorhell
@@ -54,7 +56,8 @@ public class SpigotPluginBootstrap extends JavaPlugin {
             .register(new DelayStageConsumer(scheduler),new DelaySerializer())
             .register(new InvisibleStageConsumer(userRegistry),new InvisibleStageSerializer())
             .register(new LockStageConsumer(lockListener),new LockStageSerializer())
-            .register(new PlainKeywordStageConsumer(scheduler,userRegistry,configCentralizer.getMessageConfig()),new PlainKeywordSerializer());
+            .register(new PlainKeywordStageConsumer(scheduler,userRegistry,configCentralizer.getMessageConfig()),new PlainKeywordSerializer())
+            .register(new TeleportStageConsumer(userRegistry,this.getServer()),new TeleportStageSerializer());
 
     private final TutorialCentralizer tutorialCentralizer = new TutorialCentralizer(consumerRegistry, getDataFolder().toPath(), exceptionHandler);
     private final TutorialController tutorialController = new CommonTutorialController(consumerRegistry);
@@ -74,6 +77,18 @@ public class SpigotPluginBootstrap extends JavaPlugin {
         centralizer.startup();
 
         BukkitCommandManager manager = new BukkitCommandManager(this);
+
+        manager.getCommandContexts().registerContext(Template.class, c -> {
+            String arg = c.getFirstArg();
+
+            return templateController.getByIdentifier(arg).orElseThrow(() -> {
+                configCentralizer.getMessageConfig().get().invalidTemplateMessage().send(SpigotAudience.wrap(c.getSender()));
+
+                return new InvalidCommandArgument(false);
+            });
+        });
+
+        manager.getCommandCompletions().registerCompletion("templates",s -> templateController.getTemplateNames());
 
         manager.setFormat(MessageType.HELP, ChatColor.GRAY, ChatColor.BLUE, ChatColor.GRAY);
         manager.setFormat(MessageType.ERROR, ChatColor.RED);

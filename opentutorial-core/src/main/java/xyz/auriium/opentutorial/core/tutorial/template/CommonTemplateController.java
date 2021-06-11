@@ -5,7 +5,9 @@ import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.config.types.tutorials.TemplateSection;
 import xyz.auriium.opentutorial.core.config.types.tutorials.TutorialsConfig;
 
+import java.util.Collection;
 import java.util.Optional;
+import java.util.Set;
 
 public class CommonTemplateController implements TemplateController {
 
@@ -25,4 +27,10 @@ public class CommonTemplateController implements TemplateController {
             return Optional.empty();
         }
     }
+
+    @Override
+    public Collection<String> getTemplateNames() {
+        return config.get().getTemplates().keySet();
+    }
+
 }

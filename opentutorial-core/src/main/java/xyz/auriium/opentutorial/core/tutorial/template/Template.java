@@ -27,6 +27,10 @@ public class Template {
     }
 
     public boolean stageNotPresent(int point) {
-        return point < stages.size();
+        return !stagePresent(point);
+    }
+
+    public boolean stagePresent(int point) {
+        return point >= 0 && point < stages.size();
     }
 }
