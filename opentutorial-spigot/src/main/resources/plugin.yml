@@ -1,0 +1,7 @@
+main: xyz.auriium.opentutorial.spigot.SpigotPluginBootstrap
+
+name: OpenTutorial
+
+version: ${project.version}
+
+author: Auriium
