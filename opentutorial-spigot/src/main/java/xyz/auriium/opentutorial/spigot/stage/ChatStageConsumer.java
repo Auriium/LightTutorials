@@ -4,8 +4,8 @@ import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import xyz.auriium.opentutorial.core.UserRegistry;
-import xyz.auriium.opentutorial.core.config.types.tutorials.Interpret;
+import xyz.auriium.opentutorial.core.model.UserRegistry;
+import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.BasicStageConsumer;
 

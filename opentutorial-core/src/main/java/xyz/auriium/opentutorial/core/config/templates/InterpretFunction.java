@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.core.config.types.tutorials;
+package xyz.auriium.opentutorial.core.config.templates;
 
 import space.arim.dazzleconf.error.BadValueException;
 

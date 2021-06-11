@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.core.config.types.messages;
+package xyz.auriium.opentutorial.core.config.messages;
 
 import xyz.auriium.opentutorial.core.model.Audience;
 import xyz.auriium.opentutorial.core.model.Colorer;

@@ -2,24 +2,23 @@ package xyz.auriium.opentutorial.spigot;
 
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.InvalidCommandArgument;
-import co.aikar.commands.MessageKeys;
 import co.aikar.commands.MessageType;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import space.arim.injector.InjectorBuilder;
 import xyz.auriium.opentutorial.core.InitialCentralizer;
-import xyz.auriium.opentutorial.core.UserRegistry;
-import xyz.auriium.opentutorial.core.config.CommonConfigCentralizer;
+import xyz.auriium.opentutorial.core.model.UserRegistry;
+import xyz.auriium.opentutorial.core.config.impl.CommonConfigCentralizer;
 import xyz.auriium.opentutorial.core.config.ConfigCentralizer;
 import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
-import xyz.auriium.opentutorial.core.config.TutorialCentralizer;
 import xyz.auriium.opentutorial.core.event.inner.CommonEventBus;
 import xyz.auriium.opentutorial.core.event.inner.InnerEventBus;
 import xyz.auriium.opentutorial.core.event.outer.HookCentralizer;
 import xyz.auriium.opentutorial.core.model.Colorer;
 import xyz.auriium.opentutorial.core.model.Scheduler;
-import xyz.auriium.opentutorial.core.tutorial.CommonConsumerRegistry;
-import xyz.auriium.opentutorial.core.tutorial.CommonTutorialController;
+import xyz.auriium.opentutorial.core.tutorial.impl.CommonConsumerRegistry;
+import xyz.auriium.opentutorial.core.tutorial.impl.CommonTutorialController;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.template.CommonTemplateController;
@@ -30,8 +29,6 @@ import xyz.auriium.opentutorial.spigot.hook.LockListener;
 import xyz.auriium.opentutorial.spigot.hook.SpigotHookCentralizer;
 import xyz.auriium.opentutorial.spigot.hook.StartupListener;
 import xyz.auriium.opentutorial.spigot.stage.*;
-
-import java.util.*;
 
 public class SpigotPluginBootstrap extends JavaPlugin {
 
@@ -96,6 +93,7 @@ public class SpigotPluginBootstrap extends JavaPlugin {
         manager.setFormat(MessageType.INFO, ChatColor.GRAY, ChatColor.BLUE);
         manager.enableUnstableAPI("help");
         manager.registerCommand(command);
+
     }
 
     @Override

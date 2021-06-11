@@ -1,5 +1,9 @@
-package xyz.auriium.opentutorial.core.tutorial;
+package xyz.auriium.opentutorial.core.tutorial.impl;
 
+import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
+import xyz.auriium.opentutorial.core.tutorial.NoConsumerException;
+import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 import xyz.auriium.opentutorial.core.tutorial.template.Template;
@@ -13,7 +17,6 @@ public class CommonTutorialController implements TutorialController {
 
 
     private final Map<UUID, Tutorial> map;
-
     private final ConsumerRegistry registry; //Prebuilt registry
 
     public CommonTutorialController(ConsumerRegistry registry) {

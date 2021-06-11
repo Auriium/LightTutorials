@@ -2,7 +2,7 @@ package xyz.auriium.opentutorial.spigot.stage;
 
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
-import xyz.auriium.opentutorial.core.config.types.tutorials.Interpret;
+import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageSerializer;
 
 import java.util.ArrayList;

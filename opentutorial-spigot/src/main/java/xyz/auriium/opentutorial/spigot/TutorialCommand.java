@@ -6,7 +6,7 @@ import co.aikar.commands.annotation.*;
 import org.bukkit.entity.Player;
 import xyz.auriium.opentutorial.core.InitialCentralizer;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
-import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
+import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.event.inner.InnerEventBus;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.template.Template;

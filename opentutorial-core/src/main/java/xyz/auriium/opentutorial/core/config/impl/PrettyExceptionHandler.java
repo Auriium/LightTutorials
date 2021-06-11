@@ -1,20 +1,26 @@
-package xyz.auriium.opentutorial.core.config;
+package xyz.auriium.opentutorial.core.config.impl;
 
+import jakarta.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import space.arim.dazzleconf.error.InvalidConfigException;
-import xyz.auriium.opentutorial.core.UserRegistry;
+import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
+import xyz.auriium.opentutorial.core.model.AudienceRegistry;
+
 
 import java.io.IOException;
 
-public abstract class PrettyExceptionHandler<T> implements ConfigExceptionHandler{
+
+public class PrettyExceptionHandler implements ConfigExceptionHandler {
 
     private final Logger logger = LoggerFactory.getLogger("OpenTutorial");
-    private final UserRegistry<T> registry;
 
-    protected PrettyExceptionHandler(UserRegistry<T> registry) {
+    private final AudienceRegistry registry;
+
+    public PrettyExceptionHandler(AudienceRegistry registry) {
         this.registry = registry;
     }
+
 
     @Override
     public void handle(InvalidConfigException exception) {
@@ -33,8 +39,8 @@ public abstract class PrettyExceptionHandler<T> implements ConfigExceptionHandle
     }
 
     final void relayError(String string) {
-        registry.getAllAccessible().forEach(t -> relayErrorMessage(t,string));
+        registry.getAllAccessibleAudiences().forEach(audience -> audience.sendMessage(string));
     }
 
-    protected abstract void relayErrorMessage(T t, String string);
+
 }

@@ -1,6 +1,7 @@
-package xyz.auriium.opentutorial.core.tutorial;
+package xyz.auriium.opentutorial.core.tutorial.impl;
 
 import xyz.auriium.opentutorial.core.event.inner.InnerEventBus;
+import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
 import xyz.auriium.opentutorial.core.tutorial.stage.AwaitConsumer;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
@@ -14,7 +15,6 @@ import java.util.UUID;
 public class CommonConsumerRegistry implements ConsumerRegistry {
 
     private final Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers = new HashMap<>();
-    private final Map<String, StageSerializer<?>> serializers = new HashMap<>();
 
     private final InnerEventBus bus;
 
@@ -44,15 +44,9 @@ public class CommonConsumerRegistry implements ConsumerRegistry {
     }
 
     @Override
-    public Optional<StageSerializer<?>> getSerializer(String identifier) {
-        return Optional.ofNullable(serializers.get(identifier.toLowerCase()));
-    }
-
-    @Override
-    public <T, E extends Stage> ConsumerRegistry register(StageConsumer<E> stageConsumer, StageSerializer<E> serializer) {
+    public <T,E extends Stage> ConsumerRegistry register(StageConsumer<E> stageConsumer) {
 
         consumers.put(stageConsumer.stageClass(),stageConsumer);
-        serializers.put(serializer.identifier().toLowerCase(),serializer);
 
         if (stageConsumer instanceof AwaitConsumer) {
             AwaitConsumer<E,T> consumer = (AwaitConsumer<E, T>) stageConsumer;

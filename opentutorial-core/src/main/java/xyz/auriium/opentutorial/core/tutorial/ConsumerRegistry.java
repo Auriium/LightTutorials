@@ -12,13 +12,10 @@ import java.util.UUID;
 public interface ConsumerRegistry extends Cycleable, KeyCloseable<UUID> {
 
     <T extends Stage> Optional<StageConsumer<T>> getConsumer(T stage);
-
-    Optional<StageSerializer<?>> getSerializer(String identifier);
-
     /**
-     * Installs a consumer package
-     * @param consumer the consumer package
+     * Installs a consumer
+     * @param stage the consumer
      */
-    <T, E extends Stage> ConsumerRegistry register(StageConsumer<E> stage, StageSerializer<E> consumer);
+    <T,E extends Stage> ConsumerRegistry register(StageConsumer<E> stage);
 
 }

@@ -1,6 +1,5 @@
 package xyz.auriium.opentutorial.core;
 
-import xyz.auriium.opentutorial.core.config.TutorialCentralizer;
 import xyz.auriium.opentutorial.core.event.outer.HookCentralizer;
 import xyz.auriium.opentutorial.core.model.Cycleable;
 import xyz.auriium.opentutorial.core.config.ConfigCentralizer;

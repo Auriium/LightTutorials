@@ -1,6 +1,5 @@
-package xyz.auriium.opentutorial.core.config.types.tutorials;
+package xyz.auriium.opentutorial.core.config.templates;
 
-import space.arim.dazzleconf.annote.ConfComments;
 import space.arim.dazzleconf.annote.ConfKey;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 

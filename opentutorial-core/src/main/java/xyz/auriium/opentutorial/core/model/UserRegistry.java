@@ -1,6 +1,6 @@
-package xyz.auriium.opentutorial.core;
+package xyz.auriium.opentutorial.core.model;
 
-import xyz.auriium.opentutorial.core.model.Audience;
+import xyz.auriium.opentutorial.core.model.AudienceRegistry;
 
 import java.util.Collection;
 import java.util.Optional;

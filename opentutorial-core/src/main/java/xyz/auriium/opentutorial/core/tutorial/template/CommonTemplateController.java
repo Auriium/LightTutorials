@@ -1,13 +1,11 @@
 package xyz.auriium.opentutorial.core.tutorial.template;
 
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
-import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
-import xyz.auriium.opentutorial.core.config.types.tutorials.TemplateSection;
-import xyz.auriium.opentutorial.core.config.types.tutorials.TutorialsConfig;
+import xyz.auriium.opentutorial.core.config.templates.TemplateSection;
+import xyz.auriium.opentutorial.core.config.templates.TutorialsConfig;
 
 import java.util.Collection;
 import java.util.Optional;
-import java.util.Set;
 
 public class CommonTemplateController implements TemplateController {
 

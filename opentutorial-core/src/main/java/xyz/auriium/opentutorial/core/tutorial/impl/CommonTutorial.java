@@ -1,10 +1,15 @@
-package xyz.auriium.opentutorial.core.tutorial;
+package xyz.auriium.opentutorial.core.tutorial.impl;
 
+import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 
 import java.util.Queue;
 import java.util.UUID;
 
+/**
+ * Simply just a template with a UUID attached
+ */
 public class CommonTutorial implements Tutorial {
 
     private final UUID uuid;
@@ -24,12 +29,9 @@ public class CommonTutorial implements Tutorial {
 
     @Override
     public void fireNext() {
-        //TODO if the queue is empty, the tutorial is over
 
         if (stageQueue.isEmpty()) {
-            //cum all over the floor uwu
             controller.cancelByUUID(uuid);
-
             return;
 
         }

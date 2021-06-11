@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.core.config.types.messages;
+package xyz.auriium.opentutorial.core.config.messages;
 
 import space.arim.dazzleconf.annote.ConfDefault;
 import space.arim.dazzleconf.annote.ConfKey;

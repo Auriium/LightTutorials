@@ -1,7 +1,8 @@
-package xyz.auriium.opentutorial.core.config.types.tutorials;
+package xyz.auriium.opentutorial.core.config.templates.impl;
 
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
+import xyz.auriium.opentutorial.core.config.templates.InterpretFunction;
 
 import java.util.Map;
 import java.util.function.Consumer;

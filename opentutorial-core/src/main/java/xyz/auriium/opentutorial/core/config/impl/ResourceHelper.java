@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.core.config;
+package xyz.auriium.opentutorial.core.config.impl;
 
 import space.arim.dazzleconf.ConfigurationFactory;
 import space.arim.dazzleconf.ConfigurationOptions;
@@ -6,6 +6,8 @@ import space.arim.dazzleconf.error.InvalidConfigException;
 import space.arim.dazzleconf.ext.snakeyaml.CommentMode;
 import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlConfigurationFactory;
 import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlOptions;
+import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
+import xyz.auriium.opentutorial.core.config.ConfigHolder;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -28,7 +30,7 @@ public class ResourceHelper<T> implements ConfigHolder<T> {
     private final ConfigExceptionHandler handler;
     private final ConfigurationFactory<T> factory;
 
-    private T nullable;
+    private volatile T nullable;
 
     public ResourceHelper(Class<T> clazz, Path path, String fileName, ConfigExceptionHandler handler, ConfigurationOptions options) {
         this.path = path;

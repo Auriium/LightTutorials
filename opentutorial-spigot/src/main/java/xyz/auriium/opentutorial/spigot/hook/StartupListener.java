@@ -5,7 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
-import xyz.auriium.opentutorial.core.config.types.general.GeneralConfig;
+import xyz.auriium.opentutorial.core.config.GeneralConfig;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.template.TemplateController;
 
