@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.spigot.stage;
 
 import org.bukkit.entity.Player;
-import xyz.auriium.opentutorial.core.model.UserRegistry;
+import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 

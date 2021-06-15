@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.core.tutorial.stage;
 
-import xyz.auriium.opentutorial.core.event.inner.EventConsumer;
+import xyz.auriium.opentutorial.core.event.EventConsumer;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 
 /**

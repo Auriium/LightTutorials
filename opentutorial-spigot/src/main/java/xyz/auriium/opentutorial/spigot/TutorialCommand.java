@@ -4,13 +4,12 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import org.bukkit.entity.Player;
-import xyz.auriium.opentutorial.core.InitialCentralizer;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
-import xyz.auriium.opentutorial.core.event.inner.InnerEventBus;
+import xyz.auriium.opentutorial.core.event.EventBus;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
-import xyz.auriium.opentutorial.core.tutorial.template.Template;
-import xyz.auriium.opentutorial.core.tutorial.template.TemplateController;
+import xyz.auriium.opentutorial.core.tutorial.Template;
+import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 import xyz.auriium.opentutorial.spigot.stage.ClickableEvent;
 
 import java.text.SimpleDateFormat;
@@ -31,9 +30,9 @@ public class TutorialCommand extends BaseCommand {
 
     private final ConfigHolder<MessageConfig> messages;
 
-    private final InnerEventBus bus;
+    private final EventBus bus;
 
-    public TutorialCommand(InitialCentralizer initialCentralizer, TutorialController tutorialController, TemplateController templateController, ConfigHolder<MessageConfig> messages, InnerEventBus bus) {
+    public TutorialCommand(InitialCentralizer initialCentralizer, TutorialController tutorialController, TemplateController templateController, ConfigHolder<MessageConfig> messages, EventBus bus) {
         this.initialCentralizer = initialCentralizer;
         this.tutorialController = tutorialController;
         this.templateController = templateController;

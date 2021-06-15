@@ -2,8 +2,8 @@ package xyz.auriium.opentutorial.spigot.hook;
 
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
-import xyz.auriium.opentutorial.core.event.inner.InnerEventBus;
-import xyz.auriium.opentutorial.core.model.Scheduler;
+import xyz.auriium.opentutorial.core.event.EventBus;
+import xyz.auriium.opentutorial.core.platform.base.Scheduler;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.spigot.stage.DelegateChatEvent;
@@ -12,11 +12,11 @@ import java.util.Optional;
 
 public class EventBusListener implements Listener {
 
-    private final InnerEventBus bus;
+    private final EventBus bus;
     private final Scheduler scheduler;
     private final TutorialController controller;
 
-    public EventBusListener(InnerEventBus bus, Scheduler scheduler, TutorialController controller) {
+    public EventBusListener(EventBus bus, Scheduler scheduler, TutorialController controller) {
         this.bus = bus;
         this.scheduler = scheduler;
         this.controller = controller;

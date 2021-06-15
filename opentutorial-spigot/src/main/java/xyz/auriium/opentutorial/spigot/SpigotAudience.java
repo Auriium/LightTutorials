@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.spigot;
 
 import org.bukkit.command.CommandSender;
-import xyz.auriium.opentutorial.core.model.Audience;
+import xyz.auriium.opentutorial.core.platform.base.Audience;
 
 public class SpigotAudience implements Audience {
 

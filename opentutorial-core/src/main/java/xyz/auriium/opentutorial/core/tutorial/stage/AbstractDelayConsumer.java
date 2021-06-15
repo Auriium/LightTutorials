@@ -2,11 +2,11 @@ package xyz.auriium.opentutorial.core.tutorial.stage;
 
 import xyz.auriium.beetle.utility.map.optional.DelegatingOptionalMap;
 import xyz.auriium.beetle.utility.map.optional.OptionalMap;
-import xyz.auriium.opentutorial.core.model.AudienceRegistry;
+import xyz.auriium.opentutorial.core.platform.base.AudienceRegistry;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
-import xyz.auriium.opentutorial.core.model.Scheduler;
-import xyz.auriium.opentutorial.core.model.SchedulerTask;
+import xyz.auriium.opentutorial.core.platform.base.Scheduler;
+import xyz.auriium.opentutorial.core.platform.base.SchedulerTask;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 
 import java.util.HashMap;

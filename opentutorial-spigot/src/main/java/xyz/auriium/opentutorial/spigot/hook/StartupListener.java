@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.GeneralConfig;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
-import xyz.auriium.opentutorial.core.tutorial.template.TemplateController;
+import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 
 import java.util.UUID;
 

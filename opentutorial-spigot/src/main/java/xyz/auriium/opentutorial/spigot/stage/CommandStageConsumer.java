@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.spigot.stage;
 
-import xyz.auriium.opentutorial.core.model.AudienceRegistry;
+import xyz.auriium.opentutorial.core.platform.base.AudienceRegistry;
 import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.BasicStageConsumer;

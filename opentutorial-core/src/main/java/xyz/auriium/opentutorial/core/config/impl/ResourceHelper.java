@@ -23,42 +23,24 @@ import java.nio.file.StandardOpenOption;
  * all of this needs to be recoded when i'm more motivated to work on this
  * @param <T>
  */
-public class ResourceHelper<T> implements ConfigHolder<T> {
+public class ResourceHelper<T> {
 
     private final Path path;
     private final String fileName;
-    private final ConfigExceptionHandler handler;
     private final ConfigurationFactory<T> factory;
 
-    private volatile T nullable;
-
-    public ResourceHelper(Class<T> clazz, Path path, String fileName, ConfigExceptionHandler handler, ConfigurationOptions options) {
+    public ResourceHelper(Class<T> clazz, Path path, String fileName, ConfigurationOptions options) {
         this.path = path;
         this.fileName = fileName;
-        this.handler = handler;
         this.factory = SnakeYamlConfigurationFactory.create(clazz,options,new SnakeYamlOptions.Builder()
                 .commentMode(CommentMode.alternativeWriter()) // Enables writing YAML comments
                 .build());
 
     }
 
-    public T get() {
-        return nullable;
-    }
-
-    public void reload() {
-        try {
-            reloadInternally();
-        } catch (IOException e) {
-            handler.handle(e);
-        } catch (InvalidConfigException e) {
-            handler.handle(e);
-        }
-    }
-
     //so fucking lazy
 
-    private void reloadInternally() throws IOException, InvalidConfigException {
+    public T load() throws IOException, InvalidConfigException {
 
         Files.createDirectories(path);
 
@@ -72,7 +54,7 @@ public class ResourceHelper<T> implements ConfigHolder<T> {
 
         }
 
-        this.nullable = factory.load(path.toUri().toURL().openStream());
+        return factory.load(path.toUri().toURL().openStream());
     }
 
     //copied

@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.spigot;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.auriium.opentutorial.core.model.Cycleable;
+import xyz.auriium.opentutorial.core.platform.base.Cycleable;
 
 import java.nio.file.Path;
 

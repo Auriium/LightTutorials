@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.spigot;
 
 import org.bukkit.scheduler.BukkitTask;
-import xyz.auriium.opentutorial.core.model.SchedulerTask;
+import xyz.auriium.opentutorial.core.platform.base.SchedulerTask;
 
 public class DelegatingTask implements SchedulerTask {
 

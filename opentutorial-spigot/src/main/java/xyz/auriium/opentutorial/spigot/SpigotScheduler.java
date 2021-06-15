@@ -1,8 +1,8 @@
 package xyz.auriium.opentutorial.spigot;
 
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.auriium.opentutorial.core.model.Scheduler;
-import xyz.auriium.opentutorial.core.model.SchedulerTask;
+import xyz.auriium.opentutorial.core.platform.base.Scheduler;
+import xyz.auriium.opentutorial.core.platform.base.SchedulerTask;
 
 public class SpigotScheduler implements Scheduler {
 

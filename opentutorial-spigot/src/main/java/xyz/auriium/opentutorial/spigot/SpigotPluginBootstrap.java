@@ -6,24 +6,21 @@ import co.aikar.commands.MessageType;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import space.arim.injector.InjectorBuilder;
-import xyz.auriium.opentutorial.core.InitialCentralizer;
-import xyz.auriium.opentutorial.core.model.UserRegistry;
-import xyz.auriium.opentutorial.core.config.impl.CommonConfigCentralizer;
-import xyz.auriium.opentutorial.core.config.ConfigCentralizer;
+import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
+import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
-import xyz.auriium.opentutorial.core.event.inner.CommonEventBus;
-import xyz.auriium.opentutorial.core.event.inner.InnerEventBus;
+import xyz.auriium.opentutorial.core.event.CommonEventBus;
+import xyz.auriium.opentutorial.core.event.EventBus;
 import xyz.auriium.opentutorial.core.event.outer.HookCentralizer;
-import xyz.auriium.opentutorial.core.model.Colorer;
-import xyz.auriium.opentutorial.core.model.Scheduler;
-import xyz.auriium.opentutorial.core.tutorial.impl.CommonConsumerRegistry;
+import xyz.auriium.opentutorial.core.platform.base.Colorer;
+import xyz.auriium.opentutorial.core.platform.base.Scheduler;
+import xyz.auriium.opentutorial.core.tutorial.impl.CommonConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonTutorialController;
-import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
+import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
-import xyz.auriium.opentutorial.core.tutorial.template.CommonTemplateController;
-import xyz.auriium.opentutorial.core.tutorial.template.Template;
-import xyz.auriium.opentutorial.core.tutorial.template.TemplateController;
+import xyz.auriium.opentutorial.core.tutorial.impl.CommonTemplateController;
+import xyz.auriium.opentutorial.core.tutorial.Template;
+import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 import xyz.auriium.opentutorial.spigot.hook.EventBusListener;
 import xyz.auriium.opentutorial.spigot.hook.LockListener;
 import xyz.auriium.opentutorial.spigot.hook.SpigotHookCentralizer;
@@ -35,38 +32,38 @@ public class SpigotPluginBootstrap extends JavaPlugin {
     //oh god it burns my eyes (move to dependency injection to avoid constructorhell or the alternate recursive constructorhell
 
     //everything here is messy and bad because we didn't design around a certain startup work flow or reloadable servers.
-    private final InnerEventBus eventBus = new CommonEventBus();
+    private final EventBus eventBus = new CommonEventBus();
     private final Colorer colorer = new SpigotColorer();
     private final Scheduler scheduler = new SpigotScheduler(this);
     private final UserRegistry<Player> userRegistry = new SpigotUserRegistry(this);
 
     private final ConfigExceptionHandler exceptionHandler = new SpigotExceptionHandler(userRegistry);
-    private final ConfigCentralizer configCentralizer = new CommonConfigCentralizer(exceptionHandler, colorer, getDataFolder().toPath());
+    private final ConfigController configController = new CommonConfigController(exceptionHandler, colorer, getDataFolder().toPath());
 
     private final LockListener lockListener = new LockListener();
 
-    private final ConsumerRegistry consumerRegistry = new CommonConsumerRegistry(eventBus)
+    private final ConsumerCentralizer consumerCentralizer = new CommonConsumerCentralizer(consumers, eventBus)
             .register(new ChatStageConsumer(userRegistry),new ChatStageSerializer())
-            .register(new AgeStageConsumer(scheduler,userRegistry,configCentralizer.getMessageConfig()),new AgeStageSerializer())
-            .register(new ClickBlockConsumer(scheduler,userRegistry,configCentralizer.getMessageConfig()),new ClickBlockSerializer())
+            .register(new AgeStageConsumer(scheduler,userRegistry, configController.getMessageConfig()),new AgeStageSerializer())
+            .register(new ClickBlockConsumer(scheduler,userRegistry, configController.getMessageConfig()),new ClickBlockSerializer())
             .register(new CommandStageConsumer(userRegistry),new CommandStageSerializer())
             .register(new DelayStageConsumer(scheduler),new DelaySerializer())
             .register(new InvisibleStageConsumer(userRegistry),new InvisibleStageSerializer())
             .register(new LockStageConsumer(lockListener),new LockStageSerializer())
-            .register(new PlainKeywordStageConsumer(scheduler,userRegistry,configCentralizer.getMessageConfig()),new PlainKeywordSerializer())
+            .register(new PlainKeywordStageConsumer(scheduler,userRegistry, configController.getMessageConfig()),new PlainKeywordSerializer())
             .register(new TeleportStageConsumer(userRegistry,this.getServer()),new TeleportStageSerializer());
 
-    private final TutorialCentralizer tutorialCentralizer = new TutorialCentralizer(consumerRegistry, getDataFolder().toPath(), exceptionHandler);
-    private final TutorialController tutorialController = new CommonTutorialController(consumerRegistry);
+    private final TutorialCentralizer tutorialCentralizer = new TutorialCentralizer(consumerCentralizer, getDataFolder().toPath(), exceptionHandler);
+    private final TutorialController tutorialController = new CommonTutorialController(consumerCentralizer);
     private final TemplateController templateController = new CommonTemplateController(tutorialCentralizer.getTutorialsConfig());
 
-    private final StartupListener startupListener = new StartupListener(tutorialController,templateController, configCentralizer.getGeneralConfig());
+    private final StartupListener startupListener = new StartupListener(tutorialController,templateController, configController.getGeneralConfig());
     private final EventBusListener eventBusListener = new EventBusListener(eventBus, scheduler, tutorialController);
     private final HookCentralizer spigotHookCentralizer = new SpigotHookCentralizer(this,lockListener,startupListener, eventBusListener);
 
-    private final InitialCentralizer centralizer = new InitialCentralizer(configCentralizer, consumerRegistry, tutorialCentralizer, tutorialController, spigotHookCentralizer);
+    private final InitialCentralizer centralizer = new InitialCentralizer(configController, consumerCentralizer, tutorialCentralizer, tutorialController, spigotHookCentralizer);
 
-    private final TutorialCommand command = new TutorialCommand(centralizer, tutorialController,templateController,configCentralizer.getMessageConfig(),eventBus);
+    private final TutorialCommand command = new TutorialCommand(centralizer, tutorialController,templateController, configController.getMessageConfig(),eventBus);
 
 
     @Override
@@ -79,7 +76,7 @@ public class SpigotPluginBootstrap extends JavaPlugin {
             String arg = c.getFirstArg();
 
             return templateController.getByIdentifier(arg).orElseThrow(() -> {
-                configCentralizer.getMessageConfig().get().invalidTemplateMessage().send(SpigotAudience.wrap(c.getSender()),arg);
+                configController.getMessageConfig().get().invalidTemplateMessage().send(SpigotAudience.wrap(c.getSender()),arg);
 
                 return new InvalidCommandArgument(false);
             });

@@ -2,8 +2,8 @@ package xyz.auriium.opentutorial.spigot;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.auriium.opentutorial.core.model.UserRegistry;
-import xyz.auriium.opentutorial.core.model.Audience;
+import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
+import xyz.auriium.opentutorial.core.platform.base.Audience;
 
 import java.util.Collection;
 import java.util.Optional;
