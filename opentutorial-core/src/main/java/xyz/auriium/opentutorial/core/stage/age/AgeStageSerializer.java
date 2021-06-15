@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.spigot.stage;
+package xyz.auriium.opentutorial.core.stage.age;
 
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;

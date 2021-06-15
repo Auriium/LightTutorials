@@ -1,5 +1,6 @@
 package xyz.auriium.opentutorial.spigot.stage;
 
+import xyz.auriium.opentutorial.core.event.chat.BaseChatEvent;
 import xyz.auriium.opentutorial.core.platform.base.AudienceRegistry;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
@@ -10,7 +11,7 @@ import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
 /**
  * Handles response stages by checking if they contain a keyword
  */
-public class PlainKeywordStageConsumer extends AbstractDelayConsumer<PlainKeywordStage,DelegateChatEvent> {
+public class PlainKeywordStageConsumer extends AbstractDelayConsumer<PlainKeywordStage, BaseChatEvent> {
 
 
     public PlainKeywordStageConsumer(Scheduler scheduler, AudienceRegistry registry, ConfigHolder<MessageConfig> config) {
@@ -23,7 +24,7 @@ public class PlainKeywordStageConsumer extends AbstractDelayConsumer<PlainKeywor
     }
 
     @Override
-    public void consume(PlainKeywordStage stage, DelegateChatEvent event, Tutorial tutorial) {
+    public void consume(PlainKeywordStage stage, BaseChatEvent event, Tutorial tutorial) {
        String message = event.getMessage();
 
        for (String matchable : stage.getMatchables()) {
@@ -39,8 +40,8 @@ public class PlainKeywordStageConsumer extends AbstractDelayConsumer<PlainKeywor
     }
 
     @Override
-    public Class<DelegateChatEvent> eventClass() {
-        return DelegateChatEvent.class;
+    public Class<BaseChatEvent> eventClass() {
+        return BaseChatEvent.class;
     }
 
 }

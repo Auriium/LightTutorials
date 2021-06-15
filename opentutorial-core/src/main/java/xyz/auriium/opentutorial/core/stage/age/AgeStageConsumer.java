@@ -1,5 +1,6 @@
-package xyz.auriium.opentutorial.spigot.stage;
+package xyz.auriium.opentutorial.core.stage.age;
 
+import xyz.auriium.opentutorial.core.event.chat.BaseChatEvent;
 import xyz.auriium.opentutorial.core.platform.base.AudienceRegistry;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
@@ -11,7 +12,7 @@ import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
 
 import java.util.Optional;
 
-public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateChatEvent> {
+public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, BaseChatEvent> {
 
     public AgeStageConsumer(Scheduler scheduler, AudienceRegistry registry, ConfigHolder<MessageConfig> config) {
         super(scheduler, registry, config);
@@ -23,7 +24,7 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateCh
     }
 
     @Override
-    public void consume(AgeStage stage, DelegateChatEvent event, Tutorial tutorial) {
+    public void consume(AgeStage stage, BaseChatEvent event, Tutorial tutorial) {
         String message = event.getMessage().replaceAll("\\D+","");
         Optional<Audience> sender = registry.getAudienceByUUID(tutorial.getIdentifier());
 
@@ -50,7 +51,7 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, DelegateCh
     }
 
     @Override
-    public Class<DelegateChatEvent> eventClass() {
-        return DelegateChatEvent.class;
+    public Class<BaseChatEvent> eventClass() {
+        return BaseChatEvent.class;
     }
 }

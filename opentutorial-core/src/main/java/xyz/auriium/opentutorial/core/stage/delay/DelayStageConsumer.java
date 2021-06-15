@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.spigot.stage;
+package xyz.auriium.opentutorial.core.stage.delay;
 
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
 import xyz.auriium.opentutorial.core.platform.base.SchedulerTask;
@@ -13,7 +13,7 @@ public class DelayStageConsumer implements StageConsumer<DelayStage> {
 
     private final Scheduler scheduler;
 
-    private final Map<UUID, SchedulerTask> map = new HashMap<>();
+    private final Map<UUID, SchedulerTask> map = new HashMap<>(); //hacky and bad
 
     public DelayStageConsumer(Scheduler scheduler) {
         this.scheduler = scheduler;

@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.spigot.stage;
+package xyz.auriium.opentutorial.core.stage.age;
 
 import xyz.auriium.opentutorial.core.tutorial.stage.AwaitStage;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;

@@ -6,7 +6,7 @@ import co.aikar.commands.annotation.*;
 import org.bukkit.entity.Player;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
-import xyz.auriium.opentutorial.core.event.EventBus;
+import xyz.auriium.opentutorial.core.event.InnerEventBus;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.Template;
 import xyz.auriium.opentutorial.core.tutorial.TemplateController;
@@ -30,9 +30,9 @@ public class TutorialCommand extends BaseCommand {
 
     private final ConfigHolder<MessageConfig> messages;
 
-    private final EventBus bus;
+    private final InnerEventBus bus;
 
-    public TutorialCommand(InitialCentralizer initialCentralizer, TutorialController tutorialController, TemplateController templateController, ConfigHolder<MessageConfig> messages, EventBus bus) {
+    public TutorialCommand(InitialCentralizer initialCentralizer, TutorialController tutorialController, TemplateController templateController, ConfigHolder<MessageConfig> messages, InnerEventBus bus) {
         this.initialCentralizer = initialCentralizer;
         this.tutorialController = tutorialController;
         this.templateController = templateController;

@@ -1,0 +1,39 @@
+package xyz.auriium.opentutorial.core.stage.chat;
+
+import xyz.auriium.opentutorial.core.platform.base.AudienceRegistry;
+import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
+import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.core.tutorial.stage.BasicStageConsumer;
+
+public class ChatStageConsumer implements BasicStageConsumer<ChatStage> {
+
+    private final AudienceRegistry audienceRegistry;
+
+    public ChatStageConsumer(AudienceRegistry audienceRegistry) {
+        this.audienceRegistry = audienceRegistry;
+    }
+
+    @Override
+    public void started(ChatStage options, Tutorial continuable) {
+        audienceRegistry.getAudienceByUUID(continuable.getIdentifier()).ifPresent(player -> {
+            String title = options.getTitle();
+            String subtitle = options.getSubtitle();
+
+            Interpret.ifStringPresent(options.getChat(), player::sendMessage);
+            Interpret.ifStringPresent(options.getActionbar(), player::sendActionbar);
+
+            player.sendTitle(
+                    !title.equals(Interpret.NO_STRING) ? title : "",
+                    !subtitle.equals(Interpret.NO_STRING) ? subtitle : "",
+                    0,10,10);
+        });
+
+        continuable.fireNext();
+    }
+
+    @Override
+    public Class<ChatStage> stageClass() {
+        return ChatStage.class;
+    }
+
+}

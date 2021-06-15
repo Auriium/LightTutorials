@@ -9,11 +9,17 @@ import org.bukkit.plugin.java.JavaPlugin;
 import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
 import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
-import xyz.auriium.opentutorial.core.event.CommonEventBus;
-import xyz.auriium.opentutorial.core.event.EventBus;
+import xyz.auriium.opentutorial.core.event.CommonInnerEventBus;
+import xyz.auriium.opentutorial.core.event.InnerEventBus;
 import xyz.auriium.opentutorial.core.event.outer.HookCentralizer;
 import xyz.auriium.opentutorial.core.platform.base.Colorer;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
+import xyz.auriium.opentutorial.core.stage.age.AgeStageConsumer;
+import xyz.auriium.opentutorial.core.stage.age.AgeStageSerializer;
+import xyz.auriium.opentutorial.core.stage.chat.ChatStageConsumer;
+import xyz.auriium.opentutorial.core.stage.chat.ChatStageSerializer;
+import xyz.auriium.opentutorial.core.stage.delay.DelaySerializer;
+import xyz.auriium.opentutorial.core.stage.delay.DelayStageConsumer;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonTutorialController;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
@@ -32,7 +38,7 @@ public class SpigotPluginBootstrap extends JavaPlugin {
     //oh god it burns my eyes (move to dependency injection to avoid constructorhell or the alternate recursive constructorhell
 
     //everything here is messy and bad because we didn't design around a certain startup work flow or reloadable servers.
-    private final EventBus eventBus = new CommonEventBus();
+    private final InnerEventBus innerEventBus = new CommonInnerEventBus(tutorialController);
     private final Colorer colorer = new SpigotColorer();
     private final Scheduler scheduler = new SpigotScheduler(this);
     private final UserRegistry<Player> userRegistry = new SpigotUserRegistry(this);
@@ -42,7 +48,7 @@ public class SpigotPluginBootstrap extends JavaPlugin {
 
     private final LockListener lockListener = new LockListener();
 
-    private final ConsumerCentralizer consumerCentralizer = new CommonConsumerCentralizer(consumers, eventBus)
+    private final ConsumerCentralizer consumerCentralizer = new CommonConsumerCentralizer(consumers, innerEventBus)
             .register(new ChatStageConsumer(userRegistry),new ChatStageSerializer())
             .register(new AgeStageConsumer(scheduler,userRegistry, configController.getMessageConfig()),new AgeStageSerializer())
             .register(new ClickBlockConsumer(scheduler,userRegistry, configController.getMessageConfig()),new ClickBlockSerializer())
@@ -58,12 +64,12 @@ public class SpigotPluginBootstrap extends JavaPlugin {
     private final TemplateController templateController = new CommonTemplateController(tutorialCentralizer.getTutorialsConfig());
 
     private final StartupListener startupListener = new StartupListener(tutorialController,templateController, configController.getGeneralConfig());
-    private final EventBusListener eventBusListener = new EventBusListener(eventBus, scheduler, tutorialController);
+    private final EventBusListener eventBusListener = new EventBusListener(innerEventBus, scheduler, tutorialController);
     private final HookCentralizer spigotHookCentralizer = new SpigotHookCentralizer(this,lockListener,startupListener, eventBusListener);
 
     private final InitialCentralizer centralizer = new InitialCentralizer(configController, consumerCentralizer, tutorialCentralizer, tutorialController, spigotHookCentralizer);
 
-    private final TutorialCommand command = new TutorialCommand(centralizer, tutorialController,templateController, configController.getMessageConfig(),eventBus);
+    private final TutorialCommand command = new TutorialCommand(centralizer, tutorialController,templateController, configController.getMessageConfig(), innerEventBus);
 
 
     @Override

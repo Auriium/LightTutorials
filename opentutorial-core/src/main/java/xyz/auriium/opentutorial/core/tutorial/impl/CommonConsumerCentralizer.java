@@ -1,6 +1,7 @@
 package xyz.auriium.opentutorial.core.tutorial.impl;
 
-import xyz.auriium.opentutorial.core.event.EventBus;
+import xyz.auriium.opentutorial.core.event.Event;
+import xyz.auriium.opentutorial.core.event.InnerEventBus;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.stage.AwaitConsumer;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
@@ -13,9 +14,9 @@ import java.util.UUID;
 public class CommonConsumerCentralizer implements ConsumerCentralizer {
 
     private final Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers;
-    private final EventBus bus;
+    private final InnerEventBus bus;
 
-    public CommonConsumerCentralizer(Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers, EventBus bus) {
+    public CommonConsumerCentralizer(Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers, InnerEventBus bus) {
         this.consumers = consumers;
         this.bus = bus;
     }
@@ -41,7 +42,7 @@ public class CommonConsumerCentralizer implements ConsumerCentralizer {
         return Optional.ofNullable(consumer);
     }
 
-    public <T,E extends Stage> ConsumerCentralizer register(StageConsumer<E> stageConsumer) {
+    public <T extends Event,E extends Stage> ConsumerCentralizer register(StageConsumer<E> stageConsumer) {
 
         consumers.put(stageConsumer.stageClass(),stageConsumer);
 

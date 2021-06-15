@@ -1,6 +1,8 @@
 package xyz.auriium.opentutorial.spigot.stage;
 
-public class ClickBlockEvent {
+import xyz.auriium.opentutorial.core.event.Event;
+
+public class ClickBlockEvent implements Event {
 
     private final int x;
     private final int y;
