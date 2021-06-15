@@ -1,13 +1,13 @@
 package xyz.auriium.opentutorial.spigot;
 
 import org.bukkit.command.CommandSender;
-import xyz.auriium.opentutorial.core.platform.base.Audience;
+import xyz.auriium.opentutorial.core.platform.base.Teachable;
 
-public class SpigotAudience implements Audience {
+public class SpigotTeachable implements Teachable {
 
     private final CommandSender delegate;
 
-    public SpigotAudience(CommandSender delegate) {
+    public SpigotTeachable(CommandSender delegate) {
         this.delegate = delegate;
     }
 
@@ -31,7 +31,7 @@ public class SpigotAudience implements Audience {
         delegate.getServer().dispatchCommand(delegate.getServer().getConsoleSender(),command);
     }
 
-    public static SpigotAudience wrap(CommandSender sender) {
-        return new SpigotAudience(sender);
+    public static SpigotTeachable wrap(CommandSender sender) {
+        return new SpigotTeachable(sender);
     }
 }

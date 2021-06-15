@@ -3,7 +3,7 @@ package xyz.auriium.opentutorial.core.tutorial.stage;
 import xyz.auriium.beetle.utility.map.optional.DelegatingOptionalMap;
 import xyz.auriium.beetle.utility.map.optional.OptionalMap;
 import xyz.auriium.opentutorial.core.event.Event;
-import xyz.auriium.opentutorial.core.platform.base.AudienceRegistry;
+import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
@@ -20,10 +20,10 @@ public abstract class AbstractDelayConsumer<T extends AwaitStage,E extends Event
     private final Map<UUID, SchedulerTask> delayCache = new HashMap<>();
 
     private final Scheduler scheduler;
-    protected final AudienceRegistry registry;
+    protected final TeachableRegistry registry;
     protected final ConfigHolder<MessageConfig> config;
 
-    protected AbstractDelayConsumer(Scheduler scheduler, AudienceRegistry registry, ConfigHolder<MessageConfig> config) {
+    protected AbstractDelayConsumer(Scheduler scheduler, TeachableRegistry registry, ConfigHolder<MessageConfig> config) {
         this.scheduler = scheduler;
         this.registry = registry;
         this.config = config;

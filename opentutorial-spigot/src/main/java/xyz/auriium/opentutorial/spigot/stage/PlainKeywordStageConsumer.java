@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.spigot.stage;
 
 import xyz.auriium.opentutorial.core.event.chat.BaseChatEvent;
-import xyz.auriium.opentutorial.core.platform.base.AudienceRegistry;
+import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
@@ -14,7 +14,7 @@ import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
 public class PlainKeywordStageConsumer extends AbstractDelayConsumer<PlainKeywordStage, BaseChatEvent> {
 
 
-    public PlainKeywordStageConsumer(Scheduler scheduler, AudienceRegistry registry, ConfigHolder<MessageConfig> config) {
+    public PlainKeywordStageConsumer(Scheduler scheduler, TeachableRegistry registry, ConfigHolder<MessageConfig> config) {
         super(scheduler, registry, config);
     }
 

@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.core.config.messages;
 
-import xyz.auriium.opentutorial.core.platform.base.Audience;
+import xyz.auriium.opentutorial.core.platform.base.Teachable;
 import xyz.auriium.opentutorial.core.platform.base.Colorer;
 
 public class Message {
@@ -14,10 +14,10 @@ public class Message {
         this.translatable = translatable;
     }
 
-    public void send(Audience sender, Object... strings) {
+    public void send(Teachable sender, Object... strings) {
         sender.sendMessage(colorer.color(String.format(translatable,strings)));
     }
-    public void send(Audience sender) {
+    public void send(Teachable sender) {
         sender.sendMessage(colorer.color(translatable));
     }
 

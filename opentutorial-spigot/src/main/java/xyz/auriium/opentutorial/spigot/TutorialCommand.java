@@ -54,7 +54,7 @@ public class TutorialCommand extends BaseCommand {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
 
-        messages.get().reloadMessage().send(SpigotAudience.wrap(player), formatter.format(date));
+        messages.get().reloadMessage().send(SpigotTeachable.wrap(player), formatter.format(date));
     }
 
     @Subcommand("play")
@@ -64,7 +64,7 @@ public class TutorialCommand extends BaseCommand {
         Player user = target == null ? sender : target;
 
         if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
-            messages.get().alreadyInTutorialMessage().send(SpigotAudience.wrap(sender));
+            messages.get().alreadyInTutorialMessage().send(SpigotTeachable.wrap(sender));
             return;
         }
 
@@ -80,11 +80,11 @@ public class TutorialCommand extends BaseCommand {
         int subpoint = point - 1;
 
         if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
-            messages.get().alreadyInTutorialMessage().send(SpigotAudience.wrap(sender));
+            messages.get().alreadyInTutorialMessage().send(SpigotTeachable.wrap(sender));
             return;
         }
 
-        if (template.stageNotPresent(subpoint)) messages.get().invalidStageMessage().send(SpigotAudience.wrap(sender),point,template);
+        if (template.stageNotPresent(subpoint)) messages.get().invalidStageMessage().send(SpigotTeachable.wrap(sender),point,template);
         tutorialController.createStage(template, user.getUniqueId(), subpoint);
 
     }
@@ -95,7 +95,7 @@ public class TutorialCommand extends BaseCommand {
 
         tutorialController.getByUUID(uuid).ifPresentOrElse(
                 tutorial -> bus.fire(new ClickableEvent(option),tutorial),
-                () -> messages.get().notInTutorialMessage().send(SpigotAudience.wrap(sender))
+                () -> messages.get().notInTutorialMessage().send(SpigotTeachable.wrap(sender))
         );
 
 
@@ -107,7 +107,7 @@ public class TutorialCommand extends BaseCommand {
         UUID uuid = sender.getUniqueId();
 
         if (tutorialController.getByUUID(uuid).isEmpty()) {
-            messages.get().notInTutorialMessage().send(SpigotAudience.wrap(sender));
+            messages.get().notInTutorialMessage().send(SpigotTeachable.wrap(sender));
             return;
         }
 

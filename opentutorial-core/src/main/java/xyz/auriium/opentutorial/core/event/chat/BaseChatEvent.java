@@ -1,16 +1,16 @@
 package xyz.auriium.opentutorial.core.event.chat;
 
-import xyz.auriium.opentutorial.core.platform.base.Audience;
+import xyz.auriium.opentutorial.core.platform.base.Teachable;
 
 import java.util.UUID;
 
 public class BaseChatEvent {
 
     private final UUID id;
-    private final Audience player;
+    private final Teachable player;
     private final String message;
 
-    public BaseChatEvent(UUID id, Audience player, String message) {
+    public BaseChatEvent(UUID id, Teachable player, String message) {
         this.id = id;
         this.player = player;
         this.message = message;
@@ -24,7 +24,7 @@ public class BaseChatEvent {
         return message;
     }
 
-    public Audience getPlayer() {
+    public Teachable getPlayer() {
         return player;
     }
 

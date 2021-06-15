@@ -3,7 +3,7 @@ package xyz.auriium.opentutorial.spigot;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
-import xyz.auriium.opentutorial.core.platform.base.Audience;
+import xyz.auriium.opentutorial.core.platform.base.Teachable;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -29,11 +29,11 @@ public class SpigotUserRegistry implements UserRegistry<Player> {
     }
 
     @Override
-    public Optional<Audience> getAudienceByUUID(UUID uuid) {
+    public Optional<Teachable> getAudienceByUUID(UUID uuid) {
         Player player = plugin.getServer().getPlayer(uuid);
 
         if (player != null) {
-            return Optional.of(SpigotAudience.wrap(player));
+            return Optional.of(SpigotTeachable.wrap(player));
         } else {
             return Optional.empty();
         }
