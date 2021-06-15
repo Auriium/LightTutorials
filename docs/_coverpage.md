@@ -1,4 +1,4 @@
-![logo](media/opentutorial.png)
+![logo](media/ot-logo.png)
 
 # OpenTutorial <small>1.0.0</small>
 
