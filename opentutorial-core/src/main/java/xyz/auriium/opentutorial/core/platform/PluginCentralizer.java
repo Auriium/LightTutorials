@@ -20,7 +20,9 @@ public class PluginCentralizer implements Loadable {
 
     @Override
     public void load() {
-        module.close();
+        if (module != null) {
+            module.close();
+        }
 
         module = PlatformDependentModule.load(platform,serializerRegistry,consumerRegistry);
     }

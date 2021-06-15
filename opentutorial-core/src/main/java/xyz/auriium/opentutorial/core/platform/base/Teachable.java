@@ -11,4 +11,7 @@ public interface Teachable {
     void runAs(String command);
     void runConsole(String command);
 
+    void teleport(int x, int y, int z);
+    boolean teleport(int x, int y, int z, String world);
+
 }

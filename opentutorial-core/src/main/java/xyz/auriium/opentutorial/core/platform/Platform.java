@@ -10,8 +10,8 @@ import java.nio.file.Path;
 
 public interface Platform { //TODO make typed
 
-    ConfigExceptionHandler exceptionHandler();
     InnerEventBus eventBus();
+    ConfigExceptionHandler exceptionHandler();
     Scheduler scheduler();
 
     Path configPath();

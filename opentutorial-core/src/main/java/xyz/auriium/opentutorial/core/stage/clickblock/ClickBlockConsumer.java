@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.spigot.stage;
+package xyz.auriium.opentutorial.core.stage.clickblock;
 
 import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
@@ -9,7 +9,7 @@ import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
 
 public class ClickBlockConsumer extends AbstractDelayConsumer<ClickBlockStage,ClickBlockEvent> {
 
-    public ClickBlockConsumer(Scheduler scheduler, TeachableRegistry registry, ConfigHolder<MessageConfig> config) {
+    ClickBlockConsumer(Scheduler scheduler, TeachableRegistry registry, MessageConfig config) {
         super(scheduler, registry, config);
     }
 

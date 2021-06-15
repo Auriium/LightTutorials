@@ -21,9 +21,9 @@ public abstract class AbstractDelayConsumer<T extends AwaitStage,E extends Event
 
     private final Scheduler scheduler;
     protected final TeachableRegistry registry;
-    protected final ConfigHolder<MessageConfig> config;
+    protected final MessageConfig config;
 
-    protected AbstractDelayConsumer(Scheduler scheduler, TeachableRegistry registry, ConfigHolder<MessageConfig> config) {
+    protected AbstractDelayConsumer(Scheduler scheduler, TeachableRegistry registry, MessageConfig config) {
         this.scheduler = scheduler;
         this.registry = registry;
         this.config = config;
@@ -44,7 +44,7 @@ public abstract class AbstractDelayConsumer<T extends AwaitStage,E extends Event
             delayCache.put(uuid,scheduler.runLater(
                     () -> {
                         delayCache.remove(uuid).cancel();
-                        registry.getAudienceByUUID(uuid).ifPresent(audience -> config.get().outOfTimeMessage().send(audience));
+                        registry.getAudienceByUUID(uuid).ifPresent(audience -> config.outOfTimeMessage().send(audience));
                         continuable.fireCancel();
                     },
                     options.getMaxDelay()));

@@ -15,7 +15,7 @@ public class DelayStageConsumer implements StageConsumer<DelayStage> {
 
     private final Map<UUID, SchedulerTask> map = new HashMap<>(); //hacky and bad
 
-    public DelayStageConsumer(Scheduler scheduler) {
+    DelayStageConsumer(Scheduler scheduler) {
         this.scheduler = scheduler;
     }
 

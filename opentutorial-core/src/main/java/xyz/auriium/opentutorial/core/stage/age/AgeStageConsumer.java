@@ -1,8 +1,7 @@
 package xyz.auriium.opentutorial.core.stage.age;
 
-import xyz.auriium.opentutorial.core.event.chat.BaseChatEvent;
+import xyz.auriium.opentutorial.core.event.chat.PlatformlessChatEvent;
 import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
-import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
 import xyz.auriium.opentutorial.core.platform.base.Teachable;
@@ -12,9 +11,9 @@ import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
 
 import java.util.Optional;
 
-public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, BaseChatEvent> {
+public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, PlatformlessChatEvent> {
 
-    public AgeStageConsumer(Scheduler scheduler, TeachableRegistry registry, ConfigHolder<MessageConfig> config) {
+    public AgeStageConsumer(Scheduler scheduler, TeachableRegistry registry, MessageConfig config) {
         super(scheduler, registry, config);
     }
 
@@ -24,7 +23,7 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, BaseChatEv
     }
 
     @Override
-    public void consume(AgeStage stage, BaseChatEvent event, Tutorial tutorial) {
+    public void consume(AgeStage stage, PlatformlessChatEvent event, Tutorial tutorial) {
         String message = event.getMessage().replaceAll("\\D+","");
         Optional<Teachable> sender = registry.getAudienceByUUID(tutorial.getIdentifier());
 
@@ -44,14 +43,14 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, BaseChatEv
             });
 
         } catch (NumberFormatException e) {
-            sender.ifPresent(player -> config.get().notNumberMessage().send(player));
+            sender.ifPresent(player -> config.notNumberMessage().send(player));
         }
 
         tutorial.fireNext();
     }
 
     @Override
-    public Class<BaseChatEvent> eventClass() {
-        return BaseChatEvent.class;
+    public Class<PlatformlessChatEvent> eventClass() {
+        return PlatformlessChatEvent.class;
     }
 }
