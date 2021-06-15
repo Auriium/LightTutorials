@@ -1,30 +1,34 @@
-# OpenTutorial
+## OpenTutorial
 
-OpenTutorial is a tutorial plugin utilizing a format for making ordered collections of sequential actions with potential conditions for proceeding
+> The best open source tutorial plugin for Spigot!
 
-OpenTutorial follows a sequential path and as such has a major limitation in that it cannot have branching actions.
+## What is it?
 
-A further rendition of OpenTutorial may fix this.
+A plugin that offers lists of "stages" to related stage handlers. With collections of these stages listening for user
+interaction, plugin users can create anything from simple linear tutorials to quizzes, interviews, and even simple 
+quests!
 
-//TODO: Said format must be migrated to Conversation and the ticket bot
-//TODO: multiplatform
+## Why this vs other tutorial plugins?
 
-//TODO: market it as both a quiz plugin, job interview plugin AND tutorial plugin - that's what it is!
+OpenTutorial is lightweight. OpenTutorial is well designed. OpenTutorial understands platform design and has been
+created in such a way so that it has minimal performance impact and minimal plugin conflict, is robust enough to
+sustain version changes, doesn't rely on NMS hackery, shitty blocking I/O calls, or other such garbage.
 
-For ConversationAPI i'd like to make it so we have a 
+OpenTutorial is also **free and open source**, and will **always be so.**
 
-SingleNode (contents: Queue<Node>)
-BranchingNode (Contents: List<Node> and Condition)
+## How do I install this as a server owner?
 
-i'll have to think it through more but it will follow the opentutorial standard
-I may release a huge opentutorial update once convapi is done
+OpenTutorial is designed to be platform-agnostic. That being said, it is still limited to Minecraft.
+Find your server version in the list of modules in the source code (For example, spigot users would use opentutorial-spigot)
+or search the plugin on the corresponding marketplace for said plugin. (Ore for Sponge, Spigot for, well, Spigot)
 
-//TODO: command for /opentutorial location just outputs a conf-copyable x: 1 y: 1 z: 1 for use in location stages
+## How do I configure this as a server owner?
 
-obligatory EXCEPTIONS ARE NOT BAD. i need to explain this to users so they doin't think its a buggy shitfest when in reality
-exceptions are how we signal incorrect behavior yet the average ignorant server owner doesn't understand this and uses
-actually buggy shitcode that doesn't throw exceptions and hogs memory and cpu
+Please read the Customization section! //TODO add this and make description better
 
-//TODO separate serializer from consumer (ugh) because i did not realize how orrible this would go - just make a new branch later
-//TODO separate tutorial logic back to the controller, tutorials need only be a clone of the template
-//TODO make stageserializer serialize a stage wrapping collection like Stages, so we can control indexes.
+## How do I use this as a developer?
+
+OpenTutorial has a complex developer API for registering stages, stage systems, and other integral parts of the design
+without compromising design security. Therefore, it exposes access to its' internals via an API module (opentutorial-api).
+The code itself contains Java documentation but to better understand it please read the Development section //TODO
+

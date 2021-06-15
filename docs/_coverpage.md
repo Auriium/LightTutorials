@@ -9,5 +9,5 @@
 - Open source and 100% free!
 
 [Source Code](https://github.com/OpenTutorial)
-[Overview](#opentutorial)
-[Quick Start](#opentutorial)
+[Overview](#OpenTutorial)
+[Quick Start](#OpenTutorial)
