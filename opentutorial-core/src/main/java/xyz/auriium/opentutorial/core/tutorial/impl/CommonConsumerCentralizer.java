@@ -1,7 +1,8 @@
 package xyz.auriium.opentutorial.core.tutorial.impl;
 
 import xyz.auriium.opentutorial.core.event.Event;
-import xyz.auriium.opentutorial.core.event.InnerEventBus;
+import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
+import xyz.auriium.opentutorial.core.event.hook.PrecompletedHookInsertion;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.stage.AwaitConsumer;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
@@ -14,11 +15,11 @@ import java.util.UUID;
 public class CommonConsumerCentralizer implements ConsumerCentralizer {
 
     private final Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers;
-    private final InnerEventBus bus;
+    private final HookRegistry hookRegistry;
 
-    public CommonConsumerCentralizer(Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers, InnerEventBus bus) {
+    public CommonConsumerCentralizer(Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers, HookRegistry hookRegistry) {
         this.consumers = consumers;
-        this.bus = bus;
+        this.hookRegistry = hookRegistry;
     }
 
     @Override
@@ -49,7 +50,7 @@ public class CommonConsumerCentralizer implements ConsumerCentralizer {
         if (stageConsumer instanceof AwaitConsumer) {
             AwaitConsumer<E,T> consumer = (AwaitConsumer<E, T>) stageConsumer;
 
-            bus.register(consumer.eventClass(),consumer);
+            hookRegistry.addHook(new PrecompletedHookInsertion(consumer));
         }
 
         return this;

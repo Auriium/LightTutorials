@@ -26,12 +26,12 @@ public class SpigotPlatformLauncher implements PlatformLauncher {
     public Platform launch() {
 
         UserRegistry<?> userRegistry = new SpigotTeachableRegistry(plugin.getServer());
-        InnerEventBus innerEventBus = new CommonInnerEventBus();
+        InnerEventBus innerEventBus = new CommonInnerEventBus(map, tutorialController);
         Scheduler scheduler = new SpigotScheduler(plugin);
         Path configPath = plugin.getDataFolder().toPath();
         Colorer colorer = new SpigotColorer();
         ConfigExceptionHandler handler = new WarningExceptionHandler(userRegistry);
 
-        return new CommonPlatform(handler,innerEventBus,scheduler,configPath,colorer,userRegistry);
+        return new CommonPlatform(handler, scheduler,configPath,colorer,userRegistry);
     }
 }

@@ -39,7 +39,7 @@ public class SpigotPluginBootstrap extends JavaPlugin {
     //oh god it burns my eyes (move to dependency injection to avoid constructorhell or the alternate recursive constructorhell
 
     //everything here is messy and bad because we didn't design around a certain startup work flow or reloadable servers.
-    private final InnerEventBus innerEventBus = new CommonInnerEventBus(tutorialController);
+    private final InnerEventBus innerEventBus = new CommonInnerEventBus(tutorialController, tutorialController);
     private final Colorer colorer = new SpigotColorer();
     private final Scheduler scheduler = new SpigotScheduler(this);
     private final UserRegistry<Player> userRegistry = new SpigotUserRegistry(this);

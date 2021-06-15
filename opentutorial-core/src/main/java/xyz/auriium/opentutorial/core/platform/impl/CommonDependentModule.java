@@ -1,10 +1,10 @@
 package xyz.auriium.opentutorial.core.platform.impl;
 
 import xyz.auriium.opentutorial.core.config.ConfigController;
-import xyz.auriium.opentutorial.core.event.OuterEventBus;
+import xyz.auriium.opentutorial.core.event.InnerEventBus;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
-import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.TemplateController;
+import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 
 import java.util.UUID;
 
@@ -14,9 +14,9 @@ public class CommonDependentModule implements PlatformDependentModule {
     private final ConsumerCentralizer consumerCentralizer;
     private final TutorialController tutorialController;
     private final TemplateController templateController;
-    private final OuterEventBus outerEventBus;
+    private final InnerEventBus outerEventBus;
 
-    public CommonDependentModule(ConfigController configController, ConsumerCentralizer consumerCentralizer, TutorialController tutorialController, TemplateController templateController, OuterEventBus outerEventBus) {
+    public CommonDependentModule(ConfigController configController, ConsumerCentralizer consumerCentralizer, TutorialController tutorialController, TemplateController templateController, InnerEventBus outerEventBus) {
         this.configController = configController;
         this.consumerCentralizer = consumerCentralizer;
         this.tutorialController = tutorialController;
@@ -46,17 +46,19 @@ public class CommonDependentModule implements PlatformDependentModule {
     }
 
     @Override
-    public OuterEventBus eventBus() {
+    public InnerEventBus eventBus() {
         return outerEventBus;
     }
 
     @Override
     public void closeSingle(UUID uuid) {
-//TODO impl
+        consumerCentralizer.closeSingle(uuid);
+        tutorialController.closeSingle(uuid);
     }
 
     @Override
     public void close() {
-
+        consumerCentralizer.close();
+        tutorialController.close();
     }
 }

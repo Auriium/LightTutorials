@@ -12,15 +12,13 @@ import java.nio.file.Path;
 public class CommonPlatform implements Platform {
 
     private final ConfigExceptionHandler handler;
-    private final InnerEventBus eventBus;
     private final Scheduler scheduler;
     private final Path configPath;
     private final Colorer colorer;
     private final UserRegistry<?> userRegistry;
 
-    public CommonPlatform(ConfigExceptionHandler handler, InnerEventBus eventBus, Scheduler scheduler, Path configPath, Colorer colorer, UserRegistry<?> userRegistry) {
+    public CommonPlatform(ConfigExceptionHandler handler, Scheduler scheduler, Path configPath, Colorer colorer, UserRegistry<?> userRegistry) {
         this.handler = handler;
-        this.eventBus = eventBus;
         this.scheduler = scheduler;
         this.configPath = configPath;
         this.colorer = colorer;
@@ -31,11 +29,6 @@ public class CommonPlatform implements Platform {
     @Override
     public ConfigExceptionHandler exceptionHandler() {
         return handler;
-    }
-
-    @Override
-    public InnerEventBus eventBus() {
-        return eventBus;
     }
 
     @Override

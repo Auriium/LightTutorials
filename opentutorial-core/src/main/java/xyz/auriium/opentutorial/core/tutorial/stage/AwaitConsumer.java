@@ -13,6 +13,6 @@ public interface AwaitConsumer<T extends Stage,E extends Event> extends StageCon
 
     void consume(T stage, E event, Tutorial tutorial);
 
-    Class<E> eventClass();
+
 
 }

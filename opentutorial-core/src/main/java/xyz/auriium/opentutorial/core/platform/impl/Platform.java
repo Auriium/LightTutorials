@@ -14,7 +14,6 @@ import java.nio.file.Path;
  */
 public interface Platform { //TODO make typed
 
-    InnerEventBus eventBus();
     ConfigExceptionHandler exceptionHandler();
     Scheduler scheduler();
 

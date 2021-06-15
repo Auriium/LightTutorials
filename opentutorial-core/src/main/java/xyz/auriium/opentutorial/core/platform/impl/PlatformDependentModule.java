@@ -6,6 +6,7 @@ import xyz.auriium.opentutorial.core.config.templates.SerializerRegistry;
 import xyz.auriium.opentutorial.core.event.CommonOuterEventBus;
 import xyz.auriium.opentutorial.core.event.InnerEventBus;
 import xyz.auriium.opentutorial.core.event.OuterEventBus;
+import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
 import xyz.auriium.opentutorial.core.tutorial.TemplateController;
@@ -19,16 +20,18 @@ interface PlatformDependentModule extends UUIDCloseable {
     ConsumerCentralizer consumerCentralizer();
     TutorialController tutorialController();
     TemplateController templateController();
-    OuterEventBus eventBus();
+    InnerEventBus eventBus();
 
-    static PlatformDependentModule load(Platform platform, SerializerRegistry serializerRegistry, ConsumerRegistry consumerRegistry, InnerEventBus eventBus) {
+    static PlatformDependentModule load(Platform platform, SerializerRegistry serializerRegistry, ConsumerRegistry consumerRegistry, HookRegistry hookRegistry) {
         ConfigController configController = ConfigController.load(platform,serializerRegistry);
-        ConsumerCentralizer consumerCentralizer = ConsumerCentralizer.load(platform,consumerRegistry,configController);
+        ConsumerCentralizer consumerCentralizer = ConsumerCentralizer.load(platform,consumerRegistry,hookRegistry,configController);
         TutorialController tutorialController = new CommonTutorialController(consumerCentralizer);
-        OuterEventBus outerEventBus = new CommonOuterEventBus(tutorialController,platform.eventBus());
+
+
+        InnerEventBus innerEventBus = InnerEventBus.load(platform,hookRegistry,tutorialController,configController);
         TemplateController templateController = new CommonTemplateController(configController.getTutorialsConfig());
 
-        return new CommonDependentModule(configController, consumerCentralizer,tutorialController,templateController,outerEventBus);
+        return new CommonDependentModule(configController, consumerCentralizer,tutorialController,templateController,innerEventBus);
     }
 
 }
