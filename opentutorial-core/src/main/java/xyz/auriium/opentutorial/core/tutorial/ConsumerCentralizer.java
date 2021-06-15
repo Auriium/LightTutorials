@@ -2,8 +2,7 @@ package xyz.auriium.opentutorial.core.tutorial;
 
 import xyz.auriium.beetle.utility.aspect.KeyCloseable;
 import xyz.auriium.opentutorial.core.config.ConfigController;
-import xyz.auriium.opentutorial.core.event.InnerEventBus;
-import xyz.auriium.opentutorial.core.platform.Platform;
+import xyz.auriium.opentutorial.core.platform.impl.Platform;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;

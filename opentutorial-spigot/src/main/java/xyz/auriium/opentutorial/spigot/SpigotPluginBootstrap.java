@@ -31,6 +31,7 @@ import xyz.auriium.opentutorial.spigot.hook.EventBusListener;
 import xyz.auriium.opentutorial.spigot.hook.LockListener;
 import xyz.auriium.opentutorial.spigot.hook.SpigotHookCentralizer;
 import xyz.auriium.opentutorial.spigot.hook.StartupListener;
+import xyz.auriium.opentutorial.spigot.platform.SpigotColorer;
 import xyz.auriium.opentutorial.spigot.stage.*;
 
 public class SpigotPluginBootstrap extends JavaPlugin {

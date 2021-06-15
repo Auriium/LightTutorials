@@ -1,5 +1,8 @@
 package xyz.auriium.opentutorial.core.platform.base;
 
+/**
+ * Platform agnostic interface denoting something that can be served stages from a tutorial
+ */
 public interface Teachable {
 
     String getName();
@@ -13,5 +16,7 @@ public interface Teachable {
 
     void teleport(int x, int y, int z);
     boolean teleport(int x, int y, int z, String world);
+
+    void setInvisible(boolean invisible);
 
 }

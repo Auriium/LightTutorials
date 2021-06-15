@@ -4,6 +4,9 @@ import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 
 import java.util.UUID;
 
+/**
+ * Inner event bus backbone
+ */
 public interface InnerEventBus {
 
 

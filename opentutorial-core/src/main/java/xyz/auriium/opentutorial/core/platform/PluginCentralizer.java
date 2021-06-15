@@ -1,33 +1,29 @@
 package xyz.auriium.opentutorial.core.platform;
 
 import xyz.auriium.opentutorial.core.config.templates.SerializerRegistry;
-import xyz.auriium.opentutorial.core.platform.base.Loadable;
+import xyz.auriium.opentutorial.core.event.InnerEventBus;
+import xyz.auriium.opentutorial.core.platform.base.Reloadable;
+import xyz.auriium.opentutorial.core.platform.impl.Platform;
+import xyz.auriium.opentutorial.core.platform.impl.PluginReloader;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
 
-public class PluginCentralizer implements Loadable {
+public class PluginCentralizer implements PluginExpose, Reloadable {
 
     private final Platform platform;
-    private final SerializerRegistry serializerRegistry;
-    private final ConsumerRegistry consumerRegistry;
 
-    private volatile PlatformDependentModule module;
-
-    public PluginCentralizer(Platform platform, SerializerRegistry serializerRegistry, ConsumerRegistry consumerRegistry) {
+    public PluginCentralizer(Platform platform) {
         this.platform = platform;
-        this.serializerRegistry = serializerRegistry;
-        this.consumerRegistry = consumerRegistry;
+
+        new PluginReloader(platform.)
     }
 
     @Override
     public void load() {
-        if (module != null) {
-            module.close();
-        }
 
-        module = PlatformDependentModule.load(platform,serializerRegistry,consumerRegistry);
     }
 
-    public PlatformDependentModule getModule() {
-        return module;
+    @Override
+    public void reload() {
+
     }
 }
