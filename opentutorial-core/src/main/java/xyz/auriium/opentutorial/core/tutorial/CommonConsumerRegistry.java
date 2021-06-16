@@ -1,80 +1,41 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
-import xyz.auriium.opentutorial.core.event.inner.InnerEventBus;
-import xyz.auriium.opentutorial.core.tutorial.stage.AwaitConsumer;
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
-import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
-import xyz.auriium.opentutorial.core.tutorial.stage.StageSerializer;
+import xyz.auriium.opentutorial.core.stage.age.AgeStageInsertion;
+import xyz.auriium.opentutorial.core.stage.chat.ChatStageInsertion;
+import xyz.auriium.opentutorial.core.stage.clickblock.ClickBlockInsertion;
+import xyz.auriium.opentutorial.core.stage.command.CommandStageInsertion;
+import xyz.auriium.opentutorial.core.stage.delay.DelayStageInsertion;
+import xyz.auriium.opentutorial.core.stage.invisible.InvisibleStageInsertion;
+import xyz.auriium.opentutorial.core.stage.teleport.TeleportStageInsertion;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
-public class CommonConsumerRegistry implements ConsumerRegistry {
+public class CommonConsumerRegistry implements ConsumerRegistry{
 
-    private final Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers = new HashMap<>();
-    private final Map<String, StageSerializer<?>> serializers = new HashMap<>();
+    private final Set<ConsumerInsertion> insertionSet = new HashSet<>();
 
-    private final InnerEventBus bus;
-
-    public CommonConsumerRegistry(InnerEventBus bus) {
-        this.bus = bus;
+    @Override
+    public Collection<ConsumerInsertion> getInsertions() {
+        return Set.copyOf(insertionSet);
     }
 
     @Override
-    public void closeSingle(UUID uuid) {
-        for (StageConsumer<? extends Stage> consumer : consumers.values()) {
-            consumer.closeSingle(uuid);
-        }
-    }
-
-    @Override
-    public void close() {
-        for (StageConsumer<? extends Stage> consumer : consumers.values()) {
-            consumer.close();
-        }
-    }
-
-    @SuppressWarnings("unchecked")
-    public <T extends Stage> Optional<StageConsumer<T>> getConsumer(T stage) {
-        StageConsumer<T> consumer = (StageConsumer<T>) consumers.get(stage.getClass());
-
-        return Optional.ofNullable(consumer);
-    }
-
-    @Override
-    public Optional<StageSerializer<?>> getSerializer(String identifier) {
-        return Optional.ofNullable(serializers.get(identifier.toLowerCase()));
-    }
-
-    @Override
-    public <T, E extends Stage> ConsumerRegistry register(StageConsumer<E> stageConsumer, StageSerializer<E> serializer) {
-
-        consumers.put(stageConsumer.stageClass(),stageConsumer);
-        serializers.put(serializer.identifier().toLowerCase(),serializer);
-
-        if (stageConsumer instanceof AwaitConsumer) {
-            AwaitConsumer<E,T> consumer = (AwaitConsumer<E, T>) stageConsumer;
-
-            bus.register(consumer.eventClass(),consumer);
-        }
+    public ConsumerRegistry addInsertion(ConsumerInsertion insertion) {
+        insertionSet.add(insertion);
 
         return this;
     }
 
-    @Override
-    public void startup() {
-
-    }
-
-    @Override
-    public void reload() {
-        close();
-    }
-
-    @Override
-    public void shutdown() {
-        close();
+    public static ConsumerRegistry defaults() {
+        return new CommonConsumerRegistry()
+                .addInsertion(AgeStageInsertion.INIT)
+                .addInsertion(ChatStageInsertion.INIT)
+                .addInsertion(ClickBlockInsertion.INIT)
+                .addInsertion(CommandStageInsertion.INIT)
+                .addInsertion(DelayStageInsertion.INIT)
+                .addInsertion(InvisibleStageInsertion.INIT)
+                .addInsertion(TeleportStageInsertion.INIT);
     }
 }

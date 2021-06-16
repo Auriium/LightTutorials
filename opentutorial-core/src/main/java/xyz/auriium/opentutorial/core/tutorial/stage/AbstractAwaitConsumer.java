@@ -2,11 +2,12 @@ package xyz.auriium.opentutorial.core.tutorial.stage;
 
 import xyz.auriium.beetle.utility.map.optional.DelegatingOptionalMap;
 import xyz.auriium.beetle.utility.map.optional.OptionalMap;
+import xyz.auriium.opentutorial.core.event.Event;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 
 import java.util.UUID;
 
-public abstract class AbstractAwaitConsumer<T extends Stage,E> implements AwaitConsumer<T,E> {
+public abstract class AbstractAwaitConsumer<T extends Stage,E extends Event> implements AwaitConsumer<T,E> {
 
     private final OptionalMap<UUID,T> existenceCache = new DelegatingOptionalMap<>();
 

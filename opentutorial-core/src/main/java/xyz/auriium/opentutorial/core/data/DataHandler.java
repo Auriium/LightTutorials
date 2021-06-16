@@ -1,7 +1,5 @@
 package xyz.auriium.opentutorial.core.data;
 
-import xyz.auriium.opentutorial.core.model.Cycleable;
-
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 

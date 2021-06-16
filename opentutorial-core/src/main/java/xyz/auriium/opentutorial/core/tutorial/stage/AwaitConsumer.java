@@ -1,6 +1,7 @@
 package xyz.auriium.opentutorial.core.tutorial.stage;
 
-import xyz.auriium.opentutorial.core.event.inner.EventConsumer;
+import xyz.auriium.opentutorial.core.event.Event;
+import xyz.auriium.opentutorial.core.event.InnerEventConsumer;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 
 /**
@@ -8,10 +9,10 @@ import xyz.auriium.opentutorial.core.tutorial.Tutorial;
  * @param <T>
  * @param <E>
  */
-public interface AwaitConsumer<T extends Stage,E> extends StageConsumer<T>, EventConsumer<E> {
+public interface AwaitConsumer<T extends Stage,E extends Event> extends StageConsumer<T>, InnerEventConsumer<E> {
 
     void consume(T stage, E event, Tutorial tutorial);
 
-    Class<E> eventClass();
+
 
 }

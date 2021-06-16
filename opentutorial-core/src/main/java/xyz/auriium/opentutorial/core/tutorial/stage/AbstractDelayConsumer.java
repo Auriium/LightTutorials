@@ -2,27 +2,28 @@ package xyz.auriium.opentutorial.core.tutorial.stage;
 
 import xyz.auriium.beetle.utility.map.optional.DelegatingOptionalMap;
 import xyz.auriium.beetle.utility.map.optional.OptionalMap;
-import xyz.auriium.opentutorial.core.AudienceRegistry;
+import xyz.auriium.opentutorial.core.event.Event;
+import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
 import xyz.auriium.opentutorial.core.config.ConfigHolder;
-import xyz.auriium.opentutorial.core.config.types.messages.MessageConfig;
-import xyz.auriium.opentutorial.core.model.Scheduler;
-import xyz.auriium.opentutorial.core.model.SchedulerTask;
+import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
+import xyz.auriium.opentutorial.core.platform.base.Scheduler;
+import xyz.auriium.opentutorial.core.platform.base.SchedulerTask;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public abstract class AbstractDelayConsumer<T extends AwaitStage,E> implements AwaitConsumer<T,E> {
+public abstract class AbstractDelayConsumer<T extends AwaitStage,E extends Event> implements AwaitConsumer<T,E> {
 
     private final OptionalMap<UUID,T> existenceCache = new DelegatingOptionalMap<>();
     private final Map<UUID, SchedulerTask> delayCache = new HashMap<>();
 
     private final Scheduler scheduler;
-    protected final AudienceRegistry registry;
-    protected final ConfigHolder<MessageConfig> config;
+    protected final TeachableRegistry registry;
+    protected final MessageConfig config;
 
-    protected AbstractDelayConsumer(Scheduler scheduler, AudienceRegistry registry, ConfigHolder<MessageConfig> config) {
+    protected AbstractDelayConsumer(Scheduler scheduler, TeachableRegistry registry, MessageConfig config) {
         this.scheduler = scheduler;
         this.registry = registry;
         this.config = config;
@@ -43,7 +44,7 @@ public abstract class AbstractDelayConsumer<T extends AwaitStage,E> implements A
             delayCache.put(uuid,scheduler.runLater(
                     () -> {
                         delayCache.remove(uuid).cancel();
-                        registry.getAudienceByUUID(uuid).ifPresent(audience -> config.get().outOfTimeMessage().send(audience));
+                        registry.getAudienceByUUID(uuid).ifPresent(audience -> config.outOfTimeMessage().send(audience));
                         continuable.fireCancel();
                     },
                     options.getMaxDelay()));
