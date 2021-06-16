@@ -8,6 +8,6 @@
 - Easily expandable, open to change
 - Open source and 100% free!
 
-[Source Code](https://github.com/OpenTutorial)
+[Source Code](https://github.com/Auriium/OpenTutorial)
 [Overview](#OpenTutorial)
 [Quick Start](#OpenTutorial)
