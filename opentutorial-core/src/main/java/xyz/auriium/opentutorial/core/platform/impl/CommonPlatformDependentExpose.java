@@ -7,9 +7,9 @@ import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 
 public class CommonPlatformDependentExpose implements PlatformDependentExpose {
 
-    private final PluginReloader centralizer;
+    private final PlatformDependentLoader centralizer;
 
-    public CommonPlatformDependentExpose(PluginReloader centralizer) {
+    public CommonPlatformDependentExpose(PlatformDependentLoader centralizer) {
         this.centralizer = centralizer;
     }
 

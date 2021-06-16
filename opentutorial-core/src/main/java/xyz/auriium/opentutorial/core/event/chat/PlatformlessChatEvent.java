@@ -7,18 +7,12 @@ import java.util.UUID;
 
 public class PlatformlessChatEvent implements AssociatedEvent {
 
-    private final UUID id;
     private final Teachable player;
     private final String message;
 
-    public PlatformlessChatEvent(UUID id, Teachable player, String message) {
-        this.id = id;
+    public PlatformlessChatEvent(Teachable player, String message) {
         this.player = player;
         this.message = message;
-    }
-
-    public UUID getId() {
-        return id;
     }
 
     public String getMessage() {
@@ -32,6 +26,6 @@ public class PlatformlessChatEvent implements AssociatedEvent {
 
     @Override
     public UUID getAssociated() {
-        return id;
+        return player.getID();
     }
 }

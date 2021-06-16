@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.spigot.stage;
+package xyz.auriium.opentutorial.core.stage.regex;
 
 public class RegexKeywordStage {
 

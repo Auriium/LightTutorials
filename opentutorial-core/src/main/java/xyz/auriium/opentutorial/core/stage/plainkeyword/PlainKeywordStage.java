@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.spigot.stage;
+package xyz.auriium.opentutorial.core.stage.plainkeyword;
 
 import xyz.auriium.opentutorial.core.tutorial.stage.AwaitStage;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;

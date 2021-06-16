@@ -4,13 +4,13 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import org.bukkit.entity.Player;
-import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.event.InnerEventBus;
-import xyz.auriium.opentutorial.core.tutorial.TutorialController;
+import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
 import xyz.auriium.opentutorial.core.tutorial.Template;
-import xyz.auriium.opentutorial.core.tutorial.TemplateController;
-import xyz.auriium.opentutorial.spigot.stage.ClickableEvent;
+import xyz.auriium.opentutorial.core.tutorial.TutorialController;
+import xyz.auriium.opentutorial.spigot.platform.SpigotTeachable;
+import xyz.auriium.opentutorial.core.event.chat.ClickableEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,22 +22,10 @@ import java.util.UUID;
 @CommandAlias("tutorial|opentutorial")
 public class TutorialCommand extends BaseCommand {
 
+    private final PlatformDependentLoader reloader;
 
-
-    private final InitialCentralizer initialCentralizer;
-    private final TutorialController tutorialController;
-    private final TemplateController templateController;
-
-    private final ConfigHolder<MessageConfig> messages;
-
-    private final InnerEventBus bus;
-
-    public TutorialCommand(InitialCentralizer initialCentralizer, TutorialController tutorialController, TemplateController templateController, ConfigHolder<MessageConfig> messages, InnerEventBus bus) {
-        this.initialCentralizer = initialCentralizer;
-        this.tutorialController = tutorialController;
-        this.templateController = templateController;
-        this.messages = messages;
-        this.bus = bus;
+    public TutorialCommand(PlatformDependentLoader reloader) {
+        this.reloader = reloader;
     }
 
     @HelpCommand
@@ -49,12 +37,12 @@ public class TutorialCommand extends BaseCommand {
     @Subcommand("reload")
     @CommandPermission("opentutorial.reload")
     public void reload(Player player) {
-        initialCentralizer.reload();
+        reloader.load();
 
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
 
-        messages.get().reloadMessage().send(SpigotTeachable.wrap(player), formatter.format(date));
+        reloader.getModule().configController().getMessageConfig().reloadMessage().send(new SpigotTeachable(player), formatter.format(date));
     }
 
     @Subcommand("play")
@@ -63,8 +51,10 @@ public class TutorialCommand extends BaseCommand {
     public void play(Player sender, Template template, @Optional Player target) {
         Player user = target == null ? sender : target;
 
+        TutorialController tutorialController = reloader.getModule().tutorialController();
+
         if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
-            messages.get().alreadyInTutorialMessage().send(SpigotTeachable.wrap(sender));
+            reloader.getModule().configController().getMessageConfig().alreadyInTutorialMessage().send(new SpigotTeachable(user));
             return;
         }
 
@@ -76,15 +66,16 @@ public class TutorialCommand extends BaseCommand {
     @CommandCompletion("@templates")
     public void playPoint(Player sender, Template template, int point, @Optional Player target) {
         Player user = target == null ? sender : target;
+        TutorialController tutorialController = reloader.getModule().tutorialController();
 
         int subpoint = point - 1;
 
         if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
-            messages.get().alreadyInTutorialMessage().send(SpigotTeachable.wrap(sender));
+            reloader.getModule().configController().getMessageConfig().alreadyInTutorialMessage().send(new SpigotTeachable(user));
             return;
         }
 
-        if (template.stageNotPresent(subpoint)) messages.get().invalidStageMessage().send(SpigotTeachable.wrap(sender),point,template);
+        if (template.stageNotPresent(subpoint)) reloader.getModule().configController().getMessageConfig().invalidStageMessage().send(new SpigotTeachable(user),point,template);
         tutorialController.createStage(template, user.getUniqueId(), subpoint);
 
     }
@@ -93,9 +84,13 @@ public class TutorialCommand extends BaseCommand {
     public void option(Player sender, int option) {
         UUID uuid = sender.getUniqueId();
 
+        TutorialController tutorialController = reloader.getModule().tutorialController();
+        MessageConfig messageConfig = reloader.getModule().configController().getMessageConfig();
+        InnerEventBus bus = reloader.getModule().eventBus();
+
         tutorialController.getByUUID(uuid).ifPresentOrElse(
-                tutorial -> bus.fire(new ClickableEvent(option),tutorial),
-                () -> messages.get().notInTutorialMessage().send(SpigotTeachable.wrap(sender))
+                tutorial -> bus.fire(new ClickableEvent(option, sender.getUniqueId()),tutorial),
+                () -> messageConfig.notInTutorialMessage().send(new SpigotTeachable(sender))
         );
 
 
@@ -106,8 +101,11 @@ public class TutorialCommand extends BaseCommand {
     public void leave(Player sender) {
         UUID uuid = sender.getUniqueId();
 
+        TutorialController tutorialController = reloader.getModule().tutorialController();
+        MessageConfig messageConfig = reloader.getModule().configController().getMessageConfig();
+
         if (tutorialController.getByUUID(uuid).isEmpty()) {
-            messages.get().notInTutorialMessage().send(SpigotTeachable.wrap(sender));
+            messageConfig.notInTutorialMessage().send(new SpigotTeachable(sender));
             return;
         }
 

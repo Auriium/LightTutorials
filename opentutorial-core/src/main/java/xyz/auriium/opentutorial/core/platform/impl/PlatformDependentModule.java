@@ -14,7 +14,7 @@ import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonTemplateController;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonTutorialController;
 
-interface PlatformDependentModule extends UUIDCloseable {
+public interface PlatformDependentModule extends UUIDCloseable {
 
     ConfigController configController();
     ConsumerCentralizer consumerCentralizer();
