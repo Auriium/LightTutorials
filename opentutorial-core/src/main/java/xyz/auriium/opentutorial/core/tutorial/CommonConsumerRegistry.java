@@ -6,6 +6,8 @@ import xyz.auriium.opentutorial.core.stage.clickblock.ClickBlockInsertion;
 import xyz.auriium.opentutorial.core.stage.command.CommandStageInsertion;
 import xyz.auriium.opentutorial.core.stage.delay.DelayStageInsertion;
 import xyz.auriium.opentutorial.core.stage.invisible.InvisibleStageInsertion;
+import xyz.auriium.opentutorial.core.stage.plainkeyword.PlainKeywordInsertion;
+import xyz.auriium.opentutorial.core.stage.playsound.SoundStageInsertion;
 import xyz.auriium.opentutorial.core.stage.teleport.TeleportStageInsertion;
 
 import java.util.Collection;
@@ -36,6 +38,8 @@ public class CommonConsumerRegistry implements ConsumerRegistry{
                 .addInsertion(CommandStageInsertion.INIT)
                 .addInsertion(DelayStageInsertion.INIT)
                 .addInsertion(InvisibleStageInsertion.INIT)
+                .addInsertion(PlainKeywordInsertion.INIT)
+                .addInsertion(SoundStageInsertion.INIT)
                 .addInsertion(TeleportStageInsertion.INIT);
     }
 }

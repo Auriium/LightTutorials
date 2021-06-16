@@ -2,6 +2,11 @@ package xyz.auriium.opentutorial.core.stage.clickblock;
 
 import xyz.auriium.opentutorial.core.tutorial.stage.AwaitStage;
 
+/**
+ * Stage that waits for a player to click a specific block on the map
+ *
+ * TODO add elusive world value
+ */
 public class ClickBlockStage implements AwaitStage {
 
     private final int x;

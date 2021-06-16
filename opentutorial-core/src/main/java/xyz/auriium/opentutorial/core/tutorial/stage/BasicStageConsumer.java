@@ -2,6 +2,10 @@ package xyz.auriium.opentutorial.core.tutorial.stage;
 
 import java.util.UUID;
 
+/**
+ * A basic stage consumer that does not implement {@link xyz.auriium.beetle.utility.aspect.UUIDCloseable}'s close methods
+ * @param <T> type
+ */
 public interface BasicStageConsumer<T extends Stage> extends StageConsumer<T> {
 
     @Override

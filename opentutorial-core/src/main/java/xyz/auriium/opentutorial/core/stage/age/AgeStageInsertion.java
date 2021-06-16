@@ -1,11 +1,16 @@
 package xyz.auriium.opentutorial.core.stage.age;
 
+import space.arim.dazzleconf.error.BadValueException;
+import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.opentutorial.core.config.ConfigController;
-import xyz.auriium.opentutorial.core.platform.impl.Platform;
-import xyz.auriium.opentutorial.core.tutorial.ConsumerInsertion;
+import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
+import xyz.auriium.opentutorial.core.platform.Platform;
+import xyz.auriium.opentutorial.core.tutorial.stage.ProcessingInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
-public class AgeStageInsertion implements ConsumerInsertion {
+import java.util.Map;
+
+public class AgeStageInsertion implements ProcessingInsertion {
 
     AgeStageInsertion() {}
 
@@ -14,5 +19,21 @@ public class AgeStageInsertion implements ConsumerInsertion {
     @Override
     public StageConsumer<?> build(Platform platform, ConfigController configController) {
         return new AgeStageConsumer(platform.scheduler(), platform.userRegistry(), configController.getMessageConfig());
+    }
+
+    @Override
+    public String identifier() {
+        return "age";
+    }
+
+    @Override
+    public AgeStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
+
+        String runOnFail = Interpret.getEllusive("runOnFailCommand", map, FlexibleType::getString,Interpret.NO_STRING);
+        int minimumAge = Interpret.getRequired("minimumAge",map, FlexibleType::getInteger);
+        int maxDelay = Interpret.getEllusive("maxDelay",map,FlexibleType::getInteger,Interpret.NO_INT);
+        boolean cancelOnFail = Interpret.getEllusive("cancelOnFail",map,FlexibleType::getBoolean,true);
+
+        return new AgeStage(runOnFail, minimumAge,maxDelay,cancelOnFail);
     }
 }

@@ -5,7 +5,7 @@ import xyz.auriium.beetle.utility.map.multi.MultiMap;
 import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.event.hook.HookInsertion;
 import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
-import xyz.auriium.opentutorial.core.platform.impl.Platform;
+import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 

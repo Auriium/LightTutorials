@@ -1,10 +1,14 @@
 package xyz.auriium.opentutorial.core.platform.impl;
 
 import xyz.auriium.opentutorial.core.config.ConfigController;
+import xyz.auriium.opentutorial.core.platform.PlatformDependentExpose;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 
+/**
+ * unimplemented
+ */
 public class CommonPlatformDependentExpose implements PlatformDependentExpose {
 
     private final PlatformDependentLoader centralizer;

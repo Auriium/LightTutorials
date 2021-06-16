@@ -5,11 +5,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import xyz.auriium.opentutorial.core.config.GeneralConfig;
 import xyz.auriium.opentutorial.core.event.chat.PlatformlessChatEvent;
-import xyz.auriium.opentutorial.core.platform.impl.Platform;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
 import xyz.auriium.opentutorial.spigot.platform.SpigotTeachable;
 

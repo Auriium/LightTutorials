@@ -7,12 +7,11 @@ import java.util.Map;
 
 /**
  * This doesn't have to be typed...?? why is this typed
- * @param <T>
  */
-public interface StageSerializer<T extends Stage> {
+public interface StageInsertion {
 
     String identifier();
 
-    T deserialize(Map<String, FlexibleType> map) throws BadValueException;
+    Stage deserialize(Map<String, FlexibleType> map) throws BadValueException;
 
 }

@@ -8,6 +8,9 @@ import xyz.auriium.opentutorial.core.platform.base.Scheduler;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
 
+/**
+ * Consumer system that handles {@link ClickBlockStage}
+ */
 public class ClickBlockConsumer extends AbstractDelayConsumer<ClickBlockStage, PlatformlessBlockEvent> {
 
     ClickBlockConsumer(Scheduler scheduler, TeachableRegistry registry, MessageConfig config) {

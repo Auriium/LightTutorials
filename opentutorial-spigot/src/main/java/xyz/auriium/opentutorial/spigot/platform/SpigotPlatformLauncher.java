@@ -8,7 +8,7 @@ import xyz.auriium.opentutorial.core.platform.base.Colorer;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
 import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
 import xyz.auriium.opentutorial.core.platform.impl.CommonPlatform;
-import xyz.auriium.opentutorial.core.platform.impl.Platform;
+import xyz.auriium.opentutorial.core.platform.Platform;
 
 import java.nio.file.Path;
 

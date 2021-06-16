@@ -1,11 +1,16 @@
 package xyz.auriium.opentutorial.core.stage.clickblock;
 
+import space.arim.dazzleconf.error.BadValueException;
+import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.opentutorial.core.config.ConfigController;
-import xyz.auriium.opentutorial.core.platform.impl.Platform;
-import xyz.auriium.opentutorial.core.tutorial.ConsumerInsertion;
+import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
+import xyz.auriium.opentutorial.core.platform.Platform;
+import xyz.auriium.opentutorial.core.tutorial.stage.ProcessingInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
-public class ClickBlockInsertion implements ConsumerInsertion {
+import java.util.Map;
+
+public class ClickBlockInsertion implements ProcessingInsertion {
 
     ClickBlockInsertion() {}
 
@@ -14,5 +19,21 @@ public class ClickBlockInsertion implements ConsumerInsertion {
     @Override
     public StageConsumer<?> build(Platform platform, ConfigController configController) {
         return new ClickBlockConsumer(platform.scheduler(), platform.userRegistry(), configController.getMessageConfig());
+    }
+
+    @Override
+    public String identifier() {
+        return "click_block";
+    }
+
+    @Override
+    public ClickBlockStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
+
+        int x = Interpret.getRequired("x",map,FlexibleType::getInteger);
+        int y = Interpret.getRequired("y",map,FlexibleType::getInteger);
+        int z = Interpret.getRequired("z",map,FlexibleType::getInteger);
+        int maxDelay = Interpret.getEllusive("maxDelay",map,FlexibleType::getInteger,Interpret.NO_INT);
+
+        return new ClickBlockStage(x,y,z,maxDelay);
     }
 }

@@ -1,11 +1,10 @@
 package xyz.auriium.opentutorial.spigot;
 
 import co.aikar.commands.BukkitCommandManager;
-import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.MessageType;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.auriium.opentutorial.core.platform.impl.Platform;
+import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
 import xyz.auriium.opentutorial.core.tutorial.Template;
 import xyz.auriium.opentutorial.spigot.platform.SpigotPlatformLauncher;

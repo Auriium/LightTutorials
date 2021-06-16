@@ -13,7 +13,14 @@ public interface Tutorial {
      */
     UUID getIdentifier();
 
+    /**
+     * Marks current stage as complete and moves to accepting the next one. If all stages are finished the tutorial is marked as complete.
+     */
     void fireNext();
+
+    /**
+     * Marks tutorial as cancelled and passes marking to all linked consumers.
+     */
     void fireCancel();
 
 

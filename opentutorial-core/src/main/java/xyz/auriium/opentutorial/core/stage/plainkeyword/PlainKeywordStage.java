@@ -5,6 +5,9 @@ import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 
 import java.util.List;
 
+/**
+ * Stage that awaits the player saying a specific keyword before allowing them to pass. Is timed.
+ */
 public class PlainKeywordStage implements AwaitStage {
 
     private final List<String> matchables;

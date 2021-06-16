@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Consumer system that handles {@link DelayStage}
+ */
 public class DelayStageConsumer implements StageConsumer<DelayStage> {
 
     private final Scheduler scheduler;

@@ -7,8 +7,17 @@ import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Represents a tutorial controller that can cancel and start tutorials.
+ */
 public interface TutorialController extends Cycleable, KeyCloseable<UUID> {
 
+    /**
+     * Fires a stage into related consumers from a tutorial
+     * @param stage the stage
+     * @param tutorial tutorial
+     * @param <T> type
+     */
     <T extends Stage> void consumeStage(T stage, Tutorial tutorial);
 
     /**

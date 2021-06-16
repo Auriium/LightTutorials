@@ -1,11 +1,16 @@
 package xyz.auriium.opentutorial.core.stage.delay;
 
+import space.arim.dazzleconf.error.BadValueException;
+import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.opentutorial.core.config.ConfigController;
-import xyz.auriium.opentutorial.core.platform.impl.Platform;
-import xyz.auriium.opentutorial.core.tutorial.ConsumerInsertion;
+import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
+import xyz.auriium.opentutorial.core.platform.Platform;
+import xyz.auriium.opentutorial.core.tutorial.stage.ProcessingInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
-public class DelayStageInsertion implements ConsumerInsertion {
+import java.util.Map;
+
+public class DelayStageInsertion implements ProcessingInsertion {
 
     DelayStageInsertion() {}
 
@@ -15,5 +20,18 @@ public class DelayStageInsertion implements ConsumerInsertion {
     @Override
     public StageConsumer<?> build(Platform platform, ConfigController configController) {
         return new DelayStageConsumer(platform.scheduler());
+    }
+
+    @Override
+    public String identifier() {
+        return "wait";
+    }
+
+    @Override
+    public DelayStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
+
+        long delay = Interpret.getRequired("delay",map,FlexibleType::getLong);
+
+        return new DelayStage(delay);
     }
 }

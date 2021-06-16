@@ -11,7 +11,7 @@ import xyz.auriium.opentutorial.core.config.templates.SerializerRegistry;
 import xyz.auriium.opentutorial.core.config.templates.TutorialsConfig;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.config.templates.impl.StageConfSerializer;
-import xyz.auriium.opentutorial.core.platform.impl.Platform;
+import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.base.Colorer;
 
 import java.io.IOException;

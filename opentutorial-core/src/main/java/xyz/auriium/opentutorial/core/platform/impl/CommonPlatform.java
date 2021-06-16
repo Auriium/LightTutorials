@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.platform.impl;
 
 import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
-import xyz.auriium.opentutorial.core.event.InnerEventBus;
+import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.base.Colorer;
 import xyz.auriium.opentutorial.core.platform.base.PlatformDetail;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;

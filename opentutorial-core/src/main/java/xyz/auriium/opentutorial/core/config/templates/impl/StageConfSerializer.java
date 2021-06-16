@@ -6,7 +6,7 @@ import space.arim.dazzleconf.serialiser.FlexibleType;
 import space.arim.dazzleconf.serialiser.ValueSerialiser;
 import xyz.auriium.opentutorial.core.config.templates.SerializerRegistry;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
-import xyz.auriium.opentutorial.core.tutorial.stage.StageSerializer;
+import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 
 import java.util.Map;
 import java.util.Optional;
@@ -31,7 +31,7 @@ public class StageConfSerializer implements ValueSerialiser<Stage> {
         String type = Optional.ofNullable(stageConfigMap.get("type")).orElseThrow(() -> new BadValueException.Builder().key("type").message("Stage missing value for type! Add `type:` to the stage!")
                 .build()).getString();
 
-        StageSerializer<?> serializer = serializerRegistry.getSerializer(type).orElseThrow(() -> new BadValueException.Builder().key(type).message("Could not find a stage with that type!").build());
+        StageInsertion serializer = serializerRegistry.getSerializer(type).orElseThrow(() -> new BadValueException.Builder().key(type).message("Could not find a stage with that type!").build());
 
         return serializer.deserialize(stageConfigMap);
     }

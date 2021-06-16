@@ -1,12 +1,11 @@
-package xyz.auriium.opentutorial.core.platform.impl;
+package xyz.auriium.opentutorial.core.platform;
 
 import xyz.auriium.beetle.utility.aspect.UUIDCloseable;
 import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.config.templates.SerializerRegistry;
-import xyz.auriium.opentutorial.core.event.CommonOuterEventBus;
 import xyz.auriium.opentutorial.core.event.InnerEventBus;
-import xyz.auriium.opentutorial.core.event.OuterEventBus;
 import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
+import xyz.auriium.opentutorial.core.platform.impl.CommonDependentModule;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
 import xyz.auriium.opentutorial.core.tutorial.TemplateController;
@@ -14,6 +13,9 @@ import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonTemplateController;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonTutorialController;
 
+/**
+ * Module that describes all baseless (reloadable) constructs available to the plugin
+ */
 public interface PlatformDependentModule extends UUIDCloseable {
 
     ConfigController configController();

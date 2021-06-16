@@ -6,6 +6,9 @@ import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
 
+/**
+ * Base (Not reloadable) construct exposer
+ */
 public interface PluginExpose {
 
     HookRegistry getHookRegistry();

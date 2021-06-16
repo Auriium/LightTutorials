@@ -1,5 +1,8 @@
 package xyz.auriium.opentutorial.core.stage.regex;
 
+/**
+ * Stage that waits for the player to say a specific string matching a regex pattern.
+ */
 public class RegexKeywordStage {
 
     private final String regex;

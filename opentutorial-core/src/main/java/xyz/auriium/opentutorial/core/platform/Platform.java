@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.core.platform.impl;
+package xyz.auriium.opentutorial.core.platform;
 
 import xyz.auriium.opentutorial.core.event.InnerEventBus;
 import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;

@@ -2,6 +2,10 @@ package xyz.auriium.opentutorial.core.stage.chat;
 
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 
+/**
+ * Stage that sends multiple forms of user-interfacing to a corresponding user.
+ * Can display chat, actionbars, and titles, independent of eachother.
+ */
 public class ChatStage implements Stage {
 
     private final String chat;

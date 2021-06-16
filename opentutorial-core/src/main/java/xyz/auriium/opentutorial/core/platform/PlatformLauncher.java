@@ -1,7 +1,8 @@
 package xyz.auriium.opentutorial.core.platform;
 
-import xyz.auriium.opentutorial.core.platform.impl.Platform;
-
+/**
+ * Structure that initializes and then launches a corresponding platform
+ */
 public interface PlatformLauncher {
 
     Platform launch();

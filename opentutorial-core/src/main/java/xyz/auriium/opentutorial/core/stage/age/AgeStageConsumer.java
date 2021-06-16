@@ -11,6 +11,9 @@ import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
 
 import java.util.Optional;
 
+/**
+ * Consumer that handles {@link AgeStage}
+ */
 public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, PlatformlessChatEvent> {
 
     public AgeStageConsumer(Scheduler scheduler, TeachableRegistry registry, MessageConfig config) {

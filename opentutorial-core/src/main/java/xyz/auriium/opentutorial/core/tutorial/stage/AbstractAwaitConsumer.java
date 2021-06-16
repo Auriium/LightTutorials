@@ -7,6 +7,11 @@ import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 
 import java.util.UUID;
 
+/**
+ * Abstract implementation of an AwaitConsumer
+ * @param <T> stage
+ * @param <E> event
+ */
 public abstract class AbstractAwaitConsumer<T extends Stage,E extends Event> implements AwaitConsumer<T,E> {
 
     private final OptionalMap<UUID,T> existenceCache = new DelegatingOptionalMap<>();

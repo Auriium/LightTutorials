@@ -5,6 +5,9 @@ import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.BasicStageConsumer;
 
+/**
+ * Consumer system that handles {@link ChatStage}
+ */
 public class ChatStageConsumer implements BasicStageConsumer<ChatStage> {
 
     private final TeachableRegistry teachableRegistry;

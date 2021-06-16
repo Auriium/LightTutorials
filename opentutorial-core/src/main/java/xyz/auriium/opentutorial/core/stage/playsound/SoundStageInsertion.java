@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.core.stage.command;
+package xyz.auriium.opentutorial.core.stage.playsound;
 
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
@@ -11,27 +11,29 @@ import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
 import java.util.Map;
 
-public class CommandStageInsertion implements ProcessingInsertion {
+public class SoundStageInsertion implements ProcessingInsertion {
 
-    CommandStageInsertion() {}
+    SoundStageInsertion() {}
 
-    public static CommandStageInsertion INIT = new CommandStageInsertion();
+    public static SoundStageInsertion INIT = new SoundStageInsertion();
 
     @Override
     public StageConsumer<?> build(Platform platform, ConfigController configController) {
-        return new CommandStageConsumer(platform.userRegistry());
+        return new SoundStageConsumer(platform.userRegistry());
     }
 
     @Override
     public String identifier() {
-        return "command";
+        return "sound";
     }
 
     @Override
     public Stage deserialize(Map<String, FlexibleType> map) throws BadValueException {
-        String runAsConsole = Interpret.getEllusive("run_as_console",map,FlexibleType::getString, Interpret.NO_STRING);
-        String runAsPlayer = Interpret.getEllusive("run_as_player",map,FlexibleType::getString, Interpret.NO_STRING);
 
-        return new CommandStage(runAsConsole,runAsPlayer);
+        String sound = Interpret.getRequired("sound_name",map,FlexibleType::getString);
+        float volume = Interpret.getEllusive("volume",map,FlexibleType::getFloat,1.0f);
+        float pitch = Interpret.getEllusive("pitch",map,FlexibleType::getFloat,1.0f);
+
+        return new SoundStage(sound,volume,pitch);
     }
 }

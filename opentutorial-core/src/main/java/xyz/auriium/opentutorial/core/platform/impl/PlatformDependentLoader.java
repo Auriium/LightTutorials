@@ -1,11 +1,12 @@
 package xyz.auriium.opentutorial.core.platform.impl;
 
-import xyz.auriium.beetle.utility.aspect.KeyCloseable;
 import xyz.auriium.beetle.utility.aspect.UUIDCloseable;
 import xyz.auriium.opentutorial.core.config.templates.SerializerRegistry;
 import xyz.auriium.opentutorial.core.config.templates.impl.CommonSerializerRegistry;
 import xyz.auriium.opentutorial.core.event.hook.CommonHookRegistry;
 import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
+import xyz.auriium.opentutorial.core.platform.Platform;
+import xyz.auriium.opentutorial.core.platform.PlatformDependentModule;
 import xyz.auriium.opentutorial.core.platform.PluginExpose;
 import xyz.auriium.opentutorial.core.platform.base.Loadable;
 import xyz.auriium.opentutorial.core.tutorial.CommonConsumerRegistry;
@@ -13,6 +14,9 @@ import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
 
 import java.util.UUID;
 
+/**
+ * Typical loader implementation
+ */
 public class PlatformDependentLoader implements Loadable, PluginExpose, UUIDCloseable {
 
     private final Platform platform;

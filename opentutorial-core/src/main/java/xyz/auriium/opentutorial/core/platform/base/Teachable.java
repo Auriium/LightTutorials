@@ -20,9 +20,14 @@ public interface Teachable {
     void teleport(int x, int y, int z);
     boolean teleport(int x, int y, int z, String world);
 
+    void teleport(int x, int y, int z, int pitch, int yaw);
+    boolean teleport(int x, int y, int z, int pitch, int yaw, String world);
+
     void setInvisible(boolean invisible);
 
     void setState(String state, boolean bool);
     boolean hasState(String state);
+
+    void playSound(String sound, float volume, float pitch);
 
 }

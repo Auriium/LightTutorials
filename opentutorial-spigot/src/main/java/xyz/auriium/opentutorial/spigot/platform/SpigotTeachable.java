@@ -71,6 +71,22 @@ public class SpigotTeachable implements Teachable {
     }
 
     @Override
+    public void teleport(int x, int y, int z, int pitch, int yaw) {
+        player.teleport(new Location(player.getWorld(), x, y, z, pitch, yaw));
+    }
+
+    @Override
+    public boolean teleport(int x, int y, int z, int pitch, int yaw, String world) {
+        World worldIn = player.getServer().getWorld(world);
+
+        if (worldIn == null) return false;
+
+        player.teleport(new Location(worldIn, x, y, z, pitch, yaw));
+
+        return true;
+    }
+
+    @Override
     public void setInvisible(boolean invisible) {
         player.setInvisible(invisible);
     }
@@ -84,6 +100,11 @@ public class SpigotTeachable implements Teachable {
     public boolean hasState(String state) {
         //TODO
         return false;
+    }
+
+    @Override
+    public void playSound(String sound, float volume, float pitch) {
+        player.playSound(player.getLocation(),sound,volume,pitch);
     }
 
     String color(String string) {

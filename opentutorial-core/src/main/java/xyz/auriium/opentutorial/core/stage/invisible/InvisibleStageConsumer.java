@@ -8,6 +8,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
+
 public class InvisibleStageConsumer implements StageConsumer<InvisibleStage> {
 
     private final TeachableRegistry registry;

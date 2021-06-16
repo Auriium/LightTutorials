@@ -14,6 +14,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * An await consumer that handles AwaitStages - Basically just an {@link AbstractAwaitConsumer} with a time limit.
+ * @param <T> await stage to handle
+ * @param <E> event to handle
+ */
 public abstract class AbstractDelayConsumer<T extends AwaitStage,E extends Event> implements AwaitConsumer<T,E> {
 
     private final OptionalMap<UUID,T> existenceCache = new DelegatingOptionalMap<>();
