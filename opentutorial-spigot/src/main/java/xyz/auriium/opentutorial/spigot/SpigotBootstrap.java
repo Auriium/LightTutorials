@@ -3,6 +3,7 @@ package xyz.auriium.opentutorial.spigot;
 import co.aikar.commands.BukkitCommandManager;
 import co.aikar.commands.MessageType;
 import org.bukkit.ChatColor;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
@@ -13,24 +14,24 @@ public class SpigotBootstrap extends JavaPlugin {
 
     private final SpigotPlatformLauncher launcher = new SpigotPlatformLauncher(this);
 
-    //This is a necessity to allow reloads with how bukkit plugin loading is terribly designed.
-    private volatile Platform platform;
-    private volatile PlatformDependentLoader loader;
+    private volatile PlatformDependentLoader<Player> loader;
 
     @Override
     public void onEnable() {
         //Initialize platform and loader
-        platform = launcher.launch();
+        //This is a necessity to allow reloads with how bukkit plugin loading is terribly designed.
+        Platform<Player> platform = launcher.launch();
         loader = PlatformDependentLoader.build(platform);
 
         //Load current loader instance!
         loader.load();
 
         //Initialize hacky acf bullshit (to be replaced with Branch!)
-        BukkitCommandManager manager = new BukkitCommandManager(this);
-        TutorialCommand command = new TutorialCommand(loader);
 
-        manager.getCommandContexts().registerContext(Template.class, new ACFTemplateContext(loader));
+        BukkitCommandManager manager = new BukkitCommandManager(this);
+        TutorialCommand command = new TutorialCommand(platform.userRegistry(), loader);
+
+        manager.getCommandContexts().registerContext(Template.class, new ACFTemplateContext(platform.userRegistry(), loader));
         manager.getCommandCompletions().registerCompletion("templates",s -> loader.getModule().templateController().getTemplateNames());
 
         manager.setFormat(MessageType.HELP, ChatColor.GRAY, ChatColor.BLUE, ChatColor.GRAY);

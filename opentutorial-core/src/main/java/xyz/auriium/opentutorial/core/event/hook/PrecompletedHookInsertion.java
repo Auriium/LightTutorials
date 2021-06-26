@@ -14,7 +14,7 @@ public class PrecompletedHookInsertion implements HookInsertion{
     }
 
     @Override
-    public InnerEventConsumer<?> build(Platform platform, TutorialController tutorialController, ConfigController configController) {
+    public InnerEventConsumer<?> build(Platform<?> platform, TutorialController tutorialController, ConfigController configController) {
         return hook;
     }
 }

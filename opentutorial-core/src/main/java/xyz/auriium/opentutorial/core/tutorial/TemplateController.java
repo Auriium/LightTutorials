@@ -1,7 +1,5 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
-import xyz.auriium.opentutorial.core.tutorial.impl.CommonTemplateController;
-
 import java.util.Collection;
 import java.util.Optional;
 

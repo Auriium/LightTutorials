@@ -17,7 +17,7 @@ public class TeleportStageInsertion implements ProcessingInsertion {
     public static TeleportStageInsertion INIT = new TeleportStageInsertion();
 
     @Override
-    public StageConsumer<?> build(Platform platform, ConfigController configController) {
+    public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
         return new TeleportStageConsumer(platform.userRegistry());
     }
 

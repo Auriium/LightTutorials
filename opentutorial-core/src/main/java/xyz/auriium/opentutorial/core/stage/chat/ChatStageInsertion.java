@@ -17,7 +17,7 @@ public class ChatStageInsertion implements ProcessingInsertion {
     public static ChatStageInsertion INIT = new ChatStageInsertion();
 
     @Override
-    public StageConsumer<?> build(Platform platform, ConfigController configController) {
+    public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
         return new ChatStageConsumer(platform.userRegistry());
     }
 

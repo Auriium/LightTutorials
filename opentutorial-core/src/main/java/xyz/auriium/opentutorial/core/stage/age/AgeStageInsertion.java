@@ -17,7 +17,7 @@ public class AgeStageInsertion implements ProcessingInsertion {
     public static AgeStageInsertion INIT = new AgeStageInsertion();
 
     @Override
-    public StageConsumer<?> build(Platform platform, ConfigController configController) {
+    public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
         return new AgeStageConsumer(platform.scheduler(), platform.userRegistry(), configController.getMessageConfig());
     }
 

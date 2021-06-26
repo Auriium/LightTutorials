@@ -6,8 +6,6 @@ import space.arim.dazzleconf.error.InvalidConfigException;
 import space.arim.dazzleconf.ext.snakeyaml.CommentMode;
 import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlConfigurationFactory;
 import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlOptions;
-import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
-import xyz.auriium.opentutorial.core.config.ConfigHolder;
 
 import java.io.IOException;
 import java.io.InputStream;

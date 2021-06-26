@@ -1,10 +1,9 @@
 package xyz.auriium.opentutorial.core.stage.clickblock;
 
-import xyz.auriium.opentutorial.core.event.chat.PlatformlessBlockEvent;
-import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
-import xyz.auriium.opentutorial.core.config.ConfigHolder;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
+import xyz.auriium.opentutorial.core.event.chat.PlatformlessBlockEvent;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
+import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
 

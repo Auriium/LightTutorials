@@ -1,6 +1,5 @@
 package xyz.auriium.opentutorial.core.config.templates;
 
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 
 import java.util.Optional;

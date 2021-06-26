@@ -18,7 +18,7 @@ public class SoundStageInsertion implements ProcessingInsertion {
     public static SoundStageInsertion INIT = new SoundStageInsertion();
 
     @Override
-    public StageConsumer<?> build(Platform platform, ConfigController configController) {
+    public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
         return new SoundStageConsumer(platform.userRegistry());
     }
 

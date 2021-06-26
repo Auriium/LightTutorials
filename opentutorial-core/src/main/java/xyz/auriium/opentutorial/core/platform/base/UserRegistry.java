@@ -23,6 +23,13 @@ public interface UserRegistry<T> extends TeachableRegistry {
      */
     Collection<T> getAllAccessible();
 
+    /**
+     * Returns a wrapped user
+     * @param user the wrapped user
+     * @return wrapped user
+     */
+    Teachable wrapUser(T user);
+
 
 
 }

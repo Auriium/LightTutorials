@@ -19,7 +19,7 @@ public class PlainKeywordInsertion implements ProcessingInsertion {
     public static PlainKeywordInsertion INIT = new PlainKeywordInsertion();
 
     @Override
-    public StageConsumer<?> build(Platform platform, ConfigController configController) {
+    public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
         return new PlainKeywordStageConsumer(platform.scheduler(), platform.userRegistry(), configController.getMessageConfig());
     }
 

@@ -22,7 +22,7 @@ public interface InnerEventBus {
     <E extends AssociatedEvent> void fire(E event);
     <E extends Event> void fire(E event, UUID tutorial);
 
-    static InnerEventBus load(Platform platform, HookRegistry hookRegistry, TutorialController tutorialController, ConfigController configController) {
+    static InnerEventBus load(Platform<?> platform, HookRegistry hookRegistry, TutorialController tutorialController, ConfigController configController) {
         MultiMap<Class<?>,InnerEventConsumer<?>> map = new DelegatingMultiMap<>();
 
         for (HookInsertion insertion : hookRegistry.getInsertions()) {

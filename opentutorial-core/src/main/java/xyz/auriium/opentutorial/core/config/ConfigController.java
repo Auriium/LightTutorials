@@ -7,9 +7,9 @@ import xyz.auriium.opentutorial.core.config.impl.CommonConfigController;
 import xyz.auriium.opentutorial.core.config.impl.ResourceHelper;
 import xyz.auriium.opentutorial.core.config.impl.WrappingHelper;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfSerializer;
+import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.config.templates.SerializerRegistry;
 import xyz.auriium.opentutorial.core.config.templates.TutorialsConfig;
-import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.config.templates.impl.StageConfSerializer;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.base.Colorer;
@@ -24,7 +24,7 @@ public interface ConfigController {
     GeneralConfig getGeneralConfig();
     TutorialsConfig getTutorialsConfig();
 
-    static ConfigController load(Platform platform, SerializerRegistry registry) {
+    static ConfigController load(Platform<?> platform, SerializerRegistry registry) {
         Path directory = platform.configPath();
         Colorer colorer = platform.colorer();
 

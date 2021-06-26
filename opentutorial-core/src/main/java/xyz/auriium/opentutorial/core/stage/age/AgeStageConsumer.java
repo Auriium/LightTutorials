@@ -1,11 +1,11 @@
 package xyz.auriium.opentutorial.core.stage.age;
 
-import xyz.auriium.opentutorial.core.event.chat.PlatformlessChatEvent;
-import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
-import xyz.auriium.opentutorial.core.platform.base.Teachable;
+import xyz.auriium.opentutorial.core.event.chat.PlatformlessChatEvent;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
+import xyz.auriium.opentutorial.core.platform.base.Teachable;
+import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
 

@@ -17,16 +17,16 @@ import java.util.UUID;
 /**
  * Typical loader implementation
  */
-public class PlatformDependentLoader implements Loadable, PluginExpose, UUIDCloseable {
+public class PlatformDependentLoader<T> implements Loadable, PluginExpose, UUIDCloseable {
 
-    private final Platform platform;
+    private final Platform<T> platform;
     private final SerializerRegistry serializerRegistry;
     private final ConsumerRegistry consumerRegistry;
     private final HookRegistry hookRegistry;
 
     private volatile PlatformDependentModule module;
 
-    public PlatformDependentLoader(Platform platform, SerializerRegistry serializerRegistry, ConsumerRegistry consumerRegistry, HookRegistry hookRegistry) {
+    public PlatformDependentLoader(Platform<T> platform, SerializerRegistry serializerRegistry, ConsumerRegistry consumerRegistry, HookRegistry hookRegistry) {
         this.platform = platform;
         this.serializerRegistry = serializerRegistry;
         this.consumerRegistry = consumerRegistry;
@@ -67,8 +67,8 @@ public class PlatformDependentLoader implements Loadable, PluginExpose, UUIDClos
      * @param platform the platform
      * @return reloader
      */
-    public static PlatformDependentLoader build(Platform platform) {
-        return new PlatformDependentLoader(platform, CommonSerializerRegistry.defaults(), CommonConsumerRegistry.defaults(), CommonHookRegistry.defaults());
+    public static <T> PlatformDependentLoader<T> build(Platform<T> platform) {
+        return new PlatformDependentLoader<>(platform, CommonSerializerRegistry.defaults(), CommonConsumerRegistry.defaults(), CommonHookRegistry.defaults());
     }
 
     @Override

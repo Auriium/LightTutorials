@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.data;
 
 import xyz.auriium.beetle.datacore.DataCore;
-import java.sql.PreparedStatement;
+
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 

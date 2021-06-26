@@ -6,8 +6,6 @@ import space.arim.dazzleconf.ext.snakeyaml.CommentMode;
 import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlConfigurationFactory;
 import space.arim.dazzleconf.ext.snakeyaml.SnakeYamlOptions;
 import space.arim.dazzleconf.helper.ConfigurationHelper;
-import xyz.auriium.opentutorial.core.LoadFailureException;
-import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
 
 import java.io.IOException;
 import java.nio.file.Path;

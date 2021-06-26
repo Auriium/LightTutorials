@@ -15,6 +15,6 @@ public interface ConsumerInsertion {
      * @param configController the controller
      * @return a new stageconsumer per reload
      */
-    StageConsumer<?> build(Platform platform, ConfigController configController);
+    StageConsumer<?> build(Platform<?> platform, ConfigController configController);
 
 }

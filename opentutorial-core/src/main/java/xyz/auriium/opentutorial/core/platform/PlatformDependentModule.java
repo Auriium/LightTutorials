@@ -24,7 +24,7 @@ public interface PlatformDependentModule extends UUIDCloseable {
     TemplateController templateController();
     InnerEventBus eventBus();
 
-    static PlatformDependentModule load(Platform platform, SerializerRegistry serializerRegistry, ConsumerRegistry consumerRegistry, HookRegistry hookRegistry) {
+    static PlatformDependentModule load(Platform<?> platform, SerializerRegistry serializerRegistry, ConsumerRegistry consumerRegistry, HookRegistry hookRegistry) {
         ConfigController configController = ConfigController.load(platform,serializerRegistry);
         ConsumerCentralizer consumerCentralizer = ConsumerCentralizer.load(platform,consumerRegistry,hookRegistry,configController);
         TutorialController tutorialController = new CommonTutorialController(consumerCentralizer);

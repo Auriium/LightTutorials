@@ -1,7 +1,6 @@
 package xyz.auriium.opentutorial.core.stage.plainkeyword;
 
 import xyz.auriium.opentutorial.core.tutorial.stage.AwaitStage;
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 
 import java.util.List;
 

@@ -18,7 +18,7 @@ public class DelayStageInsertion implements ProcessingInsertion {
 
 
     @Override
-    public StageConsumer<?> build(Platform platform, ConfigController configController) {
+    public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
         return new DelayStageConsumer(platform.scheduler());
     }
 

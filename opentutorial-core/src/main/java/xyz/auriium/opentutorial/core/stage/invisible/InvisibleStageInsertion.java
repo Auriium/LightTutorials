@@ -17,7 +17,7 @@ public class InvisibleStageInsertion implements ProcessingInsertion {
     public static InvisibleStageInsertion INIT = new InvisibleStageInsertion();
 
     @Override
-    public StageConsumer<?> build(Platform platform, ConfigController configController) {
+    public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
         return new InvisibleStageConsumer(platform.userRegistry());
     }
 

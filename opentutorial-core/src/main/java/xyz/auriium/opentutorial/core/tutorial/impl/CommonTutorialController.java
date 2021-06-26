@@ -1,11 +1,11 @@
 package xyz.auriium.opentutorial.core.tutorial.impl;
 
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
+import xyz.auriium.opentutorial.core.tutorial.Template;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
-import xyz.auriium.opentutorial.core.tutorial.Template;
 
 import java.util.*;
 

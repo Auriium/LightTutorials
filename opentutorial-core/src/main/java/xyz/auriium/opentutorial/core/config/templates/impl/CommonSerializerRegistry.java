@@ -7,10 +7,10 @@ import xyz.auriium.opentutorial.core.stage.clickblock.ClickBlockInsertion;
 import xyz.auriium.opentutorial.core.stage.command.CommandStageInsertion;
 import xyz.auriium.opentutorial.core.stage.delay.DelayStageInsertion;
 import xyz.auriium.opentutorial.core.stage.invisible.InvisibleStageInsertion;
+import xyz.auriium.opentutorial.core.stage.lock.LockableStageInsertion;
 import xyz.auriium.opentutorial.core.stage.plainkeyword.PlainKeywordInsertion;
 import xyz.auriium.opentutorial.core.stage.playsound.SoundStageInsertion;
 import xyz.auriium.opentutorial.core.stage.teleport.TeleportStageInsertion;
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 
 import java.util.HashMap;
@@ -42,6 +42,7 @@ public class CommonSerializerRegistry implements SerializerRegistry {
                 .register(InvisibleStageInsertion.INIT)
                 .register(PlainKeywordInsertion.INIT)
                 .register(SoundStageInsertion.INIT)
+                .register(new LockableStageInsertion())
                 .register(TeleportStageInsertion.INIT);
     }
 }

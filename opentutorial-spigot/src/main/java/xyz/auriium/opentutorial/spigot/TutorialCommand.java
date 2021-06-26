@@ -6,11 +6,12 @@ import co.aikar.commands.annotation.*;
 import org.bukkit.entity.Player;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.event.InnerEventBus;
+import xyz.auriium.opentutorial.core.event.chat.ClickableEvent;
+import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
 import xyz.auriium.opentutorial.core.tutorial.Template;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.spigot.platform.SpigotTeachable;
-import xyz.auriium.opentutorial.core.event.chat.ClickableEvent;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,11 +23,14 @@ import java.util.UUID;
 @CommandAlias("tutorial|opentutorial")
 public class TutorialCommand extends BaseCommand {
 
-    private final PlatformDependentLoader reloader;
+    private final UserRegistry<Player> userRegistry;
+    private final PlatformDependentLoader<Player> reloader;
 
-    public TutorialCommand(PlatformDependentLoader reloader) {
+    public TutorialCommand(UserRegistry<Player> userRegistry, PlatformDependentLoader<Player> reloader) {
+        this.userRegistry = userRegistry;
         this.reloader = reloader;
     }
+
 
     @HelpCommand
     @CommandPermission("opentutorial.help")
@@ -42,7 +46,7 @@ public class TutorialCommand extends BaseCommand {
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
         Date date = new Date();
 
-        reloader.getModule().configController().getMessageConfig().reloadMessage().send(new SpigotTeachable(player), formatter.format(date));
+        reloader.getModule().configController().getMessageConfig().reloadMessage().send(userRegistry.wrapUser(player), formatter.format(date));
     }
 
     @Subcommand("play")
@@ -54,7 +58,7 @@ public class TutorialCommand extends BaseCommand {
         TutorialController tutorialController = reloader.getModule().tutorialController();
 
         if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
-            reloader.getModule().configController().getMessageConfig().alreadyInTutorialMessage().send(new SpigotTeachable(user));
+            reloader.getModule().configController().getMessageConfig().alreadyInTutorialMessage().send(userRegistry.wrapUser(sender));
             return;
         }
 
@@ -71,11 +75,11 @@ public class TutorialCommand extends BaseCommand {
         int subpoint = point - 1;
 
         if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
-            reloader.getModule().configController().getMessageConfig().alreadyInTutorialMessage().send(new SpigotTeachable(user));
+            reloader.getModule().configController().getMessageConfig().alreadyInTutorialMessage().send(userRegistry.wrapUser(sender));
             return;
         }
 
-        if (template.stageNotPresent(subpoint)) reloader.getModule().configController().getMessageConfig().invalidStageMessage().send(new SpigotTeachable(user),point,template);
+        if (template.stageNotPresent(subpoint)) reloader.getModule().configController().getMessageConfig().invalidStageMessage().send(userRegistry.wrapUser(sender),point,template);
         tutorialController.createStage(template, user.getUniqueId(), subpoint);
 
     }
@@ -90,7 +94,7 @@ public class TutorialCommand extends BaseCommand {
 
         tutorialController.getByUUID(uuid).ifPresentOrElse(
                 tutorial -> bus.fire(new ClickableEvent(option, sender.getUniqueId()),tutorial),
-                () -> messageConfig.notInTutorialMessage().send(new SpigotTeachable(sender))
+                () -> messageConfig.notInTutorialMessage().send(userRegistry.wrapUser(sender))
         );
 
 
@@ -105,7 +109,7 @@ public class TutorialCommand extends BaseCommand {
         MessageConfig messageConfig = reloader.getModule().configController().getMessageConfig();
 
         if (tutorialController.getByUUID(uuid).isEmpty()) {
-            messageConfig.notInTutorialMessage().send(new SpigotTeachable(sender));
+            messageConfig.notInTutorialMessage().send(userRegistry.wrapUser(sender));
             return;
         }
 

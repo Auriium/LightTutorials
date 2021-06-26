@@ -34,7 +34,7 @@ public interface ConsumerCentralizer extends KeyCloseable<UUID> {
      * @param configController config controller
      * @return a new common consumer centralizer
      */
-    static ConsumerCentralizer load(Platform platform, ConsumerRegistry registry, HookRegistry hookRegistry, ConfigController configController) {
+    static ConsumerCentralizer load(Platform<?> platform, ConsumerRegistry registry, HookRegistry hookRegistry, ConfigController configController) {
         Map<Class<? extends Stage>, StageConsumer<? extends Stage>> map = new HashMap<>();
 
         registry.getInsertions().forEach(insertion -> {

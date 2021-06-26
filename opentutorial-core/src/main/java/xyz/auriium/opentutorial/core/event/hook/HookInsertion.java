@@ -7,6 +7,6 @@ import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 
 public interface HookInsertion {
 
-    InnerEventConsumer<?> build(Platform platform, TutorialController tutorialController, ConfigController configController);
+    InnerEventConsumer<?> build(Platform<?> platform, TutorialController tutorialController, ConfigController configController);
 
 }

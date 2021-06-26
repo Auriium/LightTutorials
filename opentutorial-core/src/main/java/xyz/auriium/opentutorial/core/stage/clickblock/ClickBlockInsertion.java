@@ -17,7 +17,7 @@ public class ClickBlockInsertion implements ProcessingInsertion {
     public static ClickBlockInsertion INIT = new ClickBlockInsertion();
 
     @Override
-    public StageConsumer<?> build(Platform platform, ConfigController configController) {
+    public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
         return new ClickBlockConsumer(platform.scheduler(), platform.userRegistry(), configController.getMessageConfig());
     }
 

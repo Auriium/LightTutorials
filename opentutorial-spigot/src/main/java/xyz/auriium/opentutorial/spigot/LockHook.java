@@ -4,12 +4,13 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
+import xyz.auriium.opentutorial.core.stage.lock.Lockable;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
-public class LockHook implements Listener {
+public class LockHook implements Listener, Lockable {
 
     private final Set<UUID> lockMovement = new HashSet<>();
     private final Set<UUID> lockView = new HashSet<>();
@@ -46,5 +47,36 @@ public class LockHook implements Listener {
         }
 
 
+    }
+
+    @Override
+    public void setLockedMovement(UUID uuid, Boolean locked) {
+        if (locked) {
+            lockMovement.add(uuid);
+        } else {
+            lockMovement.remove(uuid);
+        }
+
+    }
+
+    @Override
+    public void setLockedView(UUID uuid, Boolean locked) {
+        if (locked) {
+            lockView.add(uuid);
+        } else {
+            lockView.remove(uuid);
+        }
+    }
+
+    @Override
+    public void removeOne(UUID uuid) {
+        lockMovement.remove(uuid);
+        lockView.remove(uuid);
+    }
+
+    @Override
+    public void removeAll() {
+        lockView.clear();
+        lockMovement.clear();
     }
 }
