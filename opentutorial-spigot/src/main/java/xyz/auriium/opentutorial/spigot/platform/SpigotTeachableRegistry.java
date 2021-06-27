@@ -40,7 +40,7 @@ public class SpigotTeachableRegistry implements UserRegistry<Player> {
 
     @Override
     public Collection<Player> getAllAccessible() {
-        return (Collection<Player>) server.getOnlinePlayers();
+        return (Collection<Player>) server.getOnlinePlayers(); //this is not my fault.
     }
 
     @Override

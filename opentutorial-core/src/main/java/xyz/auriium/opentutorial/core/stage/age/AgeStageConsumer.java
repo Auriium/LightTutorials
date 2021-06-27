@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.stage.age;
 
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
-import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
+import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.event.chat.PlatformlessChatEvent;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
 import xyz.auriium.opentutorial.core.platform.base.Teachable;

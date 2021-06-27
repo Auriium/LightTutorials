@@ -3,6 +3,7 @@ package xyz.auriium.opentutorial.core.tutorial;
 import xyz.auriium.beetle.utility.aspect.KeyCloseable;
 import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
+import xyz.auriium.opentutorial.core.insertion.InsertionRegistry;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
@@ -34,10 +35,10 @@ public interface ConsumerCentralizer extends KeyCloseable<UUID> {
      * @param configController config controller
      * @return a new common consumer centralizer
      */
-    static ConsumerCentralizer load(Platform<?> platform, ConsumerRegistry registry, HookRegistry hookRegistry, ConfigController configController) {
+    static ConsumerCentralizer load(Platform<?> platform, InsertionRegistry registry, HookRegistry hookRegistry, ConfigController configController) {
         Map<Class<? extends Stage>, StageConsumer<? extends Stage>> map = new HashMap<>();
 
-        registry.getInsertions().forEach(insertion -> {
+        registry.getAllInsertions().forEach(insertion -> {
             StageConsumer<?> consumer = insertion.build(platform, configController);
 
             map.put(consumer.stageClass(),consumer);

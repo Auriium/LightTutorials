@@ -1,16 +1,14 @@
 package xyz.auriium.opentutorial.core.platform.impl;
 
 import xyz.auriium.beetle.utility.aspect.UUIDCloseable;
-import xyz.auriium.opentutorial.core.config.templates.SerializerRegistry;
-import xyz.auriium.opentutorial.core.config.templates.impl.CommonSerializerRegistry;
 import xyz.auriium.opentutorial.core.event.hook.CommonHookRegistry;
 import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
+import xyz.auriium.opentutorial.core.insertion.CommonInsertionRegistry;
+import xyz.auriium.opentutorial.core.insertion.InsertionRegistry;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.PlatformDependentModule;
 import xyz.auriium.opentutorial.core.platform.PluginExpose;
 import xyz.auriium.opentutorial.core.platform.base.Loadable;
-import xyz.auriium.opentutorial.core.tutorial.CommonConsumerRegistry;
-import xyz.auriium.opentutorial.core.tutorial.ConsumerRegistry;
 
 import java.util.UUID;
 
@@ -20,18 +18,17 @@ import java.util.UUID;
 public class PlatformDependentLoader<T> implements Loadable, PluginExpose, UUIDCloseable {
 
     private final Platform<T> platform;
-    private final SerializerRegistry serializerRegistry;
-    private final ConsumerRegistry consumerRegistry;
+    private final InsertionRegistry insertionRegistry;
     private final HookRegistry hookRegistry;
 
     private volatile PlatformDependentModule module;
 
-    public PlatformDependentLoader(Platform<T> platform, SerializerRegistry serializerRegistry, ConsumerRegistry consumerRegistry, HookRegistry hookRegistry) {
+    public PlatformDependentLoader(Platform<T> platform, InsertionRegistry insertionRegistry, HookRegistry hookRegistry) {
         this.platform = platform;
-        this.serializerRegistry = serializerRegistry;
-        this.consumerRegistry = consumerRegistry;
+        this.insertionRegistry = insertionRegistry;
         this.hookRegistry = hookRegistry;
     }
+
 
     @Override
     public void load() {
@@ -39,7 +36,7 @@ public class PlatformDependentLoader<T> implements Loadable, PluginExpose, UUIDC
             module.close();
         }
 
-        module = PlatformDependentModule.load(platform,serializerRegistry,consumerRegistry,hookRegistry);
+        module = PlatformDependentModule.load(platform,insertionRegistry,hookRegistry);
     }
 
     public PlatformDependentModule getModule() {
@@ -53,13 +50,8 @@ public class PlatformDependentLoader<T> implements Loadable, PluginExpose, UUIDC
     }
 
     @Override
-    public ConsumerRegistry getConsumerRegistry() {
-        return consumerRegistry;
-    }
-
-    @Override
-    public SerializerRegistry getSerializerRegistry() {
-        return serializerRegistry;
+    public InsertionRegistry getInsertionRegistry() {
+        return insertionRegistry;
     }
 
     /**
@@ -68,7 +60,7 @@ public class PlatformDependentLoader<T> implements Loadable, PluginExpose, UUIDC
      * @return reloader
      */
     public static <T> PlatformDependentLoader<T> build(Platform<T> platform) {
-        return new PlatformDependentLoader<>(platform, CommonSerializerRegistry.defaults(), CommonConsumerRegistry.defaults(), CommonHookRegistry.defaults());
+        return new PlatformDependentLoader<>(platform, CommonInsertionRegistry.defaults(), CommonHookRegistry.defaults());
     }
 
     @Override

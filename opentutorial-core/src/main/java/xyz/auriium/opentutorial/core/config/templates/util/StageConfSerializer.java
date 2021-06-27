@@ -1,21 +1,21 @@
-package xyz.auriium.opentutorial.core.config.templates.impl;
+package xyz.auriium.opentutorial.core.config.templates.util;
 
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.Decomposer;
 import space.arim.dazzleconf.serialiser.FlexibleType;
 import space.arim.dazzleconf.serialiser.ValueSerialiser;
-import xyz.auriium.opentutorial.core.config.templates.SerializerRegistry;
+import xyz.auriium.opentutorial.core.insertion.InsertionRegistry;
+import xyz.auriium.opentutorial.core.tutorial.stage.ProcessingInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
-import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 
 import java.util.Map;
 import java.util.Optional;
 
 public class StageConfSerializer implements ValueSerialiser<Stage> {
 
-    private final SerializerRegistry serializerRegistry;
+    private final InsertionRegistry serializerRegistry;
 
-    public StageConfSerializer(SerializerRegistry serializerRegistry) {
+    public StageConfSerializer(InsertionRegistry serializerRegistry) {
         this.serializerRegistry = serializerRegistry;
     }
 
@@ -31,7 +31,7 @@ public class StageConfSerializer implements ValueSerialiser<Stage> {
         String type = Optional.ofNullable(stageConfigMap.get("type")).orElseThrow(() -> new BadValueException.Builder().key("type").message("Stage missing value for type! Add `type:` to the stage!")
                 .build()).getString();
 
-        StageInsertion serializer = serializerRegistry.getSerializer(type).orElseThrow(() -> new BadValueException.Builder().key(type).message("Could not find a stage with that type!").build());
+        ProcessingInsertion serializer = serializerRegistry.getInsertion(type).orElseThrow(() -> new BadValueException.Builder().key(type).message("Could not find a stage with that type!").build());
 
         return serializer.deserialize(stageConfigMap);
     }

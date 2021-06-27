@@ -3,7 +3,7 @@ package xyz.auriium.opentutorial.core.stage.lock;
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.opentutorial.core.config.ConfigController;
-import xyz.auriium.opentutorial.core.config.templates.impl.Interpret;
+import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.tutorial.stage.ProcessingInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
