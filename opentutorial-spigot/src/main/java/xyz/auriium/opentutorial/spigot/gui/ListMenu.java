@@ -14,6 +14,8 @@ import xyz.auriium.opentutorial.spigot.util.SpigotItemBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import static xyz.auriium.opentutorial.spigot.gui.ChatUtil.color;
+
 public class ListMenu implements GUIProducer{
 
     private final PlatformDependentLoader<Player> loader;
@@ -24,17 +26,17 @@ public class ListMenu implements GUIProducer{
 
     @Override
     public ChestGui produce() {
-        ChestGui gui = new ChestGui(6, "&9Open&7Tutorial &7&l>> &7All Tutorials");
+        ChestGui gui = new ChestGui(6, color("&9Open&7Tutorial &7&l>> &0All Tutorials"));
         PaginatedPane pane = new PaginatedPane(0, 0, 9, 5);
 
         List<GuiItem> guiItems = new ArrayList<>();
 
         loader.getModule().templateController().getTemplates().forEach((name,template) -> {
             GuiItem item = new GuiItem(new SpigotItemBuilder(Material.ENDER_EYE)
-                    .setName("&7" + name)
-                    .addLoreLine("&7")
-                    .addLoreLine("&9Left-Click &7to play this tutorial!")
-                    .addLoreLine("&9Right-Click &7to open a new copy of this tutorial in the editor!")
+                    .setName(color("&7" + name.toUpperCase()))
+                    .addLoreLine(color("&7"))
+                    .addLoreLine(color("&9Left-Click &7to play this tutorial!"))
+                    .addLoreLine(color("&9Right-Click &7to open a new copy in the editor!"))
                     .toItemStack(), event -> {
 
                 if (event.isLeftClick()) {
@@ -61,7 +63,10 @@ public class ListMenu implements GUIProducer{
 
             if (pane.getPage() == 0) {
                 back.setVisible(false);
+            }
 
+            if (pane.getPages() <= 1) {
+                back.setVisible(false);
             }
 
             forward.setVisible(true);
