@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.core.stage.lock;
 
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
 
 public class LockableStage implements Stage {
 

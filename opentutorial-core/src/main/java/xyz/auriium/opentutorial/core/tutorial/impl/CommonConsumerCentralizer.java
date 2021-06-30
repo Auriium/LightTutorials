@@ -1,11 +1,11 @@
 package xyz.auriium.opentutorial.core.tutorial.impl;
 
+import xyz.auriium.opentutorial.api.construct.Stage;
 import xyz.auriium.opentutorial.core.event.Event;
 import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
 import xyz.auriium.opentutorial.core.event.hook.PrecompletedHookInsertion;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.stage.AwaitConsumer;
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
 import java.util.Map;

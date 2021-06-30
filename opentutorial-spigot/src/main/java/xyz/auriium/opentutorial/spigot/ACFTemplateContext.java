@@ -6,7 +6,7 @@ import co.aikar.commands.contexts.ContextResolver;
 import org.bukkit.entity.Player;
 import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
-import xyz.auriium.opentutorial.core.tutorial.Template;
+import xyz.auriium.opentutorial.api.construct.Template;
 
 public class ACFTemplateContext implements ContextResolver<Template, BukkitCommandExecutionContext> {
 

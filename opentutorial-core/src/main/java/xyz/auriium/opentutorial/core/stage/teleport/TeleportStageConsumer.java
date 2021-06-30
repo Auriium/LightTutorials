@@ -3,7 +3,7 @@ package xyz.auriium.opentutorial.core.stage.teleport;
 import xyz.auriium.opentutorial.core.StageFailureException;
 import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
-import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.api.construct.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.BasicStageConsumer;
 
 public class TeleportStageConsumer implements BasicStageConsumer<TeleportStage> {

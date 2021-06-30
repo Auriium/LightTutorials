@@ -1,6 +1,7 @@
 package xyz.auriium.opentutorial.core.platform.impl;
 
 import xyz.auriium.beetle.utility.aspect.UUIDCloseable;
+import xyz.auriium.opentutorial.api.OpenTutorial;
 import xyz.auriium.opentutorial.core.event.hook.CommonHookRegistry;
 import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
 import xyz.auriium.opentutorial.core.insertion.CommonInsertionRegistry;
@@ -39,6 +40,11 @@ public class PlatformDependentLoader<T> implements Loadable, PluginExpose, UUIDC
         module = PlatformDependentModule.load(platform,insertionRegistry,hookRegistry);
     }
 
+    public OpenTutorial getOT() {
+        return null;
+    }
+
+    @Deprecated
     public PlatformDependentModule getModule() {
         return module;
     }

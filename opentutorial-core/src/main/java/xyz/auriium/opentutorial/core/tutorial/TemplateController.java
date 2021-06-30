@@ -1,6 +1,9 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
+import xyz.auriium.opentutorial.api.construct.Template;
+
 import java.util.Collection;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -16,5 +19,6 @@ public interface TemplateController {
     Optional<Template> getByIdentifier(String identifier);
 
     Collection<String> getTemplateNames();
+    Map<String,Template> getTemplates();
 
 }

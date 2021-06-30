@@ -2,7 +2,7 @@ package xyz.auriium.opentutorial.core.stage.delay;
 
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
 import xyz.auriium.opentutorial.core.platform.base.SchedulerTask;
-import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.api.construct.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
 import java.util.HashMap;

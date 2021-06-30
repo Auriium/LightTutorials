@@ -9,8 +9,8 @@ import xyz.auriium.opentutorial.core.platform.impl.CommonDependentModule;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
-import xyz.auriium.opentutorial.core.tutorial.impl.CommonTemplateController;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonTutorialController;
+import xyz.auriium.opentutorial.core.tutorial.impl.ReduxTemplateController;
 
 /**
  * Module that describes all baseless (reloadable) constructs available to the plugin
@@ -30,7 +30,7 @@ public interface PlatformDependentModule extends UUIDCloseable {
 
 
         InnerEventBus innerEventBus = InnerEventBus.load(platform,hookRegistry,tutorialController,configController);
-        TemplateController templateController = new CommonTemplateController(configController.getTutorialsConfig());
+        TemplateController templateController = ReduxTemplateController.build(configController.getTutorialsConfig());
 
         return new CommonDependentModule(configController, consumerCentralizer,tutorialController,templateController,innerEventBus);
     }

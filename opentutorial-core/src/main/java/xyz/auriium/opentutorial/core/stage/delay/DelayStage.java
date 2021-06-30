@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.core.stage.delay;
 
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
 
 /**
  * Simple stage that makes tutorial wait DELAY's worth of ticks before proceeding

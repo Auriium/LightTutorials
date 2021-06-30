@@ -2,6 +2,7 @@ package xyz.auriium.opentutorial.core.tutorial.stage;
 
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
+import xyz.auriium.opentutorial.api.construct.Stage;
 import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.platform.Platform;
 

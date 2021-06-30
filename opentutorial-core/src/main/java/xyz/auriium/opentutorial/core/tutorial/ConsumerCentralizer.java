@@ -1,12 +1,12 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
 import xyz.auriium.beetle.utility.aspect.KeyCloseable;
+import xyz.auriium.opentutorial.api.construct.Stage;
 import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
 import xyz.auriium.opentutorial.core.insertion.InsertionRegistry;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.tutorial.impl.CommonConsumerCentralizer;
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
 import java.util.HashMap;

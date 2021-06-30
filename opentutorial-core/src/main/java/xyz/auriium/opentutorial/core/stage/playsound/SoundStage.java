@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.core.stage.playsound;
 
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
 
 /**
  * Stage that plays a certain sound key from the resource pack to the player.

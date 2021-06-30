@@ -1,5 +1,7 @@
 package xyz.auriium.opentutorial.core.tutorial.stage;
 
+import xyz.auriium.opentutorial.api.construct.Stage;
+
 import java.util.UUID;
 
 /**

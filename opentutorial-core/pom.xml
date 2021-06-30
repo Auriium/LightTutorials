@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>opentutorial</artifactId>
+        <artifactId>opentutorial-parent</artifactId>
         <groupId>xyz.auriium</groupId>
         <version>1.0.0-SNAPSHOT</version>
     </parent>
@@ -26,6 +26,12 @@
             <groupId>space.arim.dazzleconf</groupId>
             <artifactId>dazzleconf-ext-snakeyaml</artifactId>
             <version>1.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>xyz.auriium</groupId>
+            <artifactId>opentutorial-api</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

@@ -6,7 +6,7 @@ import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.tutorial.stage.ProcessingInsertion;
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
 import java.util.Map;

@@ -9,13 +9,16 @@ import xyz.auriium.opentutorial.core.event.InnerEventBus;
 import xyz.auriium.opentutorial.core.event.chat.ClickableEvent;
 import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
-import xyz.auriium.opentutorial.core.tutorial.Template;
+import xyz.auriium.opentutorial.api.construct.Template;
+import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
-import xyz.auriium.opentutorial.spigot.platform.SpigotTeachable;
+import xyz.auriium.opentutorial.spigot.gui.ListMenu;
+import xyz.auriium.opentutorial.spigot.gui.PreCreationMenu;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * What an ugly class - let's use branch!
@@ -26,11 +29,21 @@ public class TutorialCommand extends BaseCommand {
     private final UserRegistry<Player> userRegistry;
     private final PlatformDependentLoader<Player> reloader;
 
-    public TutorialCommand(UserRegistry<Player> userRegistry, PlatformDependentLoader<Player> reloader) {
+    private final ListMenu listMenu;
+    private final PreCreationMenu preCreationMenu;
+
+    public TutorialCommand(UserRegistry<Player> userRegistry, PlatformDependentLoader<Player> reloader, ListMenu listMenu, PreCreationMenu preCreationMenu) {
         this.userRegistry = userRegistry;
         this.reloader = reloader;
+        this.listMenu = listMenu;
+        this.preCreationMenu = preCreationMenu;
     }
 
+    @Subcommand("list")
+    @CommandPermission("opentutorial.list")
+    public void list(Player player) {
+        listMenu.produce().show(player);
+    }
 
     @HelpCommand
     @CommandPermission("opentutorial.help")
@@ -114,6 +127,20 @@ public class TutorialCommand extends BaseCommand {
         }
 
         tutorialController.cancelByUUID(uuid);
+    }
+
+    @Subcommand("graphical create")
+    @CommandPermission("opentutorial.graphical.create")
+    public void graphicalCreate(Player sender, String name, String permission) {
+
+        TemplateController templateController = reloader.getModule().templateController();
+
+        if (templateController.getTemplateNames().stream().map(String::toLowerCase).collect(Collectors.toSet()).contains(name.toLowerCase())) {
+            reloader.getModule().configController().getMessageConfig().templateExistsMessage().send(userRegistry.wrapUser(sender));
+            return;
+        }
+
+        preCreationMenu.produce().show(sender);
     }
 
 }

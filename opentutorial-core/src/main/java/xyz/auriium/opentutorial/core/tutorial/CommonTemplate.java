@@ -1,18 +1,16 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
+import xyz.auriium.opentutorial.api.construct.Template;
 
 import java.util.List;
 
-/**
- * Represents a full template of tutorial stages loaded on initialization that can be cloned and used to create a new tutorial
- */
-public class Template {
+public class CommonTemplate implements Template {
 
     private final String permission;
     private final List<Stage> stages;
 
-    public Template(String permission, List<Stage> stages) {
+    public CommonTemplate(String permission, List<Stage> stages) {
         this.permission = permission;
         this.stages = stages;
     }
@@ -33,4 +31,5 @@ public class Template {
     public boolean stagePresent(int point) {
         return point >= 0 && point < stages.size();
     }
+
 }

@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.core.stage.lock;
 
-import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.api.construct.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
 import java.util.UUID;

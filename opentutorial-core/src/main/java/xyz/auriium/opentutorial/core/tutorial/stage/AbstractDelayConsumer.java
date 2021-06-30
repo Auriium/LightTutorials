@@ -7,7 +7,7 @@ import xyz.auriium.opentutorial.core.event.Event;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
 import xyz.auriium.opentutorial.core.platform.base.SchedulerTask;
 import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
-import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.api.construct.Tutorial;
 
 import java.util.HashMap;
 import java.util.Map;

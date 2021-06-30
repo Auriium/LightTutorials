@@ -2,7 +2,7 @@ package xyz.auriium.opentutorial.core.stage.command;
 
 import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
-import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.api.construct.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.BasicStageConsumer;
 
 /**

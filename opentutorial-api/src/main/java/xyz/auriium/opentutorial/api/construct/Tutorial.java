@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.core.tutorial;
+package xyz.auriium.opentutorial.api.construct;
 
 import java.util.UUID;
 

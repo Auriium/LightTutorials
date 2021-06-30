@@ -1,8 +1,8 @@
 package xyz.auriium.opentutorial.core.tutorial.impl;
 
-import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.api.construct.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
 
 import java.util.Queue;
 import java.util.UUID;

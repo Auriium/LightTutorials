@@ -13,6 +13,10 @@ public interface MessageConfig {
     @ConfDefault.DefaultString("&9OpenTutorial &7> &c%s is not a valid template!")
     Message invalidTemplateMessage();
 
+    @ConfKey("messages.tutorials.template_already_exists")
+    @ConfDefault.DefaultString("&9OpenTutorial &7> &cA template already exists with that name!")
+    Message templateExistsMessage();
+
     @ConfKey("messages.tutorials.invalid_stage")
     @ConfDefault.DefaultString("&9OpenTutorial &7> &cNo stage found at index %d in tutorial %s!")
     Message invalidStageMessage();

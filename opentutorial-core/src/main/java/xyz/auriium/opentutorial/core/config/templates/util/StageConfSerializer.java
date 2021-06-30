@@ -6,7 +6,7 @@ import space.arim.dazzleconf.serialiser.FlexibleType;
 import space.arim.dazzleconf.serialiser.ValueSerialiser;
 import xyz.auriium.opentutorial.core.insertion.InsertionRegistry;
 import xyz.auriium.opentutorial.core.tutorial.stage.ProcessingInsertion;
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
 
 import java.util.Map;
 import java.util.Optional;

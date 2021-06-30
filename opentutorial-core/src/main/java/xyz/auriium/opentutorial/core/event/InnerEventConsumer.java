@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.core.event;
 
-import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.api.construct.Tutorial;
 
 public interface InnerEventConsumer<E extends Event> {
 

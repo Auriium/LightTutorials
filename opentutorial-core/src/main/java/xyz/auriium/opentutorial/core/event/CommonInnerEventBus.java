@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.event;
 
 import xyz.auriium.beetle.utility.map.multi.MultiMap;
-import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.api.construct.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.core.stage.chat;
 
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
 
 /**
  * Stage that sends multiple forms of user-interfacing to a corresponding user.

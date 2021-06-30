@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.core.stage.command;
 
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
 
 /**
  * Stage that runs commands as a player or as the console

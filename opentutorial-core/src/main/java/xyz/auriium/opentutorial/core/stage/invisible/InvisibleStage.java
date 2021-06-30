@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.stage.invisible;
 
 
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
 
 /*
  * Stage that marks the player as invisible to the server

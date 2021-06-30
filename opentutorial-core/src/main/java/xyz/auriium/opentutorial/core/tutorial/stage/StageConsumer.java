@@ -1,7 +1,8 @@
 package xyz.auriium.opentutorial.core.tutorial.stage;
 
 import xyz.auriium.beetle.utility.aspect.UUIDCloseable;
-import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.api.construct.Stage;
+import xyz.auriium.opentutorial.api.construct.Tutorial;
 
 /**
  * Represents a physical consumer of stage logic that handles when to progress to the next stage.

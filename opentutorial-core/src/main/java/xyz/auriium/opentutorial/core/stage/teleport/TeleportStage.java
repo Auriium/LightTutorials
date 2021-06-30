@@ -1,6 +1,6 @@
 package xyz.auriium.opentutorial.core.stage.teleport;
 
-import xyz.auriium.opentutorial.core.tutorial.stage.Stage;
+import xyz.auriium.opentutorial.api.construct.Stage;
 
 /**
  * Stage that teleports a player.

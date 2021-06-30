@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.stage.playsound;
 
 import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
-import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+import xyz.auriium.opentutorial.api.construct.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.stage.BasicStageConsumer;
 
 public class SoundStageConsumer implements BasicStageConsumer<SoundStage> {
