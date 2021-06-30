@@ -5,12 +5,12 @@ import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.platform.Platform;
-import xyz.auriium.opentutorial.core.tutorial.stage.ProcessingInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
 import java.util.Map;
 
-public class DelayStageInsertion implements ProcessingInsertion {
+public class DelayStageInsertion implements StageInsertion {
 
     DelayStageInsertion() {}
 
@@ -24,7 +24,7 @@ public class DelayStageInsertion implements ProcessingInsertion {
 
     @Override
     public String identifier() {
-        return "wait";
+        return "delay";
     }
 
     @Override

@@ -14,10 +14,17 @@ public class PlainKeywordStage implements AwaitStage {
     private final long maxDelay;
     private final boolean cancelOnFail;
 
-    public PlainKeywordStage(List<String> matchables, long maxDelay, boolean cancelOnFail) {
+    private final String commandOnFail;
+
+    public PlainKeywordStage(List<String> matchables, long maxDelay, boolean cancelOnFail, String commandOnFail) {
         this.matchables = matchables;
         this.maxDelay = maxDelay;
         this.cancelOnFail = cancelOnFail;
+        this.commandOnFail = commandOnFail;
+    }
+
+    public String getCommandOnFail() {
+        return commandOnFail;
     }
 
     public List<String> getMatchables() {

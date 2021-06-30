@@ -9,7 +9,7 @@ import xyz.auriium.opentutorial.core.platform.Platform;
 import java.util.Map;
 
 
-public interface ProcessingInsertion {
+public interface StageInsertion {
 
     String identifier();
 

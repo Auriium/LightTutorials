@@ -4,6 +4,8 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import org.bukkit.entity.Player;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.event.InnerEventBus;
 import xyz.auriium.opentutorial.core.event.chat.ClickableEvent;
@@ -25,6 +27,8 @@ import java.util.stream.Collectors;
  */
 @CommandAlias("tutorial|opentutorial")
 public class TutorialCommand extends BaseCommand {
+
+    private final static Logger logger = LoggerFactory.getLogger("OpenTutorial");
 
     private final UserRegistry<Player> userRegistry;
     private final PlatformDependentLoader<Player> reloader;
@@ -54,12 +58,28 @@ public class TutorialCommand extends BaseCommand {
     @Subcommand("reload")
     @CommandPermission("opentutorial.reload")
     public void reload(Player player) {
-        reloader.load();
 
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        Date date = new Date();
+        try {
+            reloader.load();
 
-        reloader.getModule().configController().getMessageConfig().reloadMessage().send(userRegistry.wrapUser(player), formatter.format(date));
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+            Date date = new Date();
+
+            reloader.getModule().configController().getMessageConfig().reloadMessage().send(userRegistry.wrapUser(player), formatter.format(date));
+        } catch (Exception e) {
+            //I SADLY HAVE TO DO THIS FUCKING SHITCODE
+            //BECAUSE ACF SUCKS ASS AND FUCKS WITH EXCEPTION HANDLING ANYWAYS
+            //SO I HAVE TO DO IT MYSELF IN THIS CRINGE ASS try-catch ABUSE
+            //FUCK AIKAR AND HIS SHITCODE
+            //CANT WAIT TO SWITCH TO BRANCH
+
+            //FUCK!!!!!!!!
+
+            //the tf2 coconut of opentutorial
+
+            logger.error("Error occurred while reloading!",e);
+        }
+
     }
 
     @Subcommand("play")

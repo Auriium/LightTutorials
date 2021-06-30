@@ -43,7 +43,7 @@ public class SpigotTeachable implements Teachable {
 
     @Override
     public void sendTitle(String title, String subtitle, int a, int b, int c) {
-        player.sendTitle(title, subtitle, a, b, c);
+        player.sendTitle(color(title), color(subtitle), a, b, c);
     }
 
     @Override

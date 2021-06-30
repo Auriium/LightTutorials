@@ -26,7 +26,7 @@ public class SpigotBusHook implements Listener {
     public void onChatEvent(AsyncPlayerChatEvent chatEvent) {
 
         loader.getModule().eventBus().fire(new PlatformlessChatEvent(platform.userRegistry().wrapUser(chatEvent.getPlayer()), chatEvent.getMessage()));
-        //TODO cancel
+
     }
 
     @EventHandler

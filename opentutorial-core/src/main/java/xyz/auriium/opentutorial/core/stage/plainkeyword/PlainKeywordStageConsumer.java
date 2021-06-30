@@ -36,6 +36,12 @@ public class PlainKeywordStageConsumer extends AbstractDelayConsumer<PlainKeywor
        if (stage.isCancelOnFail()) {
            tutorial.fireCancel();
        }
+
+       if (!stage.getCommandOnFail().equals("none")) {
+           registry.getAudienceByUUID(tutorial.getIdentifier()).ifPresent(teachable -> {
+               teachable.runConsole(stage.getCommandOnFail().replaceAll("%PLAYER%", teachable.getName()));
+           });
+       }
     }
 
     @Override

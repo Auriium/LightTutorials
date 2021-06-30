@@ -1,4 +1,4 @@
-package xyz.auriium.opentutorial.spigot;
+package xyz.auriium.opentutorial.spigot.hook;
 
 import org.bukkit.Location;
 import org.bukkit.event.EventHandler;

@@ -12,6 +12,7 @@ public class ChatStageConsumer implements BasicStageConsumer<ChatStage> {
 
     private final TeachableRegistry teachableRegistry;
 
+
     ChatStageConsumer(TeachableRegistry teachableRegistry) {
         this.teachableRegistry = teachableRegistry;
     }

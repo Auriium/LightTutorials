@@ -5,12 +5,12 @@ import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.platform.Platform;
-import xyz.auriium.opentutorial.core.tutorial.stage.ProcessingInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
 import java.util.Map;
 
-public class ClickBlockInsertion implements ProcessingInsertion {
+public class ClickBlockInsertion implements StageInsertion {
 
     ClickBlockInsertion() {}
 
@@ -32,7 +32,7 @@ public class ClickBlockInsertion implements ProcessingInsertion {
         int x = Interpret.getRequired("x",map,FlexibleType::getInteger);
         int y = Interpret.getRequired("y",map,FlexibleType::getInteger);
         int z = Interpret.getRequired("z",map,FlexibleType::getInteger);
-        int maxDelay = Interpret.getEllusive("maxDelay",map,FlexibleType::getInteger,Interpret.NO_INT);
+        int maxDelay = Interpret.getEllusive("max_delay",map,FlexibleType::getInteger,Interpret.NO_INT);
 
         return new ClickBlockStage(x,y,z,maxDelay);
     }
