@@ -27,6 +27,6 @@ public class SuppressStageInsertion implements StageInsertion {
 
     @Override
     public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
-        return null;
+        return new SuppressStageConsumer(platform.suppressor());
     }
 }

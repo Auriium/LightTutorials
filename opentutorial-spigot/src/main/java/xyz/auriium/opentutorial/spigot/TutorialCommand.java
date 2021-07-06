@@ -3,7 +3,17 @@ package xyz.auriium.opentutorial.spigot;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
+import com.github.stefvanschie.inventoryframework.gui.GuiItem;
+import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
+import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
+import com.github.stefvanschie.inventoryframework.pane.StaticPane;
+import net.md_5.bungee.api.chat.ClickEvent;
+import net.md_5.bungee.api.chat.TextComponent;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
@@ -146,6 +156,8 @@ public class TutorialCommand extends BaseCommand {
             return;
         }
 
+
+        messageConfig.leftTutorialMessage().send(userRegistry.wrapUser(sender));
         tutorialController.cancelByUUID(uuid);
     }
 
@@ -159,6 +171,9 @@ public class TutorialCommand extends BaseCommand {
             reloader.getModule().configController().getMessageConfig().templateExistsMessage().send(userRegistry.wrapUser(sender));
             return;
         }
+
+
+
 
         preCreationMenu.produce().show(sender);
     }

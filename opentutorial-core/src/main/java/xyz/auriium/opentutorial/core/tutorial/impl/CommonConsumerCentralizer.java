@@ -15,11 +15,9 @@ import java.util.UUID;
 public class CommonConsumerCentralizer implements ConsumerCentralizer {
 
     private final Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers;
-    private final HookRegistry hookRegistry;
 
-    public CommonConsumerCentralizer(Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers, HookRegistry hookRegistry) {
+    public CommonConsumerCentralizer(Map<Class<? extends Stage>, StageConsumer<? extends Stage>> consumers) {
         this.consumers = consumers;
-        this.hookRegistry = hookRegistry;
     }
 
     @Override
@@ -47,11 +45,7 @@ public class CommonConsumerCentralizer implements ConsumerCentralizer {
 
         consumers.put(stageConsumer.stageClass(),stageConsumer);
 
-        if (stageConsumer instanceof AwaitConsumer) {
-            AwaitConsumer<E,T> consumer = (AwaitConsumer<E, T>) stageConsumer;
 
-            hookRegistry.addHook(new PrecompletedHookInsertion(consumer));
-        }
 
         return this;
     }

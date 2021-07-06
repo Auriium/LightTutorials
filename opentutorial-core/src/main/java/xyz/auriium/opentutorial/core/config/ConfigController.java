@@ -52,8 +52,11 @@ public interface ConfigController {
             ).load();
 
             return new CommonConfigController(config, generalConfig, tutorialsConfig);
-        } catch (IOException | InvalidConfigException exception) {
-            platform.exceptionHandler().signal();
+        } catch (IOException exception) {
+            platform.exceptionHandler().signal(exception);
+            throw new LoadFailureException(exception);
+        } catch (InvalidConfigException exception) {
+            platform.exceptionHandler().signal(exception);
             throw new LoadFailureException(exception);
         }
     }

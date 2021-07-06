@@ -20,16 +20,14 @@ public class ChatStageConsumer implements BasicStageConsumer<ChatStage> {
     @Override
     public void started(ChatStage options, Tutorial continuable) {
         teachableRegistry.getAudienceByUUID(continuable.getIdentifier()).ifPresent(player -> {
-            String title = options.getTitle();
-            String subtitle = options.getSubtitle();
 
-            Interpret.ifStringPresent(options.getChat(), player::sendMessage);
-            Interpret.ifStringPresent(options.getActionbar(), player::sendActionbar);
+            if (options.getTitle().isPresent() || options.getSubtitle().isPresent()) {
+                player.sendTitle(options.getTitle().orElse(""),options.getSubtitle().orElse(""), 0, 10, 10);
+            }
 
-            player.sendTitle(
-                    !title.equals(Interpret.NO_STRING) ? title : "",
-                    !subtitle.equals(Interpret.NO_STRING) ? subtitle : "",
-                    0,10,10);
+            options.getChat().ifPresent(player::sendMessage);
+            options.getActionbar().ifPresent(player::sendActionbar);
+
         });
 
         continuable.fireNext();

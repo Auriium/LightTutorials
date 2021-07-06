@@ -31,13 +31,15 @@ public class StageConfSerializer implements ValueSerialiser<Stage> {
         String type = Optional.ofNullable(stageConfigMap.get("type")).orElseThrow(() -> new BadValueException.Builder().key("type").message("Stage missing value for type! Add `type:` to the stage!")
                 .build()).getString();
 
-        StageInsertion serializer = serializerRegistry.getInsertion(type).orElseThrow(() -> new BadValueException.Builder().key(type).message("Could not find a stage with that type!").build());
+        StageInsertion serializer = serializerRegistry.getInsertion(type).orElseThrow(() -> new BadValueException.Builder().key(type).message("No type exists in OpenTutorial with that type identifier! Check your spelling and try again, or read the wiki!").build());
 
         return serializer.deserialize(stageConfigMap);
     }
 
     @Override
     public Object serialise(Stage stage, Decomposer decomposer) {
+
+
         throw new UnsupportedOperationException("Not implemented! (Yet!)");
     }
 }

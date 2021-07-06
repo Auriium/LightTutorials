@@ -18,38 +18,7 @@ public class TeleportStageConsumer implements BasicStageConsumer<TeleportStage> 
     public void started(TeleportStage options, Tutorial continuable) {
 
         userRegistry.getAudienceByUUID(continuable.getIdentifier()).ifPresent(player -> {
-            String worldName = options.getWorld();
-            int x = options.getX();
-            int y = options.getY();
-            int z = options.getZ();
-
-            //clean this up
-            if (options.getPitch() == Interpret.NO_INT || options.getYaw() == Interpret.NO_INT) {
-                if (worldName.equals("none")) {
-                    player.teleport(x,y,z);
-                } else {
-                    boolean isSuccessful = player.teleport(x,y,z,worldName);
-
-                    if (!isSuccessful) {
-                        throw new StageFailureException("Invalid world specified for tutorial! World " + worldName + " does not exist or cannot be loaded by OpenTutorial platform handle!");
-                    }
-                }
-            } else {
-                int pitch = options.getPitch();
-                int yaw = options.getYaw();
-
-                if (worldName.equals("none")) {
-                    player.teleport(x,y,z,pitch,yaw);
-                } else {
-                    boolean isSuccessful = player.teleport(x,y,z,pitch,yaw,worldName);
-
-                    if (!isSuccessful) {
-                        throw new StageFailureException("Invalid world specified for tutorial! World " + worldName + " does not exist or cannot be loaded by OpenTutorial platform handle!");
-                    }
-                }
-            }
-
-
+            player.teleport(options.getLocation());
         });
 
         continuable.fireNext();

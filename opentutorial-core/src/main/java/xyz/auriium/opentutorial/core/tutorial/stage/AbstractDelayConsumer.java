@@ -44,15 +44,14 @@ public abstract class AbstractDelayConsumer<T extends AwaitStage,E extends Event
 
         UUID uuid = continuable.getIdentifier();
 
-        if (options.getMaxDelay() != -1) {
-            delayCache.put(uuid,scheduler.runLater(
-                    () -> {
-                        delayCache.remove(uuid).cancel();
-                        registry.getAudienceByUUID(uuid).ifPresent(audience -> config.outOfTimeMessage().send(audience));
-                        continuable.fireCancel();
-                    },
-                    options.getMaxDelay()));
-        }
+        options.getMaxDelay().ifPresent(aLong ->
+                delayCache.put(uuid,scheduler.runLater(
+                () -> {
+                    delayCache.remove(uuid).cancel();
+                    registry.getAudienceByUUID(uuid).ifPresent(audience -> config.outOfTimeMessage().send(audience));
+                    continuable.fireCancel();
+                },
+                aLong)));
     }
 
 

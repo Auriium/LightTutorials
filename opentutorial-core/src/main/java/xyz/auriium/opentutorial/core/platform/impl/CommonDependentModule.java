@@ -53,13 +53,11 @@ public class CommonDependentModule implements PlatformDependentModule {
 
     @Override
     public void closeSingle(UUID uuid) {
-        consumerCentralizer.closeSingle(uuid);
         tutorialController.closeSingle(uuid);
     }
 
     @Override
     public void close() {
-        consumerCentralizer.close();
         tutorialController.close();
     }
 }

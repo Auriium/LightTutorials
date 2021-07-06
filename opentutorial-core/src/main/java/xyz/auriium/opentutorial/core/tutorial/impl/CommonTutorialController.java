@@ -1,5 +1,8 @@
 package xyz.auriium.opentutorial.core.tutorial.impl;
 
+import xyz.auriium.opentutorial.core.platform.base.PlatformlessLocation;
+import xyz.auriium.opentutorial.core.platform.base.Teachable;
+import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.api.construct.Template;
 import xyz.auriium.opentutorial.api.construct.Tutorial;
@@ -14,10 +17,31 @@ import java.util.*;
  */
 public class CommonTutorialController implements TutorialController {
 
-    private final Map<UUID, Tutorial> map;
-    private final ConsumerCentralizer registry; //Prebuilt registry
+    static class TutorialData {
+        private final Tutorial tutorial;
+        private final PlatformlessLocation location;
 
-    public CommonTutorialController(ConsumerCentralizer registry) {
+        TutorialData(Tutorial tutorial, PlatformlessLocation location) {
+            this.tutorial = tutorial;
+            this.location = location;
+        }
+
+        public Tutorial getTutorial() {
+            return tutorial;
+        }
+
+        public PlatformlessLocation getLocation() {
+            return location;
+        }
+    }
+
+    private final Map<UUID, TutorialData> map;
+
+    private final ConsumerCentralizer registry; //Prebuilt registry
+    private final TeachableRegistry teachableRegistry;
+
+    public CommonTutorialController(ConsumerCentralizer registry, TeachableRegistry teachableRegistry) {
+        this.teachableRegistry = teachableRegistry;
         this.map = new HashMap<>();
 
         this.registry = registry;
@@ -33,23 +57,32 @@ public class CommonTutorialController implements TutorialController {
 
     @Override
     public Optional<Tutorial> cancelByUUID(UUID uuid) {
+        teachableRegistry.getAudienceByUUID(uuid).ifPresent(teachable -> {
+            TutorialData data = map.get(uuid);
+
+            if (data != null) {
+                teachable.teleport(data.getLocation());
+            }
+        });
+
         registry.closeSingle(uuid);
 
-        return Optional.ofNullable(map.remove(uuid));
+        return Optional.ofNullable(map.remove(uuid).getTutorial());
     }
 
     @Override
     public Optional<Tutorial> getByUUID(UUID uuid) {
-        return Optional.ofNullable(map.get(uuid));
+        return Optional.ofNullable(map.get(uuid).getTutorial());
     }
 
     @Override
     public Tutorial createNew(Template template, UUID owner) {
        if (map.containsKey(owner)) throw new IllegalStateException("User is already in a tutorial: " + owner);
+       Teachable teachable = teachableRegistry.getAudienceByUUID(owner).orElseThrow(() -> new IllegalStateException("User is activating tutorial but not on server!"));
 
        Tutorial tutorial = new CommonTutorial(owner,new ArrayDeque<>(template.getStages()),this);
 
-       map.put(owner, tutorial);
+       map.put(owner, new TutorialData(tutorial,teachable.getLocation()));
 
        return tutorial;
     }
@@ -58,13 +91,15 @@ public class CommonTutorialController implements TutorialController {
     public Tutorial createStage(Template template, UUID owner, int stage) {
         if (map.containsKey(owner)) throw new IllegalStateException("User is already in a tutorial: " + owner);
         if (template.stageNotPresent(stage)) throw new IllegalStateException("No stage exists at that index!");
+        Teachable teachable = teachableRegistry.getAudienceByUUID(owner).orElseThrow(() -> new IllegalStateException("User is activating tutorial but not on server!"));
+
 
         Deque<Stage> stages = new ArrayDeque<>();
         stages.add(template.getStages().get(stage));
 
         Tutorial tutorial = new CommonTutorial(owner,new ArrayDeque<>(stages),this);
 
-        map.put(owner, tutorial);
+        map.put(owner, new TutorialData(tutorial,teachable.getLocation()));
 
         return tutorial;
     }

@@ -21,13 +21,8 @@ public class CommandStageConsumer implements BasicStageConsumer<CommandStage> {
     public void started(CommandStage options, Tutorial continuable) {
 
         teachableRegistry.getAudienceByUUID(continuable.getIdentifier()).ifPresent(player -> {
-            Interpret.ifStringPresent(options.getRunAsConsole(), string -> {
-                player.runConsole(string.replaceAll("%PLAYER%",player.getName()));
-            });
-
-            Interpret.ifStringPresent(options.getRunAsPlayer(), string -> {
-                player.runAs(string.replaceAll("%PLAYER%",player.getName()));
-            });
+            options.getRunAsConsole().ifPresent(string -> player.runConsole(string.replaceAll("%PLAYER%",player.getName())));
+            options.getRunAsPlayer().ifPresent(string -> player.runAs(string.replaceAll("%PLAYER%",player.getName())));
         });
 
         continuable.fireNext();

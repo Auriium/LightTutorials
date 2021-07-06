@@ -4,6 +4,8 @@ import java.util.UUID;
 
 /**
  * Platform agnostic interface denoting something that can be served stages from a tutorial
+ *
+ * Not meant to be cached anywhere or held onto. Doing so is bad practice.
  */
 public interface Teachable {
 
@@ -17,11 +19,18 @@ public interface Teachable {
     void runAs(String command);
     void runConsole(String command);
 
-    void teleport(int x, int y, int z);
-    boolean teleport(int x, int y, int z, String world);
 
+    @Deprecated
+    void teleport(int x, int y, int z);
+    @Deprecated
+    boolean teleport(int x, int y, int z, String world);
+    @Deprecated
     void teleport(int x, int y, int z, int pitch, int yaw);
+    @Deprecated
     boolean teleport(int x, int y, int z, int pitch, int yaw, String world);
+
+    boolean teleport(PlatformlessLocation location);
+    PlatformlessLocation getLocation();
 
     void setInvisible(boolean invisible);
 
@@ -29,5 +38,7 @@ public interface Teachable {
     boolean hasState(String state);
 
     void playSound(String sound, float volume, float pitch);
+
+    void sendClickable(String message, String command, String hover);
 
 }

@@ -15,13 +15,21 @@ public class Message {
     }
 
     public void send(Teachable sender, Object... strings) {
-        sender.sendMessage(colorer.color(String.format(translatable,strings)));
+
+        if (!translatable.equals("none")) {
+            sender.sendMessage(String.format(colorer.color(translatable),strings));
+        }
+
     }
     public void send(Teachable sender) {
-        sender.sendMessage(colorer.color(translatable));
+        send(sender,"");
     }
 
     public String getTranslatable() {
         return translatable;
+    }
+
+    public String parse(Object... strings) {
+        return String.format(colorer.color(translatable),strings);
     }
 }

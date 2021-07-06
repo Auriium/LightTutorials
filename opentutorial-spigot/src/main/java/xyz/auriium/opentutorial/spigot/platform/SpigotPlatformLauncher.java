@@ -10,6 +10,7 @@ import xyz.auriium.opentutorial.core.platform.base.Colorer;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
 import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
 import xyz.auriium.opentutorial.core.platform.impl.CommonPlatform;
+import xyz.auriium.opentutorial.spigot.SpigotBusHook;
 import xyz.auriium.opentutorial.spigot.hook.ChatHook;
 import xyz.auriium.opentutorial.spigot.hook.LockHook;
 
@@ -39,6 +40,7 @@ public class SpigotPlatformLauncher implements PlatformLauncher<Player> {
 
         LockHook lockable = new LockHook();
         ChatHook hook = new ChatHook();
+
 
         plugin.getServer().getPluginManager().registerEvents(lockable,plugin);
         plugin.getServer().getPluginManager().registerEvents(hook,plugin);

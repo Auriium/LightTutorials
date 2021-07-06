@@ -31,8 +31,8 @@ public class SoundStageInsertion implements StageInsertion {
     public Stage deserialize(Map<String, FlexibleType> map) throws BadValueException {
 
         String sound = Interpret.getRequired("sound_name",map,FlexibleType::getString);
-        float volume = Interpret.getEllusive("volume",map,FlexibleType::getFloat,1.0f);
-        float pitch = Interpret.getEllusive("pitch",map,FlexibleType::getFloat,1.0f);
+        float volume = Interpret.getAlternative("volume",map,FlexibleType::getFloat,1.0f);
+        float pitch = Interpret.getAlternative("pitch",map,FlexibleType::getFloat,1.0f);
 
         return new SoundStage(sound,volume,pitch);
     }

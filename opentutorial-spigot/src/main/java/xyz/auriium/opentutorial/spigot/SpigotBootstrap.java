@@ -28,6 +28,8 @@ public class SpigotBootstrap extends JavaPlugin {
         //Load current loader instance!
         loader.load();
 
+        getServer().getPluginManager().registerEvents(new SpigotBusHook(platform,loader),this);
+
         //Initialize hacky acf bullshit (to be replaced with Branch!)
 
         ListMenu listMenu = new ListMenu(loader);

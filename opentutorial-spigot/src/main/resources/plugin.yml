@@ -6,4 +6,4 @@ version: ${project.version}
 
 author: Auriium
 
-api-version: 1.17
+api-version: 1.16

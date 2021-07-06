@@ -29,10 +29,11 @@ public class AgeStageInsertion implements StageInsertion {
     @Override
     public AgeStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
 
-        String runOnFail = Interpret.getEllusive("runOnFailCommand", map, FlexibleType::getString,Interpret.NO_STRING);
-        int minimumAge = Interpret.getRequired("minimumAge",map, FlexibleType::getInteger);
-        int maxDelay = Interpret.getEllusive("maxDelay",map,FlexibleType::getInteger,Interpret.NO_INT);
-        boolean cancelOnFail = Interpret.getEllusive("cancelOnFail",map,FlexibleType::getBoolean,true);
+        Integer minimumAge = Interpret.getRequired("minimumAge",map, FlexibleType::getInteger);
+
+        String runOnFail = Interpret.getNullable("runOnFailCommand", map, FlexibleType::getString);
+        Long maxDelay = Interpret.getNullable("maxDelay",map,FlexibleType::getLong);
+        boolean cancelOnFail = Interpret.getAlternative("cancelOnFail",map,FlexibleType::getBoolean, false);
 
         return new AgeStage(runOnFail, minimumAge,maxDelay,cancelOnFail);
     }

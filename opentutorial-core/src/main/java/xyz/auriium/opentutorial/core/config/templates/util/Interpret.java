@@ -7,28 +7,21 @@ import xyz.auriium.opentutorial.core.config.templates.InterpretFunction;
 import java.util.Map;
 import java.util.function.Consumer;
 
-/**
- * Utility class for shitcode serializers
- */
 public class Interpret {
 
-    public static String NO_STRING = "none";
-    public static long NO_LONG = -1L; ///fixme this is bad but i dont know what to do about it
-    public static boolean NO_BOOL = true;
-    public static int NO_INT = -1;
-    public static String DEFAULT_OUT_OF_TIME = "&cYou are out of time to complete this tutorial stage!";
+
 
     public static <T> T getRequired(String identifier, Map<String,FlexibleType> typeMap, InterpretFunction<FlexibleType,T> func) throws BadValueException {
         FlexibleType type = typeMap.get(identifier);
 
         if (type == null) {
-            throw new BadValueException.Builder().key(identifier).message("No value present for value " + identifier + "!").build();
+            throw new BadValueException.Builder().key(identifier).message("No value present for key '" + identifier + "'!").build();
         } else {
             return func.interpret(type);
         }
     }
 
-    public static <T> T getEllusive(String identifier, Map<String,FlexibleType> typeMap, InterpretFunction<FlexibleType,T> function, T defaultValue) throws BadValueException {
+    public static <T> T getAlternative(String identifier, Map<String,FlexibleType> typeMap, InterpretFunction<FlexibleType,T> function, T defaultValue) throws BadValueException {
         FlexibleType nullable = typeMap.get(identifier);
 
         if (nullable == null) {
@@ -36,6 +29,12 @@ public class Interpret {
         } else {
             return function.interpret(nullable);
         }
+    }
+
+    public static <T> T getNullable(String identifier, Map<String,FlexibleType> typeMap, InterpretFunction<FlexibleType,T> function) throws BadValueException {
+        FlexibleType nullable = typeMap.get(identifier);
+
+        return function.interpret(nullable);
     }
 
     /**
@@ -48,12 +47,6 @@ public class Interpret {
     public static <T> void ifPresent(T current, T defaultVal, Consumer<T> action) {
         if (!current.equals(defaultVal)) {
             action.accept(current);
-        }
-    }
-
-    public static void ifStringPresent(String string, Consumer<String> action) {
-        if (!string.equals(NO_STRING)) {
-            action.accept(string);
         }
     }
 

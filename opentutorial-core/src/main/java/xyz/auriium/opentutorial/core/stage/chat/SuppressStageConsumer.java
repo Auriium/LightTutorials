@@ -17,6 +17,8 @@ public class SuppressStageConsumer implements StageConsumer<SuppressStage> {
     @Override
     public void started(SuppressStage options, Tutorial continuable) {
         suppressor.setSuppressed(continuable.getIdentifier(),options.isSuppressChat());
+
+        continuable.fireNext();
     }
 
     @Override

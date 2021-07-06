@@ -1,36 +1,26 @@
-package xyz.auriium.opentutorial.core.stage.plainkeyword;
+package xyz.auriium.opentutorial.core.stage.clickquiz;
 
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
+import xyz.auriium.opentutorial.api.construct.Stage;
 import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.platform.Platform;
-import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
+import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class PlainKeywordInsertion implements StageInsertion {
-
-    PlainKeywordInsertion() {}
-
-    public static PlainKeywordInsertion INIT = new PlainKeywordInsertion();
-
-    @Override
-    public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
-        return new PlainKeywordStageConsumer(platform.scheduler(), platform.userRegistry(), configController.getMessageConfig());
-    }
-
+public class ClickableStageInsertion implements StageInsertion {
     @Override
     public String identifier() {
-        return "plain_keyword";
+        return "clickable";
     }
 
     @Override
-    public PlainKeywordStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
-
+    public Stage deserialize(Map<String, FlexibleType> map) throws BadValueException {
         List<String> keywords = Interpret.getRequired("keywords",map, shitter -> {
 
             List<String> strings = new ArrayList<>();
@@ -42,10 +32,16 @@ public class PlainKeywordInsertion implements StageInsertion {
             return strings;
         });
 
+        int correctOption = Interpret.getRequired("correct_option",map,FlexibleType::getInteger);
         Long maxDelay = Interpret.getNullable("max_delay",map,FlexibleType::getLong);
-        boolean isCancelOnFail = Interpret.getAlternative("cancel_on_fail",map,FlexibleType::getBoolean,true);
+        boolean isCancelOnFail = Interpret.getAlternative("cancel_on_fail",map,FlexibleType::getBoolean,false);
         String commandOnFail = Interpret.getNullable("command_on_fail",map,FlexibleType::getString);
 
-        return new PlainKeywordStage(keywords,maxDelay,isCancelOnFail, commandOnFail);
+        return new ClickableQuizStage(keywords, maxDelay, correctOption, isCancelOnFail,commandOnFail);
+    }
+
+    @Override
+    public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
+        return new ClickableQuizConsumer(platform.scheduler(), platform.userRegistry(), configController.getMessageConfig());
     }
 }

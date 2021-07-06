@@ -25,7 +25,7 @@ public class LockableStageInsertion implements StageInsertion {
     @Override
     public Stage deserialize(Map<String, FlexibleType> map) throws BadValueException {
         boolean movement = Interpret.getRequired("lock_movement",map,FlexibleType::getBoolean);
-        boolean view = Interpret.getEllusive("lock_view",map,FlexibleType::getBoolean,false);
+        boolean view = Interpret.getAlternative("lock_view",map,FlexibleType::getBoolean,false);
 
         return new LockableStage(movement,view);
     }

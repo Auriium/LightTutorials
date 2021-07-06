@@ -25,14 +25,16 @@ public interface PlatformDependentModule extends UUIDCloseable {
 
     static PlatformDependentModule load(Platform<?> platform, InsertionRegistry insertionRegistry, HookRegistry hookRegistry) {
         ConfigController configController = ConfigController.load(platform,insertionRegistry);
-        ConsumerCentralizer consumerCentralizer = ConsumerCentralizer.load(platform,insertionRegistry,hookRegistry,configController);
-        TutorialController tutorialController = new CommonTutorialController(consumerCentralizer);
+        ConsumerCentralizer consumerCentralizer = ConsumerCentralizer.load(platform, insertionRegistry, hookRegistry, configController);
+        TutorialController tutorialController = new CommonTutorialController(consumerCentralizer, platform.userRegistry());
 
 
         InnerEventBus innerEventBus = InnerEventBus.load(platform,hookRegistry,tutorialController,configController);
         TemplateController templateController = ReduxTemplateController.build(configController.getTutorialsConfig());
 
         return new CommonDependentModule(configController, consumerCentralizer,tutorialController,templateController,innerEventBus);
+
+
     }
 
 }

@@ -35,9 +35,10 @@ public class AgeStageConsumer extends AbstractDelayConsumer<AgeStage, Platformle
 
             sender.ifPresent(player -> {
                 if (age < stage.getBelowAge()) {
-                    Interpret.ifStringPresent(stage.getRunOnFail(), cmd ->
-                            player.runConsole(cmd.replaceAll("%PLAYER%",player.getName()))
-                    );
+
+                    stage.getRunOnFail().ifPresent(cmd -> {
+                        player.runConsole(cmd.replaceAll("%PLAYER%",player.getName()));
+                    });
 
                     if (stage.isCancelOnFail()) {
                         tutorial.fireCancel();

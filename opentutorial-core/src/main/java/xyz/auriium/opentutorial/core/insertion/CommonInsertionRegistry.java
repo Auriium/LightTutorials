@@ -4,6 +4,7 @@ import xyz.auriium.opentutorial.core.stage.age.AgeStageInsertion;
 import xyz.auriium.opentutorial.core.stage.chat.ChatStageInsertion;
 import xyz.auriium.opentutorial.core.stage.chat.SuppressStageInsertion;
 import xyz.auriium.opentutorial.core.stage.clickblock.ClickBlockInsertion;
+import xyz.auriium.opentutorial.core.stage.clickquiz.ClickableStageInsertion;
 import xyz.auriium.opentutorial.core.stage.command.CommandStageInsertion;
 import xyz.auriium.opentutorial.core.stage.delay.DelayStageInsertion;
 import xyz.auriium.opentutorial.core.stage.invisible.InvisibleStageInsertion;
@@ -48,6 +49,7 @@ public class CommonInsertionRegistry implements InsertionRegistry{
                 .register(SoundStageInsertion.INIT)
                 .register(new LockableStageInsertion())
                 .register(TeleportStageInsertion.INIT)
+                .register(new ClickableStageInsertion())
                 .register(new SuppressStageInsertion());
     }
 }

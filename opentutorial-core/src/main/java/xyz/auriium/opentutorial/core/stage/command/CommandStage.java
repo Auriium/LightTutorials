@@ -2,6 +2,8 @@ package xyz.auriium.opentutorial.core.stage.command;
 
 import xyz.auriium.opentutorial.api.construct.Stage;
 
+import java.util.Optional;
+
 /**
  * Stage that runs commands as a player or as the console
  */
@@ -15,11 +17,11 @@ public class CommandStage implements Stage {
         this.runAsPlayer = runAsPlayer;
     }
 
-    public String getRunAsConsole() {
-        return runAsConsole;
+    public Optional<String> getRunAsConsole() {
+        return Optional.ofNullable(runAsConsole);
     }
 
-    public String getRunAsPlayer() {
-        return runAsPlayer;
+    public Optional<String> getRunAsPlayer() {
+        return Optional.ofNullable(runAsPlayer);
     }
 }

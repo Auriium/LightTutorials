@@ -28,10 +28,10 @@ public class ChatStageInsertion implements StageInsertion {
 
     @Override
     public ChatStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
-        String chat = Interpret.getEllusive("chat", map, FlexibleType::getString, Interpret.NO_STRING);
-        String actionbar = Interpret.getEllusive("actionbar", map, FlexibleType::getString, Interpret.NO_STRING);
-        String title = Interpret.getEllusive("title", map, FlexibleType::getString, Interpret.NO_STRING);
-        String subtitle = Interpret.getEllusive("subtitle", map, FlexibleType::getString, Interpret.NO_STRING);
+        String chat = Interpret.getNullable("chat", map, FlexibleType::getString);
+        String actionbar = Interpret.getNullable("actionbar", map, FlexibleType::getString);
+        String title = Interpret.getNullable("title", map, FlexibleType::getString);
+        String subtitle = Interpret.getNullable("subtitle", map, FlexibleType::getString);
 
         return new ChatStage(chat,actionbar,title,subtitle);
     }

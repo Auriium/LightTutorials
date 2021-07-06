@@ -2,6 +2,8 @@ package xyz.auriium.opentutorial.core.stage.clickblock;
 
 import xyz.auriium.opentutorial.core.tutorial.stage.AwaitStage;
 
+import java.util.Optional;
+
 /**
  * Stage that waits for a player to click a specific block on the map
  *
@@ -13,9 +15,9 @@ public class ClickBlockStage implements AwaitStage {
     private final int y;
     private final int z;
 
-    private final long maxDelay;
+    private final Long maxDelay;
 
-    public ClickBlockStage(int x, int y, int z, long maxDelay) {
+    public ClickBlockStage(int x, int y, int z, Long maxDelay) {
         this.x = x;
         this.y = y;
         this.z = z;
@@ -35,8 +37,8 @@ public class ClickBlockStage implements AwaitStage {
     }
 
     @Override
-    public long getMaxDelay() {
-        return maxDelay;
+    public Optional<Long> getMaxDelay() {
+        return Optional.ofNullable(maxDelay);
     }
 
 }
