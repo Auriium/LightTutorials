@@ -67,12 +67,20 @@ public class CommonTutorialController implements TutorialController {
 
         registry.closeSingle(uuid);
 
-        return Optional.ofNullable(map.remove(uuid).getTutorial());
+        TutorialData data = map.remove(uuid);
+
+        if (data == null) return Optional.empty();
+
+        return Optional.of(data.getTutorial());
     }
 
     @Override
     public Optional<Tutorial> getByUUID(UUID uuid) {
-        return Optional.ofNullable(map.get(uuid).getTutorial());
+        TutorialData data = map.get(uuid);
+
+        if (data == null) return Optional.empty();
+
+        return Optional.of(data.getTutorial());
     }
 
     @Override

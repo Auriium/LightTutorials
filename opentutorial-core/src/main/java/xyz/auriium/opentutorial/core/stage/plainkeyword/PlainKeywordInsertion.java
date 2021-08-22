@@ -5,6 +5,8 @@ import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.platform.Platform;
+import xyz.auriium.opentutorial.core.stage.Defaults;
+import xyz.auriium.opentutorial.core.stage.Identifiers;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
@@ -14,9 +16,6 @@ import java.util.Map;
 
 public class PlainKeywordInsertion implements StageInsertion {
 
-    PlainKeywordInsertion() {}
-
-    public static PlainKeywordInsertion INIT = new PlainKeywordInsertion();
 
     @Override
     public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
@@ -31,21 +30,14 @@ public class PlainKeywordInsertion implements StageInsertion {
     @Override
     public PlainKeywordStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
 
-        List<String> keywords = Interpret.getRequired("keywords",map, shitter -> {
+        List<String> keywords = Interpret.getRequired(Identifiers.LIST_KEYWORDS,map,Interpret::convertList);
 
-            List<String> strings = new ArrayList<>();
+        Integer maxDelay = Interpret.getNullable(Identifiers.DELAYTYPE_MAX_DELAY,map,FlexibleType::getInteger);
+        boolean isCancelOnFail = Interpret.getAlternative(Identifiers.FAIL_CANCEL,map,FlexibleType::getBoolean,true);
+        String commandOnFail = Interpret.getNullable(Identifiers.FAIL_COMMAND,map,FlexibleType::getString);
+        String actionbarFormat = Interpret.getNullable(Identifiers.DELAYTYPE_FORMAT, map, FlexibleType::getString);
 
-            for (FlexibleType type : shitter.getList()) {
-                strings.add(type.getString());
-            }
 
-            return strings;
-        });
-
-        Long maxDelay = Interpret.getNullable("max_delay",map,FlexibleType::getLong);
-        boolean isCancelOnFail = Interpret.getAlternative("cancel_on_fail",map,FlexibleType::getBoolean,true);
-        String commandOnFail = Interpret.getNullable("command_on_fail",map,FlexibleType::getString);
-
-        return new PlainKeywordStage(keywords,maxDelay,isCancelOnFail, commandOnFail);
+        return new PlainKeywordStage(keywords, isCancelOnFail, commandOnFail, maxDelay, actionbarFormat);
     }
 }

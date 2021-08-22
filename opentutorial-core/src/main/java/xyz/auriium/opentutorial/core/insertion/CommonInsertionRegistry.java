@@ -1,11 +1,11 @@
 package xyz.auriium.opentutorial.core.insertion;
 
-import xyz.auriium.opentutorial.core.stage.age.AgeStageInsertion;
 import xyz.auriium.opentutorial.core.stage.chat.ChatStageInsertion;
 import xyz.auriium.opentutorial.core.stage.chat.SuppressStageInsertion;
 import xyz.auriium.opentutorial.core.stage.clickblock.ClickBlockInsertion;
 import xyz.auriium.opentutorial.core.stage.clickquiz.ClickableStageInsertion;
 import xyz.auriium.opentutorial.core.stage.command.CommandStageInsertion;
+import xyz.auriium.opentutorial.core.stage.delay.ActionbarDelayStageInsertion;
 import xyz.auriium.opentutorial.core.stage.delay.DelayStageInsertion;
 import xyz.auriium.opentutorial.core.stage.invisible.InvisibleStageInsertion;
 import xyz.auriium.opentutorial.core.stage.lock.LockableStageInsertion;
@@ -39,17 +39,17 @@ public class CommonInsertionRegistry implements InsertionRegistry{
 
     public static InsertionRegistry defaults() {
         return new CommonInsertionRegistry()
-                .register(AgeStageInsertion.INIT)
-                .register(ChatStageInsertion.INIT)
-                .register(ClickBlockInsertion.INIT)
-                .register(CommandStageInsertion.INIT)
-                .register(DelayStageInsertion.INIT)
-                .register(InvisibleStageInsertion.INIT)
-                .register(PlainKeywordInsertion.INIT)
-                .register(SoundStageInsertion.INIT)
+                .register(new ChatStageInsertion())
+                .register(new ClickBlockInsertion())
+                .register(new CommandStageInsertion())
+                .register(new DelayStageInsertion())
+                .register(new InvisibleStageInsertion())
+                .register(new PlainKeywordInsertion())
+                .register(new SoundStageInsertion())
                 .register(new LockableStageInsertion())
-                .register(TeleportStageInsertion.INIT)
+                .register(new TeleportStageInsertion())
                 .register(new ClickableStageInsertion())
-                .register(new SuppressStageInsertion());
+                .register(new SuppressStageInsertion())
+                .register(new ActionbarDelayStageInsertion());
     }
 }

@@ -8,18 +8,21 @@ import java.util.Optional;
 public class ClickableQuizStage implements AwaitStage {
 
     private final List<String> options;
-    private final Long maxDelay;
     private final int correctOption;
 
     private final boolean cancelOnFail;
     private final String commandOnFail;
 
-    public ClickableQuizStage(List<String> options, Long maxDelay, int correctOption, boolean cancelOnFail, String commandOnFail) {
+    private final Integer maxDelay;
+    private final String actionbarFormat;
+
+    public ClickableQuizStage(List<String> options, int correctOption, boolean cancelOnFail, String commandOnFail, Integer maxDelay, String actionbarFormat) {
         this.options = options;
-        this.maxDelay = maxDelay;
         this.correctOption = correctOption;
         this.cancelOnFail = cancelOnFail;
         this.commandOnFail = commandOnFail;
+        this.maxDelay = maxDelay;
+        this.actionbarFormat = actionbarFormat;
     }
 
     public List<String> getOptions() {
@@ -30,8 +33,13 @@ public class ClickableQuizStage implements AwaitStage {
         return correctOption;
     }
 
-    public Optional<Long> getMaxDelay() {
-        return Optional.ofNullable(maxDelay);
+    public Integer getMaxDelay() {
+        return maxDelay;
+    }
+
+    @Override
+    public String getActionbarFormat() {
+        return actionbarFormat;
     }
 
     public boolean isCancelOnFail() {

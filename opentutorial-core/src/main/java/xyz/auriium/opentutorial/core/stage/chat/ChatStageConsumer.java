@@ -22,7 +22,7 @@ public class ChatStageConsumer implements BasicStageConsumer<ChatStage> {
         teachableRegistry.getAudienceByUUID(continuable.getIdentifier()).ifPresent(player -> {
 
             if (options.getTitle().isPresent() || options.getSubtitle().isPresent()) {
-                player.sendTitle(options.getTitle().orElse(""),options.getSubtitle().orElse(""), 0, 10, 10);
+                player.sendTitle(options.getTitle().orElse(""),options.getSubtitle().orElse(""), 0, 20, 10);
             }
 
             options.getChat().ifPresent(player::sendMessage);

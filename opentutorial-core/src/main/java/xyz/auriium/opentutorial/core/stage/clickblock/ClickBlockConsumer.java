@@ -5,7 +5,7 @@ import xyz.auriium.opentutorial.core.event.chat.PlatformlessBlockEvent;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
 import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
 import xyz.auriium.opentutorial.api.construct.Tutorial;
-import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
+import xyz.auriium.opentutorial.core.stage.AbstractDelayConsumer;
 
 /**
  * Consumer system that handles {@link ClickBlockStage}

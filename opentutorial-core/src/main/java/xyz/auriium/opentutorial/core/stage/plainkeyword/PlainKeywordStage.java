@@ -12,17 +12,18 @@ import java.util.Optional;
 public class PlainKeywordStage implements AwaitStage {
 
     private final List<String> matchables;
-
-    private final Long maxDelay;
     private final boolean cancelOnFail;
-
     private final String commandOnFail;
 
-    public PlainKeywordStage(List<String> matchables, Long maxDelay, boolean cancelOnFail, String commandOnFail) {
+    private final Integer maxDelay;
+    private final String actionbarFormat;
+
+    public PlainKeywordStage(List<String> matchables, boolean cancelOnFail, String commandOnFail, Integer maxDelay, String actionbarFormat) {
         this.matchables = matchables;
-        this.maxDelay = maxDelay;
         this.cancelOnFail = cancelOnFail;
         this.commandOnFail = commandOnFail;
+        this.maxDelay = maxDelay;
+        this.actionbarFormat = actionbarFormat;
     }
 
     public Optional<String> getCommandOnFail() {
@@ -33,8 +34,13 @@ public class PlainKeywordStage implements AwaitStage {
         return matchables;
     }
 
-    public Optional<Long> getMaxDelay() {
-        return Optional.ofNullable(maxDelay);
+    public Integer getMaxDelay() {
+        return maxDelay;
+    }
+
+    @Override
+    public String getActionbarFormat() {
+        return actionbarFormat;
     }
 
     public boolean isCancelOnFail() {

@@ -6,16 +6,13 @@ import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.base.PlatformlessLocation;
+import xyz.auriium.opentutorial.core.stage.Identifiers;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 
 import java.util.Map;
 
 public class TeleportStageInsertion implements StageInsertion {
-
-    TeleportStageInsertion() {}
-
-    public static TeleportStageInsertion INIT = new TeleportStageInsertion();
 
     @Override
     public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
@@ -30,12 +27,12 @@ public class TeleportStageInsertion implements StageInsertion {
     @Override
     public TeleportStage deserialize(Map<String, FlexibleType> map) throws BadValueException {
 
-        Double x = Interpret.getRequired("x",map,FlexibleType::getDouble);
-        Double y = Interpret.getRequired("y",map,FlexibleType::getDouble);
-        Double z = Interpret.getRequired("z",map,FlexibleType::getDouble);
-        String world = Interpret.getNullable("world",map,FlexibleType::getString);
-        Float pitch = Interpret.getNullable("pitch",map,FlexibleType::getFloat);
-        Float yaw = Interpret.getNullable("yaw",map,FlexibleType::getFloat);
+        Double x = Interpret.getRequired(Identifiers.LOC_X,map,FlexibleType::getDouble);
+        Double y = Interpret.getRequired(Identifiers.LOC_Y,map,FlexibleType::getDouble);
+        Double z = Interpret.getRequired(Identifiers.LOC_Z,map,FlexibleType::getDouble);
+        String world = Interpret.getNullable(Identifiers.LOC_WORLD,map,FlexibleType::getString);
+        Float pitch = Interpret.getNullable(Identifiers.LOC_PITCH,map,FlexibleType::getFloat);
+        Float yaw = Interpret.getNullable(Identifiers.LOC_YAW,map,FlexibleType::getFloat);
 
         return new TeleportStage(new PlatformlessLocation(x, y, z, pitch, yaw, world));
     }

@@ -18,6 +18,10 @@ public class SpigotBootstrap extends JavaPlugin {
 
     private volatile PlatformDependentLoader<Player> loader;
 
+    public void onLoad() {
+        //TODO move stuff here
+    }
+
     @Override
     public void onEnable() {
         //Initialize platform and loader
@@ -47,8 +51,6 @@ public class SpigotBootstrap extends JavaPlugin {
         manager.setFormat(MessageType.INFO, ChatColor.GRAY, ChatColor.BLUE);
         manager.enableUnstableAPI("help");
         manager.registerCommand(command);
-
-
 
 
     }

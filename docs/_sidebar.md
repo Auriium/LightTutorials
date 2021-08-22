@@ -5,7 +5,6 @@
 - Installation Guides
 
     - [Spigot](info/spigot.md)
-    - [Sponge](info/sponge.md)
 
 - Configuration
 

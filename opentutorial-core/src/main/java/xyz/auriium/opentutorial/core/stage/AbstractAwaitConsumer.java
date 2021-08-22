@@ -1,10 +1,11 @@
-package xyz.auriium.opentutorial.core.tutorial.stage;
+package xyz.auriium.opentutorial.core.stage;
 
 import xyz.auriium.beetle.utility.map.optional.DelegatingOptionalMap;
 import xyz.auriium.beetle.utility.map.optional.OptionalMap;
 import xyz.auriium.opentutorial.api.construct.Stage;
 import xyz.auriium.opentutorial.core.event.Event;
 import xyz.auriium.opentutorial.api.construct.Tutorial;
+import xyz.auriium.opentutorial.core.tutorial.stage.AwaitConsumer;
 
 import java.util.UUID;
 

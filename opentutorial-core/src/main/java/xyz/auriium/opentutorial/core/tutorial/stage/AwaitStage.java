@@ -13,6 +13,8 @@ public interface AwaitStage extends Stage {
      * The longest amount of time possible to be spent on the stage before it is invalid and parenting tutorial must be cancelled
      * @return long describing said value
      */
-    Optional<Long> getMaxDelay();
+    Integer getMaxDelay();
+
+    String getActionbarFormat();
 
 }

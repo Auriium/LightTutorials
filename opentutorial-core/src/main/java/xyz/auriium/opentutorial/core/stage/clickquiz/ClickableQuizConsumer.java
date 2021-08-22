@@ -5,7 +5,7 @@ import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.event.chat.ClickableEvent;
 import xyz.auriium.opentutorial.core.platform.base.Scheduler;
 import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
-import xyz.auriium.opentutorial.core.tutorial.stage.AbstractDelayConsumer;
+import xyz.auriium.opentutorial.core.stage.AbstractDelayConsumer;
 
 public class ClickableQuizConsumer extends AbstractDelayConsumer<ClickableQuizStage, ClickableEvent> {
 
@@ -51,7 +51,7 @@ public class ClickableQuizConsumer extends AbstractDelayConsumer<ClickableQuizSt
 
         teachableRegistry.getAudienceByUUID(continuable.getIdentifier()).ifPresent(teachable -> {
 
-            for (int i = 0; i < options.getOptions().size() - 1; i++) {
+            for (int i = 0; i < options.getOptions().size(); i++) {
                 String str = options.getOptions().get(i);
 
                 String ooga = config.optionMessage().parse(i + 1,str);

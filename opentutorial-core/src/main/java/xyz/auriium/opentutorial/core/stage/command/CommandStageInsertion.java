@@ -6,6 +6,7 @@ import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.config.templates.util.Constants;
 import xyz.auriium.opentutorial.core.config.templates.util.Interpret;
 import xyz.auriium.opentutorial.core.platform.Platform;
+import xyz.auriium.opentutorial.core.stage.Identifiers;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 import xyz.auriium.opentutorial.api.construct.Stage;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
@@ -13,11 +14,6 @@ import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
 import java.util.Map;
 
 public class CommandStageInsertion implements StageInsertion {
-
-    CommandStageInsertion() {}
-
-    public static CommandStageInsertion INIT = new CommandStageInsertion();
-
     @Override
     public StageConsumer<?> build(Platform<?> platform, ConfigController configController) {
         return new CommandStageConsumer(platform.userRegistry());
@@ -30,8 +26,8 @@ public class CommandStageInsertion implements StageInsertion {
 
     @Override
     public Stage deserialize(Map<String, FlexibleType> map) throws BadValueException {
-        String runAsConsole = Interpret.getNullable("run_as_console",map,FlexibleType::getString);
-        String runAsPlayer = Interpret.getNullable("run_as_player",map,FlexibleType::getString);
+        String runAsConsole = Interpret.getNullable(Identifiers.COMMAND_CONSOLE,map,FlexibleType::getString);
+        String runAsPlayer = Interpret.getNullable(Identifiers.COMMAND_PLAYER,map,FlexibleType::getString);
 
         return new CommandStage(runAsConsole,runAsPlayer);
     }

@@ -29,6 +29,16 @@ public class SpigotTeachableRegistry implements UserRegistry<Player> {
     }
 
     @Override
+    public Teachable getAudienceByUUIDThrow(UUID uuid) {
+
+        Player player = server.getPlayer(uuid);
+
+        if (player == null) throw new IllegalStateException("Player does not exist on server when it should: " + uuid);
+
+        return wrapUser(player);
+    }
+
+    @Override
     public Collection<Teachable> getAllAccessibleAudiences() {
         return server.getOnlinePlayers().stream().map(this::wrapUser).collect(Collectors.toUnmodifiableSet());
     }

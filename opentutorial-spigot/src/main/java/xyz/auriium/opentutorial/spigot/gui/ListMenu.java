@@ -27,6 +27,7 @@ public class ListMenu implements GUIProducer{
     @Override
     public ChestGui produce() {
         ChestGui gui = new ChestGui(6, color("&9Open&7Tutorial &7&l>> &0All Tutorials")); //might need to add related plugin
+        gui.setOnGlobalClick(click -> click.setCancelled(true));
         PaginatedPane pane = new PaginatedPane(0, 0, 9, 5);
 
         List<GuiItem> guiItems = new ArrayList<>();
@@ -45,8 +46,7 @@ public class ListMenu implements GUIProducer{
                     event.getWhoClicked().sendMessage(ChatColor.RED + "Sorry, this feature has not been implemented yet!");
                 }
 
-                event.setCancelled(true);
-
+                event.getWhoClicked().closeInventory();
             });
 
             guiItems.add(item);

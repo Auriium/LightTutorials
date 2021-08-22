@@ -15,13 +15,15 @@ public class ClickBlockStage implements AwaitStage {
     private final int y;
     private final int z;
 
-    private final Long maxDelay;
+    private final Integer maxDelay;
+    private final String actionbarFormat;
 
-    public ClickBlockStage(int x, int y, int z, Long maxDelay) {
+    public ClickBlockStage(int x, int y, int z, Integer maxDelay, String actionbarFormat) {
         this.x = x;
         this.y = y;
         this.z = z;
         this.maxDelay = maxDelay;
+        this.actionbarFormat = actionbarFormat;
     }
 
     public int getX() {
@@ -37,8 +39,12 @@ public class ClickBlockStage implements AwaitStage {
     }
 
     @Override
-    public Optional<Long> getMaxDelay() {
-        return Optional.ofNullable(maxDelay);
+    public Integer getMaxDelay() {
+        return maxDelay;
     }
 
+    @Override
+    public String getActionbarFormat() {
+        return actionbarFormat;
+    }
 }
