@@ -5,7 +5,7 @@ import org.slf4j.LoggerFactory;
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.error.InvalidConfigException;
 import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
-import xyz.auriium.opentutorial.core.platform.base.TeachableRegistry;
+import xyz.auriium.opentutorial.core.platform.TeachableRegistry;
 
 import java.io.IOException;
 

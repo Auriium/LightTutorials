@@ -1,7 +1,5 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
-import xyz.auriium.opentutorial.api.construct.Template;
-
 import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;

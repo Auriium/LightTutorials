@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.config.messages;
 
-import xyz.auriium.opentutorial.core.platform.base.Colorer;
-import xyz.auriium.opentutorial.core.platform.base.Teachable;
+import xyz.auriium.opentutorial.core.platform.Colorer;
+import xyz.auriium.opentutorial.core.platform.Teachable;
 
 public class Message {
 

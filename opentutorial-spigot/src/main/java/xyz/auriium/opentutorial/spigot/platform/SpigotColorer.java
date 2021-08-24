@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.spigot.platform;
 
 import org.bukkit.ChatColor;
-import xyz.auriium.opentutorial.core.platform.base.Colorer;
+import xyz.auriium.opentutorial.core.platform.Colorer;
 
 public class SpigotColorer implements Colorer {
     @Override

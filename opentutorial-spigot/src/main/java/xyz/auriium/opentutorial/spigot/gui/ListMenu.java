@@ -26,7 +26,7 @@ public class ListMenu implements GUIProducer{
 
     @Override
     public ChestGui produce() {
-        ChestGui gui = new ChestGui(6, color("&9Open&7Tutorial &7&l>> &0All Tutorials")); //might need to add related plugin
+        ChestGui gui = new ChestGui(6, color("&9Open&7Tutorial &7>> &eAll Tutorials")); //might need to add related plugin
         gui.setOnGlobalClick(click -> click.setCancelled(true));
         PaginatedPane pane = new PaginatedPane(0, 0, 9, 5);
 
@@ -37,13 +37,10 @@ public class ListMenu implements GUIProducer{
                     .setName(color("&7" + name.toUpperCase()))
                     .addLoreLine(color("&7"))
                     .addLoreLine(color("&9Left-Click &7to play this tutorial!"))
-                    .addLoreLine(color("&9Right-Click &7to open a new copy in the editor!"))
                     .toItemStack(), event -> {
 
                 if (event.isLeftClick()) {
                     loader.getModule().tutorialController().createNew(template,event.getWhoClicked().getUniqueId()).fireNext(); //play
-                } else if (event.isRightClick()) {
-                    event.getWhoClicked().sendMessage(ChatColor.RED + "Sorry, this feature has not been implemented yet!");
                 }
 
                 event.getWhoClicked().closeInventory();

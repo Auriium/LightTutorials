@@ -12,7 +12,7 @@ import xyz.auriium.opentutorial.core.config.templates.TutorialsConfig;
 import xyz.auriium.opentutorial.core.config.templates.util.StageConfSerializer;
 import xyz.auriium.opentutorial.core.insertion.InsertionRegistry;
 import xyz.auriium.opentutorial.core.platform.Platform;
-import xyz.auriium.opentutorial.core.platform.base.Colorer;
+import xyz.auriium.opentutorial.core.platform.Colorer;
 
 import java.io.IOException;
 import java.nio.file.Path;

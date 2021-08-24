@@ -1,17 +1,18 @@
 package xyz.auriium.opentutorial.core.insertion;
 
-import xyz.auriium.opentutorial.core.stage.chat.ChatStageInsertion;
-import xyz.auriium.opentutorial.core.stage.chat.SuppressStageInsertion;
-import xyz.auriium.opentutorial.core.stage.clickblock.ClickBlockInsertion;
-import xyz.auriium.opentutorial.core.stage.clickquiz.ClickableStageInsertion;
-import xyz.auriium.opentutorial.core.stage.command.CommandStageInsertion;
-import xyz.auriium.opentutorial.core.stage.delay.ActionbarDelayStageInsertion;
-import xyz.auriium.opentutorial.core.stage.delay.DelayStageInsertion;
-import xyz.auriium.opentutorial.core.stage.invisible.InvisibleStageInsertion;
-import xyz.auriium.opentutorial.core.stage.lock.LockableStageInsertion;
-import xyz.auriium.opentutorial.core.stage.plainkeyword.PlainKeywordInsertion;
-import xyz.auriium.opentutorial.core.stage.playsound.SoundStageInsertion;
-import xyz.auriium.opentutorial.core.stage.teleport.TeleportStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.chat.ChatStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.player.SuppressStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.clickblock.ClickBlockInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.clickable.ClickableStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.command.CommandStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.delay.ActionbarDelayStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.delay.DelayStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.player.InvisibleStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.player.LockableStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.keyword.PlainKeywordInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.player.SoundStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.player.TeleportStageInsertion;
+import xyz.auriium.opentutorial.core.tutorial.stage.killbirds.KillABirdInsertion;
 import xyz.auriium.opentutorial.core.tutorial.stage.StageInsertion;
 
 import java.util.*;
@@ -50,6 +51,7 @@ public class CommonInsertionRegistry implements InsertionRegistry{
                 .register(new TeleportStageInsertion())
                 .register(new ClickableStageInsertion())
                 .register(new SuppressStageInsertion())
-                .register(new ActionbarDelayStageInsertion());
+                .register(new ActionbarDelayStageInsertion())
+                .register(new KillABirdInsertion());
     }
 }

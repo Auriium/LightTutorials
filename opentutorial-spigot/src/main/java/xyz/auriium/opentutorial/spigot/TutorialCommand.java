@@ -3,25 +3,15 @@ package xyz.auriium.opentutorial.spigot;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
-import com.github.stefvanschie.inventoryframework.gui.GuiItem;
-import com.github.stefvanschie.inventoryframework.gui.type.ChestGui;
-import com.github.stefvanschie.inventoryframework.pane.PaginatedPane;
-import com.github.stefvanschie.inventoryframework.pane.StaticPane;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.TextComponent;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.event.InnerEventBus;
 import xyz.auriium.opentutorial.core.event.chat.ClickableEvent;
-import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
+import xyz.auriium.opentutorial.core.platform.UserRegistry;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
-import xyz.auriium.opentutorial.api.construct.Template;
+import xyz.auriium.opentutorial.core.tutorial.Template;
 import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.spigot.gui.ListMenu;
@@ -67,7 +57,7 @@ public class TutorialCommand extends BaseCommand {
 
     @Subcommand("reload")
     @CommandPermission("opentutorial.reload")
-    public void reload(Player player) {
+    public void reload(@Optional Player player) {
 
         try {
             reloader.load();
@@ -75,7 +65,10 @@ public class TutorialCommand extends BaseCommand {
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
             Date date = new Date();
 
-            reloader.getModule().configController().getMessageConfig().reloadMessage().send(userRegistry.wrapUser(player), formatter.format(date));
+            if (player != null) {
+                reloader.getModule().configController().getMessageConfig().reloadMessage().send(userRegistry.wrapUser(player), formatter.format(date));
+            }
+
         } catch (Exception e) {
             //I SADLY HAVE TO DO THIS FUCKING SHITCODE
             //BECAUSE ACF SUCKS ASS AND FUCKS WITH EXCEPTION HANDLING ANYWAYS

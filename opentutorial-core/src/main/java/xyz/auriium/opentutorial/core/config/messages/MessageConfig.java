@@ -40,7 +40,7 @@ public interface MessageConfig {
     Message completedTutorialMessage();
 
     @ConfKey("messages.stage_defaults.out_of_time")
-    @ConfDefault.DefaultString("&9&lOpen&7&lTutorial &7> &cOut of time! You have failed the %s tutorial!")
+    @ConfDefault.DefaultString("&9&lOpen&7&lTutorial &7> &cOut of time! You have failed the tutorial!")
     Message outOfTimeMessage();
 
     @ConfKey("messages.stage_defaults.not_a_number")

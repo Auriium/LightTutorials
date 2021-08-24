@@ -4,7 +4,7 @@ import org.bukkit.Location;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
-import xyz.auriium.opentutorial.core.stage.lock.Lockable;
+import xyz.auriium.opentutorial.core.tutorial.stage.Lockable;
 
 import java.util.HashSet;
 import java.util.Set;

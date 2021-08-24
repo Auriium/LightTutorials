@@ -7,9 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.auriium.opentutorial.core.config.templates.util.Constants;
-import xyz.auriium.opentutorial.core.platform.base.PlatformlessLocation;
-import xyz.auriium.opentutorial.core.platform.base.Teachable;
+import xyz.auriium.opentutorial.core.platform.PlatformlessLocation;
+import xyz.auriium.opentutorial.core.platform.Teachable;
 
 import java.util.UUID;
 
@@ -69,47 +68,16 @@ public class SpigotTeachable implements Teachable {
     }
 
     @Override
-    public void teleport(int x, int y, int z) {
-        player.teleport(new Location(player.getWorld(), x, y, z));
-    }
-
-    @Override
-    public boolean teleport(int x, int y, int z, String world) {
-
-        World worldIn = player.getServer().getWorld(world);
-
-        if (worldIn == null) return false;
-
-        player.teleport(new Location(worldIn, x, y, z));
-
-        return true;
-    }
-
-    @Override
-    public void teleport(int x, int y, int z, int pitch, int yaw) {
-        player.teleport(new Location(player.getWorld(), x, y, z, pitch, yaw));
-    }
-
-    @Override
-    public boolean teleport(int x, int y, int z, int pitch, int yaw, String world) {
-        World worldIn = player.getServer().getWorld(world);
-
-        if (worldIn == null) return false;
-
-        player.teleport(new Location(worldIn, x, y, z, pitch, yaw));
-
-        return true;
-    }
-
-    @Override
     public boolean teleport(PlatformlessLocation location) {
 
         Location bukkitLocation = player.getLocation();
 
-        double pitch = location.getPitch(bukkitLocation.getPitch());
-        double yaw = location.getYaw(bukkitLocation.getYaw());
+        float pitch = location.getPitch(bukkitLocation.getPitch());
+        float yaw = location.getYaw(bukkitLocation.getYaw());
 
         World world = location.getWorld().map(string -> plugin.getServer().getWorld(string)).orElse(bukkitLocation.getWorld());
+
+        player.teleport(new Location(world, location.getX(), location.getY(), location.getZ(), yaw, pitch));
 
         return true;
     }

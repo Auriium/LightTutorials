@@ -1,8 +1,11 @@
 package xyz.auriium.opentutorial.core.tutorial.stage;
 
 import xyz.auriium.beetle.utility.aspect.UUIDCloseable;
-import xyz.auriium.opentutorial.api.construct.Stage;
-import xyz.auriium.opentutorial.api.construct.Tutorial;
+import xyz.auriium.opentutorial.core.event.Event;
+import xyz.auriium.opentutorial.core.tutorial.Stage;
+import xyz.auriium.opentutorial.core.tutorial.Tutorial;
+
+import java.util.UUID;
 
 /**
  * Represents a physical consumer of stage logic that handles when to progress to the next stage.
@@ -12,6 +15,8 @@ import xyz.auriium.opentutorial.api.construct.Tutorial;
  * @param <T> type of stage consumed
  */
 public interface StageConsumer<T extends Stage> extends UUIDCloseable {
+
+
 
     /**
      * Method that describes logic that handles when a new stage of type T is started.
@@ -33,4 +38,13 @@ public interface StageConsumer<T extends Stage> extends UUIDCloseable {
      */
     Class<T> stageClass();
 
+    @Override
+    default void close() {
+
+    }
+
+    @Override
+    default void closeSingle(UUID uuid) {
+
+    }
 }

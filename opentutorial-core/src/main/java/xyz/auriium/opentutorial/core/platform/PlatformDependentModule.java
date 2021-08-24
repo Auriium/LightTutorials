@@ -9,8 +9,8 @@ import xyz.auriium.opentutorial.core.platform.impl.CommonDependentModule;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
-import xyz.auriium.opentutorial.core.tutorial.impl.CommonTutorialController;
-import xyz.auriium.opentutorial.core.tutorial.impl.ReduxTemplateController;
+import xyz.auriium.opentutorial.core.tutorial.CommonTutorialController;
+import xyz.auriium.opentutorial.core.tutorial.ReduxTemplateController;
 
 /**
  * Module that describes all baseless (reloadable) constructs available to the plugin

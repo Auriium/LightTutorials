@@ -6,7 +6,7 @@ import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.event.hook.HookInsertion;
 import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
 import xyz.auriium.opentutorial.core.platform.Platform;
-import xyz.auriium.opentutorial.api.construct.Tutorial;
+import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 
 import java.util.UUID;

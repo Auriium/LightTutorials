@@ -1,10 +1,7 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
 import xyz.auriium.beetle.utility.aspect.KeyCloseable;
-import xyz.auriium.opentutorial.api.construct.Stage;
-import xyz.auriium.opentutorial.api.construct.Template;
-import xyz.auriium.opentutorial.api.construct.Tutorial;
-import xyz.auriium.opentutorial.core.platform.base.Cycleable;
+import xyz.auriium.opentutorial.core.platform.Cycleable;
 
 import java.util.Optional;
 import java.util.UUID;

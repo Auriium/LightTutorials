@@ -7,9 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
-import xyz.auriium.opentutorial.api.construct.Template;
+import xyz.auriium.opentutorial.core.tutorial.Template;
 import xyz.auriium.opentutorial.spigot.gui.ListMenu;
 import xyz.auriium.opentutorial.spigot.gui.PreCreationMenu;
+import xyz.auriium.opentutorial.spigot.hook.KillabirdHook;
 import xyz.auriium.opentutorial.spigot.platform.SpigotPlatformLauncher;
 
 public class SpigotBootstrap extends JavaPlugin {
@@ -33,6 +34,7 @@ public class SpigotBootstrap extends JavaPlugin {
         loader.load();
 
         getServer().getPluginManager().registerEvents(new SpigotBusHook(platform,loader),this);
+        getServer().getPluginManager().registerEvents(new KillabirdHook(loader), this);
 
         //Initialize hacky acf bullshit (to be replaced with Branch!)
 

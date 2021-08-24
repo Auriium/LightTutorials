@@ -6,11 +6,10 @@ import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
 import xyz.auriium.opentutorial.core.config.impl.WarningExceptionHandler;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.PlatformLauncher;
-import xyz.auriium.opentutorial.core.platform.base.Colorer;
-import xyz.auriium.opentutorial.core.platform.base.Scheduler;
-import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
+import xyz.auriium.opentutorial.core.platform.Colorer;
+import xyz.auriium.opentutorial.core.platform.Scheduler;
+import xyz.auriium.opentutorial.core.platform.UserRegistry;
 import xyz.auriium.opentutorial.core.platform.impl.CommonPlatform;
-import xyz.auriium.opentutorial.spigot.SpigotBusHook;
 import xyz.auriium.opentutorial.spigot.hook.ChatHook;
 import xyz.auriium.opentutorial.spigot.hook.LockHook;
 
