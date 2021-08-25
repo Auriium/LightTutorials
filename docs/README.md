@@ -16,6 +16,10 @@ sustain version changes, doesn't rely on NMS hackery, shitty blocking I/O calls,
 
 OpenTutorial is also **free and open source**, and will **always be so.**
 
+## The Wiki
+
+**https://auriium.github.io/OpenTutorial**
+
 ## How do I install this as a server owner?
 
 OpenTutorial is designed to be platform-agnostic. That being said, it is still limited to Minecraft.

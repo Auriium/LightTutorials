@@ -4,7 +4,7 @@ import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.Decomposer;
 import space.arim.dazzleconf.serialiser.FlexibleType;
 import space.arim.dazzleconf.serialiser.ValueSerialiser;
-import xyz.auriium.opentutorial.core.platform.base.Colorer;
+import xyz.auriium.opentutorial.core.platform.Colorer;
 
 public class MessageConfSerializer implements ValueSerialiser<Message> {
 

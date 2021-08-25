@@ -4,18 +4,22 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import org.bukkit.entity.Player;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
 import xyz.auriium.opentutorial.core.event.InnerEventBus;
 import xyz.auriium.opentutorial.core.event.chat.ClickableEvent;
-import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
+import xyz.auriium.opentutorial.core.platform.UserRegistry;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
 import xyz.auriium.opentutorial.core.tutorial.Template;
+import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
-import xyz.auriium.opentutorial.spigot.platform.SpigotTeachable;
+import xyz.auriium.opentutorial.spigot.gui.ListMenu;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * What an ugly class - let's use branch!
@@ -23,14 +27,24 @@ import java.util.UUID;
 @CommandAlias("tutorial|opentutorial")
 public class TutorialCommand extends BaseCommand {
 
+    private final static Logger logger = LoggerFactory.getLogger("OpenTutorial");
+
     private final UserRegistry<Player> userRegistry;
     private final PlatformDependentLoader<Player> reloader;
 
-    public TutorialCommand(UserRegistry<Player> userRegistry, PlatformDependentLoader<Player> reloader) {
+    private final ListMenu listMenu;
+
+    public TutorialCommand(UserRegistry<Player> userRegistry, PlatformDependentLoader<Player> reloader, ListMenu listMenu) {
         this.userRegistry = userRegistry;
         this.reloader = reloader;
+        this.listMenu = listMenu;
     }
 
+    @Subcommand("list")
+    @CommandPermission("opentutorial.list")
+    public void list(Player player) {
+        listMenu.produce().show(player);
+    }
 
     @HelpCommand
     @CommandPermission("opentutorial.help")
@@ -40,13 +54,32 @@ public class TutorialCommand extends BaseCommand {
 
     @Subcommand("reload")
     @CommandPermission("opentutorial.reload")
-    public void reload(Player player) {
-        reloader.load();
+    public void reload(@Optional Player player) {
 
-        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        Date date = new Date();
+        try {
+            reloader.load();
 
-        reloader.getModule().configController().getMessageConfig().reloadMessage().send(userRegistry.wrapUser(player), formatter.format(date));
+            SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
+            Date date = new Date();
+
+            if (player != null) {
+                reloader.getModule().configController().getMessageConfig().reloadMessage().send(userRegistry.wrapUser(player), formatter.format(date));
+            }
+
+        } catch (Exception e) {
+            //I SADLY HAVE TO DO THIS FUCKING SHITCODE
+            //BECAUSE ACF SUCKS ASS AND FUCKS WITH EXCEPTION HANDLING ANYWAYS
+            //SO I HAVE TO DO IT MYSELF IN THIS CRINGE ASS try-catch ABUSE
+            //FUCK AIKAR AND HIS SHITCODE
+            //CANT WAIT TO SWITCH TO BRANCH
+
+            //FUCK!!!!!!!!
+
+            //the tf2 coconut of opentutorial
+
+            logger.error("Error occurred while reloading!",e);
+        }
+
     }
 
     @Subcommand("play")
@@ -113,6 +146,8 @@ public class TutorialCommand extends BaseCommand {
             return;
         }
 
+
+        messageConfig.leftTutorialMessage().send(userRegistry.wrapUser(sender));
         tutorialController.cancelByUUID(uuid);
     }
 

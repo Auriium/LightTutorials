@@ -3,8 +3,8 @@ package xyz.auriium.opentutorial.spigot.platform;
 import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.auriium.opentutorial.core.platform.base.Teachable;
-import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
+import xyz.auriium.opentutorial.core.platform.Teachable;
+import xyz.auriium.opentutorial.core.platform.UserRegistry;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -26,6 +26,16 @@ public class SpigotTeachableRegistry implements UserRegistry<Player> {
         Player player = server.getPlayer(uuid);
 
         return player == null ? Optional.empty() : Optional.of(wrapUser(player));
+    }
+
+    @Override
+    public Teachable getAudienceByUUIDThrow(UUID uuid) {
+
+        Player player = server.getPlayer(uuid);
+
+        if (player == null) throw new IllegalStateException("Player does not exist on server when it should: " + uuid);
+
+        return wrapUser(player);
     }
 
     @Override

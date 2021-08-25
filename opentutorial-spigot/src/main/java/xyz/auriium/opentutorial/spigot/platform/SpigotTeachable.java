@@ -1,17 +1,20 @@
 package xyz.auriium.opentutorial.spigot.platform;
 
 import net.md_5.bungee.api.ChatMessageType;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.*;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import xyz.auriium.opentutorial.core.platform.base.Teachable;
+import xyz.auriium.opentutorial.core.platform.PlatformlessLocation;
+import xyz.auriium.opentutorial.core.platform.Teachable;
 
 import java.util.UUID;
 
 public class SpigotTeachable implements Teachable {
+
+    public static final String BYPASS_INVIS_PERMISSION = "opentutorial.bypass.invisible";
 
     private final JavaPlugin plugin;
     private final Player player;
@@ -43,57 +46,54 @@ public class SpigotTeachable implements Teachable {
 
     @Override
     public void sendTitle(String title, String subtitle, int a, int b, int c) {
-        player.sendTitle(title, subtitle, a, b, c);
+        player.sendTitle(color(title), color(subtitle), a, b, c);
     }
 
     @Override
     public void runAs(String command) {
-        player.getServer().dispatchCommand(player,command);
+
+        plugin.getServer().getScheduler().runTask(plugin,() -> {
+            player.getServer().dispatchCommand(player,command);
+        });
+
     }
 
     @Override
     public void runConsole(String command) {
-        player.getServer().dispatchCommand(player.getServer().getConsoleSender(),command);
+
+        plugin.getServer().getScheduler().runTask(plugin,() -> {
+            player.getServer().dispatchCommand(player.getServer().getConsoleSender(),command);
+        });
+
     }
 
     @Override
-    public void teleport(int x, int y, int z) {
-        player.teleport(new Location(player.getWorld(), x, y, z));
-    }
+    public boolean teleport(PlatformlessLocation location) {
 
-    @Override
-    public boolean teleport(int x, int y, int z, String world) {
+        Location bukkitLocation = player.getLocation();
 
-        World worldIn = player.getServer().getWorld(world);
+        float pitch = location.getPitch(bukkitLocation.getPitch());
+        float yaw = location.getYaw(bukkitLocation.getYaw());
 
-        if (worldIn == null) return false;
+        World world = location.getWorld().map(string -> plugin.getServer().getWorld(string)).orElse(bukkitLocation.getWorld());
 
-        player.teleport(new Location(worldIn, x, y, z));
+        player.teleport(new Location(world, location.getX(), location.getY(), location.getZ(), yaw, pitch));
 
         return true;
     }
 
     @Override
-    public void teleport(int x, int y, int z, int pitch, int yaw) {
-        player.teleport(new Location(player.getWorld(), x, y, z, pitch, yaw));
-    }
+    public PlatformlessLocation getLocation() {
+        Location loc = player.getLocation();
 
-    @Override
-    public boolean teleport(int x, int y, int z, int pitch, int yaw, String world) {
-        World worldIn = player.getServer().getWorld(world);
-
-        if (worldIn == null) return false;
-
-        player.teleport(new Location(worldIn, x, y, z, pitch, yaw));
-
-        return true;
+        return new PlatformlessLocation(loc.getX(), loc.getY(), loc.getZ(), loc.getPitch(), loc.getYaw(), loc.getWorld() != null ? loc.getWorld().getName() : null);
     }
 
     @Override
     public void setInvisible(boolean invisible) {
         for (Player etern : plugin.getServer().getOnlinePlayers()) {
             if (etern.equals(player)) continue;
-            if (!etern.hasPermission("opentutorial.bypass.invisible")) {
+            if (!etern.hasPermission(BYPASS_INVIS_PERMISSION)) {
                 etern.hidePlayer(plugin,player);
             }
         }
@@ -113,6 +113,20 @@ public class SpigotTeachable implements Teachable {
     @Override
     public void playSound(String sound, float volume, float pitch) {
         player.playSound(player.getLocation(),sound,volume,pitch);
+    }
+
+    @Override
+    public void sendClickable(String message, String command, String hover) {
+        //bungeechat sucks
+        //remind me to use adventure
+
+        TextComponent component = new TextComponent(TextComponent.fromLegacyText(ChatColor.translateAlternateColorCodes('&', message)));
+        BaseComponent[] hoverComponent = new ComponentBuilder(ChatColor.translateAlternateColorCodes('&',hover)).create();
+
+        component.setClickEvent(new ClickEvent(ClickEvent.Action.RUN_COMMAND, "/" + command));
+        component.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, hoverComponent));
+
+        player.spigot().sendMessage(component);
     }
 
     String color(String string) {

@@ -5,3 +5,5 @@ name: OpenTutorial
 version: ${project.version}
 
 author: Auriium
+
+api-version: 1.16

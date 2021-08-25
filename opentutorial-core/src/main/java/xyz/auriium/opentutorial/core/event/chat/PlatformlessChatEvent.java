@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.event.chat;
 
 import xyz.auriium.opentutorial.core.event.AssociatedEvent;
-import xyz.auriium.opentutorial.core.platform.base.Teachable;
+import xyz.auriium.opentutorial.core.platform.Teachable;
 
 import java.util.UUID;
 

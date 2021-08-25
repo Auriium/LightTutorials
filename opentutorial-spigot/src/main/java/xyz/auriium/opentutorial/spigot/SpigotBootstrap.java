@@ -8,6 +8,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
 import xyz.auriium.opentutorial.core.tutorial.Template;
+import xyz.auriium.opentutorial.spigot.gui.ListMenu;
+import xyz.auriium.opentutorial.spigot.hook.KillabirdHook;
 import xyz.auriium.opentutorial.spigot.platform.SpigotPlatformLauncher;
 
 public class SpigotBootstrap extends JavaPlugin {
@@ -15,6 +17,10 @@ public class SpigotBootstrap extends JavaPlugin {
     private final SpigotPlatformLauncher launcher = new SpigotPlatformLauncher(this);
 
     private volatile PlatformDependentLoader<Player> loader;
+
+    public void onLoad() {
+        //TODO move stuff here
+    }
 
     @Override
     public void onEnable() {
@@ -26,10 +32,15 @@ public class SpigotBootstrap extends JavaPlugin {
         //Load current loader instance!
         loader.load();
 
+        getServer().getPluginManager().registerEvents(new SpigotBusHook(platform,loader),this);
+        getServer().getPluginManager().registerEvents(new KillabirdHook(loader), this);
+
         //Initialize hacky acf bullshit (to be replaced with Branch!)
 
+        ListMenu listMenu = new ListMenu(loader);
+
         BukkitCommandManager manager = new BukkitCommandManager(this);
-        TutorialCommand command = new TutorialCommand(platform.userRegistry(), loader);
+        TutorialCommand command = new TutorialCommand(platform.userRegistry(), loader, listMenu);
 
         manager.getCommandContexts().registerContext(Template.class, new ACFTemplateContext(platform.userRegistry(), loader));
         manager.getCommandCompletions().registerCompletion("templates",s -> loader.getModule().templateController().getTemplateNames());
@@ -40,8 +51,6 @@ public class SpigotBootstrap extends JavaPlugin {
         manager.setFormat(MessageType.INFO, ChatColor.GRAY, ChatColor.BLUE);
         manager.enableUnstableAPI("help");
         manager.registerCommand(command);
-
-
 
 
     }

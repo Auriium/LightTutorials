@@ -1,6 +1,7 @@
 package xyz.auriium.opentutorial.core.platform.impl;
 
 import xyz.auriium.beetle.utility.aspect.UUIDCloseable;
+import xyz.auriium.opentutorial.core.OpenTutorial;
 import xyz.auriium.opentutorial.core.event.hook.CommonHookRegistry;
 import xyz.auriium.opentutorial.core.event.hook.HookRegistry;
 import xyz.auriium.opentutorial.core.insertion.CommonInsertionRegistry;
@@ -8,7 +9,7 @@ import xyz.auriium.opentutorial.core.insertion.InsertionRegistry;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.PlatformDependentModule;
 import xyz.auriium.opentutorial.core.platform.PluginExpose;
-import xyz.auriium.opentutorial.core.platform.base.Loadable;
+import xyz.auriium.opentutorial.core.platform.Loadable;
 
 import java.util.UUID;
 
@@ -37,6 +38,10 @@ public class PlatformDependentLoader<T> implements Loadable, PluginExpose, UUIDC
         }
 
         module = PlatformDependentModule.load(platform,insertionRegistry,hookRegistry);
+    }
+
+    public OpenTutorial getOT() {
+        return null;
     }
 
     public PlatformDependentModule getModule() {

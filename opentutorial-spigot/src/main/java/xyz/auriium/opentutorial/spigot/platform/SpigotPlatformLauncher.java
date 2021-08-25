@@ -6,11 +6,12 @@ import xyz.auriium.opentutorial.core.config.ConfigExceptionHandler;
 import xyz.auriium.opentutorial.core.config.impl.WarningExceptionHandler;
 import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.PlatformLauncher;
-import xyz.auriium.opentutorial.core.platform.base.Colorer;
-import xyz.auriium.opentutorial.core.platform.base.Scheduler;
-import xyz.auriium.opentutorial.core.platform.base.UserRegistry;
+import xyz.auriium.opentutorial.core.platform.Colorer;
+import xyz.auriium.opentutorial.core.platform.Scheduler;
+import xyz.auriium.opentutorial.core.platform.UserRegistry;
 import xyz.auriium.opentutorial.core.platform.impl.CommonPlatform;
-import xyz.auriium.opentutorial.spigot.LockHook;
+import xyz.auriium.opentutorial.spigot.hook.ChatHook;
+import xyz.auriium.opentutorial.spigot.hook.LockHook;
 
 import java.nio.file.Path;
 
@@ -35,12 +36,16 @@ public class SpigotPlatformLauncher implements PlatformLauncher<Player> {
         Path configPath = plugin.getDataFolder().toPath();
         Colorer colorer = new SpigotColorer();
         ConfigExceptionHandler handler = new WarningExceptionHandler(userRegistry);
+
         LockHook lockable = new LockHook();
+        ChatHook hook = new ChatHook();
+
 
         plugin.getServer().getPluginManager().registerEvents(lockable,plugin);
+        plugin.getServer().getPluginManager().registerEvents(hook,plugin);
 
         hasLaunched = true;
 
-        return new CommonPlatform<>(handler, scheduler, configPath, colorer, userRegistry, lockable);
+        return new CommonPlatform<>(handler, scheduler, configPath, colorer, userRegistry, lockable, hook);
     }
 }

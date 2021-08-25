@@ -9,8 +9,8 @@ import xyz.auriium.opentutorial.core.platform.impl.CommonDependentModule;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
-import xyz.auriium.opentutorial.core.tutorial.impl.CommonTemplateController;
-import xyz.auriium.opentutorial.core.tutorial.impl.CommonTutorialController;
+import xyz.auriium.opentutorial.core.tutorial.CommonTutorialController;
+import xyz.auriium.opentutorial.core.tutorial.ReduxTemplateController;
 
 /**
  * Module that describes all baseless (reloadable) constructs available to the plugin
@@ -25,14 +25,16 @@ public interface PlatformDependentModule extends UUIDCloseable {
 
     static PlatformDependentModule load(Platform<?> platform, InsertionRegistry insertionRegistry, HookRegistry hookRegistry) {
         ConfigController configController = ConfigController.load(platform,insertionRegistry);
-        ConsumerCentralizer consumerCentralizer = ConsumerCentralizer.load(platform,insertionRegistry,hookRegistry,configController);
-        TutorialController tutorialController = new CommonTutorialController(consumerCentralizer);
+        ConsumerCentralizer consumerCentralizer = ConsumerCentralizer.load(platform, insertionRegistry, hookRegistry, configController);
+        TutorialController tutorialController = new CommonTutorialController(consumerCentralizer, platform.userRegistry());
 
 
         InnerEventBus innerEventBus = InnerEventBus.load(platform,hookRegistry,tutorialController,configController);
-        TemplateController templateController = new CommonTemplateController(configController.getTutorialsConfig());
+        TemplateController templateController = ReduxTemplateController.build(configController.getTutorialsConfig());
 
         return new CommonDependentModule(configController, consumerCentralizer,tutorialController,templateController,innerEventBus);
+
+
     }
 
 }

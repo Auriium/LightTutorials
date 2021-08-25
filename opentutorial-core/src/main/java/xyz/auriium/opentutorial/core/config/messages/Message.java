@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.config.messages;
 
-import xyz.auriium.opentutorial.core.platform.base.Colorer;
-import xyz.auriium.opentutorial.core.platform.base.Teachable;
+import xyz.auriium.opentutorial.core.platform.Colorer;
+import xyz.auriium.opentutorial.core.platform.Teachable;
 
 public class Message {
 
@@ -15,13 +15,21 @@ public class Message {
     }
 
     public void send(Teachable sender, Object... strings) {
-        sender.sendMessage(colorer.color(String.format(translatable,strings)));
+
+        if (!translatable.equals("none")) {
+            sender.sendMessage(String.format(colorer.color(translatable),strings));
+        }
+
     }
     public void send(Teachable sender) {
-        sender.sendMessage(colorer.color(translatable));
+        send(sender,"");
     }
 
     public String getTranslatable() {
         return translatable;
+    }
+
+    public String parse(Object... strings) {
+        return String.format(colorer.color(translatable),strings);
     }
 }

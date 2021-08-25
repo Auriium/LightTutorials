@@ -12,7 +12,7 @@ import xyz.auriium.opentutorial.core.config.templates.TutorialsConfig;
 import xyz.auriium.opentutorial.core.config.templates.util.StageConfSerializer;
 import xyz.auriium.opentutorial.core.insertion.InsertionRegistry;
 import xyz.auriium.opentutorial.core.platform.Platform;
-import xyz.auriium.opentutorial.core.platform.base.Colorer;
+import xyz.auriium.opentutorial.core.platform.Colorer;
 
 import java.io.IOException;
 import java.nio.file.Path;
@@ -52,8 +52,11 @@ public interface ConfigController {
             ).load();
 
             return new CommonConfigController(config, generalConfig, tutorialsConfig);
-        } catch (IOException | InvalidConfigException exception) {
-            platform.exceptionHandler().signal();
+        } catch (IOException exception) {
+            platform.exceptionHandler().signal(exception);
+            throw new LoadFailureException(exception);
+        } catch (InvalidConfigException exception) {
+            platform.exceptionHandler().signal(exception);
             throw new LoadFailureException(exception);
         }
     }

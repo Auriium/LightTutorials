@@ -13,6 +13,8 @@ public interface Tutorial {
      */
     UUID getIdentifier();
 
+    TutorialStorage localStorage();
+
     /**
      * Marks current stage as complete and moves to accepting the next one. If all stages are finished the tutorial is marked as complete.
      */
