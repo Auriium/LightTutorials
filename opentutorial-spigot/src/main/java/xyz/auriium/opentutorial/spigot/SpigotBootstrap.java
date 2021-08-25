@@ -9,7 +9,6 @@ import xyz.auriium.opentutorial.core.platform.Platform;
 import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
 import xyz.auriium.opentutorial.core.tutorial.Template;
 import xyz.auriium.opentutorial.spigot.gui.ListMenu;
-import xyz.auriium.opentutorial.spigot.gui.PreCreationMenu;
 import xyz.auriium.opentutorial.spigot.hook.KillabirdHook;
 import xyz.auriium.opentutorial.spigot.platform.SpigotPlatformLauncher;
 
@@ -39,10 +38,9 @@ public class SpigotBootstrap extends JavaPlugin {
         //Initialize hacky acf bullshit (to be replaced with Branch!)
 
         ListMenu listMenu = new ListMenu(loader);
-        PreCreationMenu preCreationMenu = new PreCreationMenu();
 
         BukkitCommandManager manager = new BukkitCommandManager(this);
-        TutorialCommand command = new TutorialCommand(platform.userRegistry(), loader, listMenu, preCreationMenu);
+        TutorialCommand command = new TutorialCommand(platform.userRegistry(), loader, listMenu);
 
         manager.getCommandContexts().registerContext(Template.class, new ACFTemplateContext(platform.userRegistry(), loader));
         manager.getCommandCompletions().registerCompletion("templates",s -> loader.getModule().templateController().getTemplateNames());

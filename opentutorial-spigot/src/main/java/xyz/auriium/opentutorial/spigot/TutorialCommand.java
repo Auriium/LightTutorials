@@ -15,7 +15,6 @@ import xyz.auriium.opentutorial.core.tutorial.Template;
 import xyz.auriium.opentutorial.core.tutorial.TemplateController;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 import xyz.auriium.opentutorial.spigot.gui.ListMenu;
-import xyz.auriium.opentutorial.spigot.gui.PreCreationMenu;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -34,13 +33,11 @@ public class TutorialCommand extends BaseCommand {
     private final PlatformDependentLoader<Player> reloader;
 
     private final ListMenu listMenu;
-    private final PreCreationMenu preCreationMenu;
 
-    public TutorialCommand(UserRegistry<Player> userRegistry, PlatformDependentLoader<Player> reloader, ListMenu listMenu, PreCreationMenu preCreationMenu) {
+    public TutorialCommand(UserRegistry<Player> userRegistry, PlatformDependentLoader<Player> reloader, ListMenu listMenu) {
         this.userRegistry = userRegistry;
         this.reloader = reloader;
         this.listMenu = listMenu;
-        this.preCreationMenu = preCreationMenu;
     }
 
     @Subcommand("list")
@@ -152,23 +149,6 @@ public class TutorialCommand extends BaseCommand {
 
         messageConfig.leftTutorialMessage().send(userRegistry.wrapUser(sender));
         tutorialController.cancelByUUID(uuid);
-    }
-
-    @Subcommand("graphical create")
-    @CommandPermission("opentutorial.graphical.create")
-    public void graphicalCreate(Player sender, String name, String permission) {
-
-        TemplateController templateController = reloader.getModule().templateController();
-
-        if (templateController.getTemplateNames().stream().map(String::toLowerCase).collect(Collectors.toSet()).contains(name.toLowerCase())) {
-            reloader.getModule().configController().getMessageConfig().templateExistsMessage().send(userRegistry.wrapUser(sender));
-            return;
-        }
-
-
-
-
-        preCreationMenu.produce().show(sender);
     }
 
 }
