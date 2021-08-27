@@ -3,19 +3,17 @@ package xyz.auriium.opentutorial.spigot;
 import co.aikar.commands.BukkitCommandExecutionContext;
 import co.aikar.commands.InvalidCommandArgument;
 import co.aikar.commands.contexts.ContextResolver;
-import org.bukkit.entity.Player;
-import xyz.auriium.opentutorial.core.platform.UserRegistry;
-import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
-import xyz.auriium.opentutorial.core.tutorial.Template;
+import xyz.auriium.openmineplatform.api.Platform;
+import xyz.auriium.opentutorial.core.MissingServiceSupplier;
+import xyz.auriium.opentutorial.core.PlatformDependentModule;
+import xyz.auriium.opentutorial.core.template.Template;
 
 public class ACFTemplateContext implements ContextResolver<Template, BukkitCommandExecutionContext> {
 
-    private final UserRegistry<Player> registry;
-    private final PlatformDependentLoader<Player> loader;
+    private final Platform platform;
 
-    public ACFTemplateContext(UserRegistry<Player> registry, PlatformDependentLoader<Player> loader) {
-        this.registry = registry;
-        this.loader = loader;
+    public ACFTemplateContext(Platform platform) {
+        this.platform = platform;
     }
 
 
@@ -23,10 +21,16 @@ public class ACFTemplateContext implements ContextResolver<Template, BukkitComma
     public Template getContext(BukkitCommandExecutionContext c) throws InvalidCommandArgument {
         String arg = c.getFirstArg();
 
-        return loader.getModule().templateController().getByIdentifier(arg).orElseThrow(() -> {
-            loader.getModule().configController().getMessageConfig().invalidTemplateMessage().send(registry.wrapUser(c.getPlayer()),arg);
+        PlatformDependentModule module = platform.serviceRegistry()
+                .retrieve(PlatformDependentModule.class)
+                .orElseThrow(new MissingServiceSupplier("plugin-core"));
 
-            return new InvalidCommandArgument(false);
-        });
+        return module.templateController()
+                .getByIdentifier(arg)
+                .orElseThrow(() -> {
+                    module.configController().getMessageConfig().invalidTemplateMessage().send(platform.interRegistry().get(c.getPlayer().getUniqueId()));
+
+                    return new InvalidCommandArgument(false);
+                });
     }
 }

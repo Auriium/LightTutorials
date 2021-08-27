@@ -1,109 +1,72 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
-import xyz.auriium.opentutorial.core.platform.PlatformlessLocation;
-import xyz.auriium.opentutorial.core.platform.Teachable;
-import xyz.auriium.opentutorial.core.platform.TeachableRegistry;
-import xyz.auriium.opentutorial.core.tutorial.stage.StageConsumer;
+import xyz.auriium.openmineplatform.api.Platform;
+import xyz.auriium.opentutorial.core.InternalDependentModule;
+import xyz.auriium.opentutorial.core.consumer.ConsumerCentralizer;
+import xyz.auriium.opentutorial.core.consumer.stage.Stage;
+import xyz.auriium.opentutorial.core.template.Template;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
-/**
- * Controller as well as entry point for closeables
- */
-public class CommonTutorialController implements TutorialController {
+public class CommonTutorialController implements TutorialController{
 
-    static class TutorialData {
-        private final Tutorial tutorial;
-        private final PlatformlessLocation location;
+    private final Map<UUID, Tutorial> map = new ConcurrentHashMap<>();
 
-        TutorialData(Tutorial tutorial, PlatformlessLocation location) {
-            this.tutorial = tutorial;
-            this.location = location;
-        }
+    private final Platform platform;
+    private final InternalDependentModule module;
+    private final ConsumerCentralizer centralizer; //Prebuilt registry
 
-        public Tutorial getTutorial() {
-            return tutorial;
-        }
-
-        public PlatformlessLocation getLocation() {
-            return location;
-        }
-    }
-
-    private final Map<UUID, TutorialData> map;
-
-    private final ConsumerCentralizer registry; //Prebuilt registry
-    private final TeachableRegistry teachableRegistry;
-
-    public CommonTutorialController(ConsumerCentralizer registry, TeachableRegistry teachableRegistry) {
-        this.teachableRegistry = teachableRegistry;
-        this.map = new HashMap<>();
-
-        this.registry = registry;
-    }
-
-
-    public <T extends Stage> void consumeStage(T stage, Tutorial tutorial) {
-
-        StageConsumer<T> c = registry.getConsumer(stage).orElseThrow(() -> new NoConsumerException("No logic found for stage of type " + stage.getClass().getName()));
-
-        c.started(stage,tutorial);
+    public CommonTutorialController(Platform platform, InternalDependentModule module, ConsumerCentralizer registry) {
+        this.platform = platform;
+        this.module = module;
+        this.centralizer = registry;
     }
 
     @Override
     public Optional<Tutorial> cancelByUUID(UUID uuid) {
-        teachableRegistry.getAudienceByUUID(uuid).ifPresent(teachable -> {
-            TutorialData data = map.get(uuid);
+        Tutorial tutorial = map.remove(uuid);
 
-            //TODO teleport back on completion? Kinda stupid since the entire plugin is designed in explicit-style configuration definition/.
-        });
+        if (tutorial != null) {
+            tutorial.fireCancel();
 
-        registry.closeSingle(uuid);
+            return Optional.of(tutorial);
+        }
 
-        TutorialData data = map.remove(uuid);
-
-        if (data == null) return Optional.empty();
-
-        return Optional.of(data.getTutorial());
+        return Optional.empty();
     }
 
     @Override
     public Optional<Tutorial> getByUUID(UUID uuid) {
-        TutorialData data = map.get(uuid);
-
-        if (data == null) return Optional.empty();
-
-        return Optional.of(data.getTutorial());
+        return Optional.ofNullable(map.get(uuid));
     }
 
     @Override
     public Tutorial createNew(Template template, UUID owner) {
-       if (map.containsKey(owner)) throw new IllegalStateException("User is already in a tutorial: " + owner);
-       Teachable teachable = teachableRegistry.getAudienceByUUID(owner).orElseThrow(() -> new IllegalStateException("User is activating tutorial but not on server!"));
 
-       Tutorial tutorial = new CommonTutorial(owner,new ArrayDeque<>(template.getStages()),this);
+        if (map.containsKey(owner)) throw new IllegalStateException("User is already in a tutorial: " + owner);
 
-       map.put(owner, new TutorialData(tutorial,teachable.getLocation()));
+        Tutorial tutorial = new CommonTutorial(owner, new ArrayDeque<>(template.getStages()), centralizer, platform, module);
+        map.put(owner, tutorial);
 
-       return tutorial;
+        return tutorial;
     }
 
     @Override
     public Tutorial createStage(Template template, UUID owner, int stage) {
+
         if (map.containsKey(owner)) throw new IllegalStateException("User is already in a tutorial: " + owner);
         if (template.stageNotPresent(stage)) throw new IllegalStateException("No stage exists at that index!");
-        Teachable teachable = teachableRegistry.getAudienceByUUID(owner).orElseThrow(() -> new IllegalStateException("User is activating tutorial but not on server!"));
-
 
         Deque<Stage> stages = new ArrayDeque<>();
         stages.add(template.getStages().get(stage));
 
-        Tutorial tutorial = new CommonTutorial(owner,new ArrayDeque<>(stages),this);
-
-        map.put(owner, new TutorialData(tutorial,teachable.getLocation()));
+        Tutorial tutorial = new CommonTutorial(owner, new ArrayDeque<>(stages), centralizer, platform, module);
+        map.put(owner, tutorial);
 
         return tutorial;
     }
+
 
     @Override
     public void closeSingle(UUID uuid) {
@@ -112,22 +75,6 @@ public class CommonTutorialController implements TutorialController {
 
     @Override
     public void close() {
-        registry.close();
-        map.clear();
-    }
-
-    @Override
-    public void startup() {
-        //no-ops
-    }
-
-    @Override
-    public void reload() {
-        close();
-    }
-
-    @Override
-    public void shutdown() {
-        close();
+        map.forEach((a,b) -> cancelByUUID(a));
     }
 }

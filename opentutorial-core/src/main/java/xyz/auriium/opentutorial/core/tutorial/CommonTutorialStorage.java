@@ -1,7 +1,6 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
-import xyz.auriium.opentutorial.core.tutorial.StageLocalValue;
-import xyz.auriium.opentutorial.core.tutorial.TutorialStorage;
+import xyz.auriium.opentutorial.core.consumer.stage.StageLocalValue;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

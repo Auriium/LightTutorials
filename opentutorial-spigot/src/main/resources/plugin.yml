@@ -1,4 +1,4 @@
-main: xyz.auriium.opentutorial.spigot.SpigotBootstrap
+main: xyz.auriium.opentutorial.spigot.OpenTutorialBootstrap
 
 name: OpenTutorial
 

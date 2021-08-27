@@ -1,5 +1,10 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
+import xyz.auriium.openmineplatform.api.Platform;
+import xyz.auriium.opentutorial.core.InternalDependentModule;
+import xyz.auriium.opentutorial.core.consumer.ConsumerCentralizer;
+import xyz.auriium.opentutorial.core.consumer.stage.Stage;
+
 import java.util.Queue;
 import java.util.UUID;
 
@@ -10,14 +15,20 @@ public class CommonTutorial implements Tutorial {
 
     private final UUID uuid;
     private final Queue<Stage> stageQueue;
-    private final TutorialController controller;
+    private final ConsumerCentralizer consumerCentralizer;
+    private final Platform platform;
+    private final InternalDependentModule module;
+
     private final TutorialStorage storage = new CommonTutorialStorage();
 
-    public CommonTutorial(UUID uuid, Queue<Stage> stageQueue, TutorialController controller) {
+    public CommonTutorial(UUID uuid, Queue<Stage> stageQueue, ConsumerCentralizer consumerCentralizer, Platform platform, InternalDependentModule module) {
         this.uuid = uuid;
         this.stageQueue = stageQueue;
-        this.controller = controller;
+        this.consumerCentralizer = consumerCentralizer;
+        this.platform = platform;
+        this.module = module;
     }
+
 
     @Override
     public UUID getIdentifier() {
@@ -27,6 +38,16 @@ public class CommonTutorial implements Tutorial {
     @Override
     public TutorialStorage localStorage() {
         return storage;
+    }
+
+    @Override
+    public Platform getPlatform() {
+        return platform;
+    }
+
+    @Override
+    public InternalDependentModule getModule() {
+        return module;
     }
 
     @Override
@@ -40,7 +61,7 @@ public class CommonTutorial implements Tutorial {
 
         }
 
-        controller.consumeStage(stageQueue.remove(), this);
+        consumerCentralizer.consumeStage(stageQueue.remove(), this);
     }
 
     @Override
@@ -50,6 +71,6 @@ public class CommonTutorial implements Tutorial {
 
     void stop() {
         storage.closeTutorial();
-        controller.cancelByUUID(uuid);
+        //TODO remove self from map
     }
 }

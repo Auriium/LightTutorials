@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.config.templates;
 
 import space.arim.dazzleconf.annote.ConfKey;
-import xyz.auriium.opentutorial.core.tutorial.Stage;
+import xyz.auriium.opentutorial.core.consumer.stage.Stage;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
-import xyz.auriium.beetle.utility.aspect.KeyCloseable;
-import xyz.auriium.opentutorial.core.platform.Cycleable;
+import xyz.auriium.littlethings.archetypes.closeables.UUIDCloseable;
+import xyz.auriium.opentutorial.core.template.Template;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -9,15 +9,7 @@ import java.util.UUID;
 /**
  * Represents a tutorial controller that can cancel and start tutorials.
  */
-public interface TutorialController extends Cycleable, KeyCloseable<UUID> {
-
-    /**
-     * Fires a stage into related consumers from a tutorial
-     * @param stage the stage
-     * @param tutorial tutorial
-     * @param <T> type
-     */
-    <T extends Stage> void consumeStage(T stage, Tutorial tutorial);
+public interface TutorialController extends UUIDCloseable {
 
     /**
      * Cancels by UUID if present or does nothing if not
