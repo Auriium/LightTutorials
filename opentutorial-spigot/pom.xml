@@ -47,6 +47,7 @@
                             <include>xyz.auriium:openmineplatform-spigot</include>
                             <include>xyz.auriium:littlethings-archetypes</include>
                             <include>xyz.auriium:littlethings-collections</include>
+                            <include>net.kyori</include>
 
                             <include>com.github.stefvanschie.inventoryframework</include>
                         </includes>
