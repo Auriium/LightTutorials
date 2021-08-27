@@ -10,9 +10,9 @@ import xyz.auriium.opentutorial.core.MissingServiceSupplier;
 import xyz.auriium.opentutorial.core.PlatformDependentModule;
 import xyz.auriium.opentutorial.core.config.MessageConfig;
 import xyz.auriium.opentutorial.core.event.EventBus;
-import xyz.auriium.opentutorial.core.types.clickable.PlatformlessClickableEvent;
 import xyz.auriium.opentutorial.core.template.Template;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
+import xyz.auriium.opentutorial.core.types.clickable.PlatformlessClickableEvent;
 import xyz.auriium.opentutorial.spigot.hook.command.ListMenu;
 
 import java.text.SimpleDateFormat;

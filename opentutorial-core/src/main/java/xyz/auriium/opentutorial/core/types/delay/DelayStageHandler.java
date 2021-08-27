@@ -11,7 +11,6 @@ import xyz.auriium.opentutorial.core.consumer.stage.StageLocalValue;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 
 import java.util.Map;
-import java.util.UUID;
 
 public class DelayStageHandler implements BasicConsumer<DelayStage> {
     @Override

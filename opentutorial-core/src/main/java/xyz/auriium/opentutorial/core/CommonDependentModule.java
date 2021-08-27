@@ -6,9 +6,12 @@ import xyz.auriium.opentutorial.core.consumer.CommonConsumerCentralizer;
 import xyz.auriium.opentutorial.core.consumer.ConsumerCentralizer;
 import xyz.auriium.opentutorial.core.event.EventBus;
 import xyz.auriium.opentutorial.core.event.ReduxEventBus;
-import xyz.auriium.opentutorial.core.tutorial.*;
 import xyz.auriium.opentutorial.core.template.CommonTemplateController;
 import xyz.auriium.opentutorial.core.template.TemplateController;
+import xyz.auriium.opentutorial.core.tutorial.CancellingConduit;
+import xyz.auriium.opentutorial.core.tutorial.CommonTutorialController;
+import xyz.auriium.opentutorial.core.tutorial.ConsumerFailureConduit;
+import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 
 import java.util.UUID;
 

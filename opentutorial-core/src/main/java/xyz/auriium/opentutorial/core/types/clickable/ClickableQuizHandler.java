@@ -3,7 +3,7 @@ package xyz.auriium.opentutorial.core.types.clickable;
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.openmineplatform.api.interfaceable.user.User;
-import xyz.auriium.openmineplatform.api.interfaceable.user.UserTelescope;
+import xyz.auriium.opentutorial.core.StageExceptionMapper;
 import xyz.auriium.opentutorial.core.config.templates.Interpret;
 import xyz.auriium.opentutorial.core.consumer.AbstractDelayConsumer;
 import xyz.auriium.opentutorial.core.consumer.stage.Identifiers;
@@ -22,7 +22,7 @@ public class ClickableQuizHandler extends AbstractDelayConsumer<ClickableQuizSta
         } else {
             User user = tutorial.getPlatform()
                     .interRegistry()
-                    .getTelescoping(tutorial.getIdentifier(), UserTelescope.EXCEPTIONAL);
+                    .getTelescoping(tutorial.getIdentifier(), StageExceptionMapper.USER);
 
             tutorial.getModule()
                     .configController()
@@ -42,7 +42,7 @@ public class ClickableQuizHandler extends AbstractDelayConsumer<ClickableQuizSta
     public void started1(ClickableQuizStage stage, Tutorial tutorial) {
         User user = tutorial.getPlatform()
                 .interRegistry()
-                .getTelescoping(tutorial.getIdentifier(), UserTelescope.EXCEPTIONAL);
+                .getTelescoping(tutorial.getIdentifier(), StageExceptionMapper.USER);
 
         for (int i = 0; i < stage.getOptions().size(); i++) {
             String str = stage.getOptions().get(i);

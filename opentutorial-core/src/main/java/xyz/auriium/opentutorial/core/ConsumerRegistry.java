@@ -1,8 +1,8 @@
 package xyz.auriium.opentutorial.core;
 
-import xyz.auriium.opentutorial.core.consumer.stage.Stage;
 import xyz.auriium.opentutorial.core.consumer.StageConfigParser;
 import xyz.auriium.opentutorial.core.consumer.StageConsumer;
+import xyz.auriium.opentutorial.core.consumer.stage.Stage;
 
 import java.util.Collection;
 import java.util.Optional;

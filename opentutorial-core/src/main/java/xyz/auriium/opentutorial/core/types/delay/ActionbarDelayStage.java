@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.types.delay;
 
-import xyz.auriium.opentutorial.core.consumer.stage.Stage;
 import xyz.auriium.opentutorial.core.consumer.stage.Delayable;
+import xyz.auriium.opentutorial.core.consumer.stage.Stage;
 
 /**
  * A new implementation of DelayStage that sends a repeating bar to the player while delayed

@@ -1,6 +1,5 @@
 package xyz.auriium.opentutorial.core;
 
-import xyz.auriium.openmineplatform.api.HookData;
 import xyz.auriium.openmineplatform.api.Platform;
 import xyz.auriium.openmineplatform.api.PlatformProjectIdentity;
 import xyz.auriium.openmineplatform.api.plugin.PluginRepresentation;

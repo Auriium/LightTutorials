@@ -1,7 +1,7 @@
 package xyz.auriium.opentutorial.core.types.player;
 
-import xyz.auriium.opentutorial.core.consumer.stage.Stage;
 import xyz.auriium.openmineplatform.api.binding.location.PlatformLocation;
+import xyz.auriium.opentutorial.core.consumer.stage.Stage;
 
 /**
  * Stage that teleports a player.

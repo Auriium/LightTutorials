@@ -2,13 +2,11 @@ package xyz.auriium.opentutorial.core.config.templates;
 
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
-import xyz.auriium.opentutorial.core.config.templates.InterpretFunction;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class Interpret {
 

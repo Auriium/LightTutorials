@@ -1,6 +1,5 @@
 package xyz.auriium.opentutorial.core.consumer;
 
-import xyz.auriium.opentutorial.core.consumer.EventStageConsumer;
 import xyz.auriium.opentutorial.core.consumer.stage.Stage;
 import xyz.auriium.opentutorial.core.consumer.stage.StageLocalValue;
 import xyz.auriium.opentutorial.core.event.Event;

@@ -2,7 +2,8 @@ package xyz.auriium.opentutorial.core.tutorial;
 
 import xyz.auriium.opentutorial.core.consumer.stage.StageLocalValue;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 @SuppressWarnings("unchecked")

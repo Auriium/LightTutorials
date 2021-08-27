@@ -3,8 +3,8 @@ package xyz.auriium.opentutorial.spigot.stage.player;
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.openmineplatform.api.interfaceable.user.User;
-import xyz.auriium.openmineplatform.api.interfaceable.user.UserTelescope;
 import xyz.auriium.openmineplatform.spigot.user.PlayerTelescope;
+import xyz.auriium.opentutorial.core.StageExceptionMapper;
 import xyz.auriium.opentutorial.core.config.templates.Interpret;
 import xyz.auriium.opentutorial.core.consumer.BasicConsumer;
 import xyz.auriium.opentutorial.core.consumer.StageException;
@@ -34,7 +34,7 @@ public class InvisibleStageHandler implements BasicConsumer<InvisibleStage> {
 
         User user = tutorial.getPlatform()
                 .interRegistry()
-                .getTelescoping(tutorial.getIdentifier(), UserTelescope.EXCEPTIONAL);
+                .getTelescoping(tutorial.getIdentifier(), StageExceptionMapper.USER);
 
         tutorial.localStorage()
                 .register("invisibility", new StageLocalValue<>(on, false, val -> {

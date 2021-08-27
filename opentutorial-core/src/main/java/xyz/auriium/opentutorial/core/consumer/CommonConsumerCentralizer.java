@@ -5,7 +5,7 @@ import xyz.auriium.opentutorial.core.consumer.stage.Stage;
 import xyz.auriium.opentutorial.core.tutorial.ConsumerFailureConduit;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
 
-import java.util.*;
+import java.util.Optional;
 
 //centralizer backed by a registry
 public class CommonConsumerCentralizer implements ConsumerCentralizer {

@@ -3,7 +3,6 @@ package xyz.auriium.opentutorial.core.types.command;
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.openmineplatform.api.interfaceable.user.User;
-import xyz.auriium.openmineplatform.api.interfaceable.user.UserTelescope;
 import xyz.auriium.opentutorial.core.StageExceptionMapper;
 import xyz.auriium.opentutorial.core.config.templates.Interpret;
 import xyz.auriium.opentutorial.core.consumer.BasicConsumer;

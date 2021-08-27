@@ -1,10 +1,6 @@
 package xyz.auriium.opentutorial.core.event;
 
-import xyz.auriium.littlethings.collections.maps.DelegatingMultiMap;
-import xyz.auriium.littlethings.collections.maps.MultiMap;
-import xyz.auriium.opentutorial.core.config.ConfigController;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
-import xyz.auriium.opentutorial.core.tutorial.TutorialController;
 
 import java.util.UUID;
 

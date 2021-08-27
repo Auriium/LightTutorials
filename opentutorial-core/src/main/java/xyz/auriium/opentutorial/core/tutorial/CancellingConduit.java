@@ -2,8 +2,8 @@ package xyz.auriium.opentutorial.core.tutorial;
 
 import xyz.auriium.openmineplatform.api.Platform;
 import xyz.auriium.opentutorial.core.MissingServiceSupplier;
-import xyz.auriium.opentutorial.core.platform.MessagingExceptionHandler;
 import xyz.auriium.opentutorial.core.consumer.StageException;
+import xyz.auriium.opentutorial.core.platform.MessagingExceptionHandler;
 
 public class CancellingConduit implements ConsumerFailureConduit{
 

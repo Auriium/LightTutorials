@@ -6,7 +6,6 @@ import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.error.InvalidConfigException;
 import xyz.auriium.openmineplatform.api.interfaceable.InterfaceableRegistry;
 import xyz.auriium.opentutorial.core.consumer.StageException;
-import xyz.auriium.opentutorial.core.platform.MessagingExceptionHandler;
 
 import java.io.IOException;
 

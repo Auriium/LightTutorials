@@ -4,7 +4,7 @@ import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
 import xyz.auriium.openmineplatform.api.interfaceable.user.PlatformTitle;
 import xyz.auriium.openmineplatform.api.interfaceable.user.User;
-import xyz.auriium.openmineplatform.api.interfaceable.user.UserTelescope;
+import xyz.auriium.opentutorial.core.StageExceptionMapper;
 import xyz.auriium.opentutorial.core.config.templates.Interpret;
 import xyz.auriium.opentutorial.core.consumer.BasicConsumer;
 import xyz.auriium.opentutorial.core.consumer.stage.Identifiers;
@@ -35,7 +35,7 @@ public class ChatStageHandler implements BasicConsumer<ChatStage> {
     public void stageStarted(ChatStage options, Tutorial tutorial) {
         User user = tutorial.getPlatform()
                 .interRegistry()
-                .getTelescoping(tutorial.getIdentifier(), UserTelescope.EXCEPTIONAL);
+                .getTelescoping(tutorial.getIdentifier(), StageExceptionMapper.USER);
 
         if (options.getTitle().isPresent() || options.getSubtitle().isPresent()) {
             user.sendTitle(PlatformTitle.of(

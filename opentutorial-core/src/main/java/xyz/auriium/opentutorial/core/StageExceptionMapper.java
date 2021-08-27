@@ -3,7 +3,6 @@ package xyz.auriium.opentutorial.core;
 import xyz.auriium.openmineplatform.api.interfaceable.Interfaceable;
 import xyz.auriium.openmineplatform.api.interfaceable.user.User;
 import xyz.auriium.openmineplatform.api.interfaceable.user.UserTelescope;
-import xyz.auriium.openmineplatform.api.telescope.BadTelescopeException;
 import xyz.auriium.openmineplatform.api.telescope.Telescope;
 import xyz.auriium.openmineplatform.api.telescope.TelescopeMapping;
 import xyz.auriium.opentutorial.core.consumer.StageException;

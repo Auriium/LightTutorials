@@ -1,15 +1,12 @@
 package xyz.auriium.opentutorial.core.consumer;
 
 import xyz.auriium.openmineplatform.api.interfaceable.user.User;
-import xyz.auriium.openmineplatform.api.interfaceable.user.UserTelescope;
 import xyz.auriium.openmineplatform.api.scheduling.SchedulerTask;
+import xyz.auriium.opentutorial.core.StageExceptionMapper;
 import xyz.auriium.opentutorial.core.config.MessageConfig;
-import xyz.auriium.opentutorial.core.consumer.stage.StageLocalValue;
 import xyz.auriium.opentutorial.core.consumer.stage.AwaitStage;
+import xyz.auriium.opentutorial.core.consumer.stage.StageLocalValue;
 import xyz.auriium.opentutorial.core.tutorial.Tutorial;
-
-import java.util.Optional;
-import java.util.UUID;
 
 public abstract class AbstractDelayConsumer<T extends AwaitStage,E> implements EventStageConsumer<T,E> {
 
@@ -23,7 +20,7 @@ public abstract class AbstractDelayConsumer<T extends AwaitStage,E> implements E
     public void stageStarted(T options, Tutorial continuable) {
         User user = continuable.getPlatform()
                 .interRegistry()
-                .getTelescoping(continuable.getIdentifier(), UserTelescope.EXCEPTIONAL);
+                .getTelescoping(continuable.getIdentifier(), StageExceptionMapper.USER);
 
         continuable.localStorage().register("stage", new StageLocalValue<>(options, true, var -> {}));
 
