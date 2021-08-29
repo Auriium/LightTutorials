@@ -5,6 +5,7 @@ import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import org.bukkit.entity.Player;
 import xyz.auriium.openmineplatform.api.Platform;
+import xyz.auriium.openmineplatform.api.interfaceable.Interfaceable;
 import xyz.auriium.openmineplatform.api.plugin.ReloadablePluginState;
 import xyz.auriium.opentutorial.core.MissingServiceSupplier;
 import xyz.auriium.opentutorial.core.PlatformDependentModule;
@@ -65,7 +66,7 @@ public class TutorialCommand extends BaseCommand {
                         .configController()
                         .getMessageConfig()
                         .reloadMessage()
-                        .send(platform.interRegistry().get(player.getUniqueId()), formatter.format(date));
+                        .send(new PlayerConsumer(player), formatter.format(date));
             }
 
         } catch (Exception e) {
@@ -89,19 +90,24 @@ public class TutorialCommand extends BaseCommand {
     @CommandCompletion("@templates")
     public void play(Player sender, Template template, @Optional Player target) {
         Player user = target == null ? sender : target;
+        PlayerConsumer consumer = new PlayerConsumer(user);
 
         PlatformDependentModule module = platform.serviceRegistry()
                 .retrieve(PlatformDependentModule.class)
                 .orElseThrow(new MissingServiceSupplier("plugin-core"));
 
+        MessageConfig config = module.configController().getMessageConfig();
+
         TutorialController controller = module.tutorialController();
 
         if (controller.getByUUID(user.getUniqueId()).isPresent()) {
-            module.configController().getMessageConfig().alreadyInTutorialMessage().send(platform.interRegistry().get(sender.getUniqueId()));
+            config.alreadyInTutorialMessage().send(consumer);
             return;
         }
 
+
         controller.createNew(template,user.getUniqueId()).fireNext();
+        config.playingTutorialMessage().send(consumer);
     }
 
     @Subcommand("playpoint")
@@ -109,6 +115,7 @@ public class TutorialCommand extends BaseCommand {
     @CommandCompletion("@templates")
     public void playPoint(Player sender, Template template, int point, @Optional Player target) {
         Player user = target == null ? sender : target;
+        PlayerConsumer consumer = new PlayerConsumer(user);
 
         PlatformDependentModule module = platform.serviceRegistry()
                 .retrieve(PlatformDependentModule.class)
@@ -123,7 +130,7 @@ public class TutorialCommand extends BaseCommand {
             module.configController()
                     .getMessageConfig()
                     .alreadyInTutorialMessage()
-                    .send(platform.interRegistry().get(uuid));
+                    .send(consumer);
 
             return;
         }
@@ -132,7 +139,7 @@ public class TutorialCommand extends BaseCommand {
             module.configController()
                     .getMessageConfig()
                     .invalidStageMessage()
-                    .send(platform.interRegistry().get(uuid),point,template);
+                    .send(consumer,point,template);
 
             return;
         }
@@ -155,7 +162,7 @@ public class TutorialCommand extends BaseCommand {
 
         tutorialController.getByUUID(uuid).ifPresentOrElse(
                 tutorial -> bus.fire(new PlatformlessClickableEvent(option, sender.getUniqueId()),tutorial),
-                () -> messageConfig.notInTutorialMessage().send(platform.interRegistry().get(sender.getUniqueId()))
+                () -> messageConfig.notInTutorialMessage().send(new PlayerConsumer(sender))
         );
 
 
@@ -165,6 +172,7 @@ public class TutorialCommand extends BaseCommand {
     @CommandPermission("opentutorial.quit")
     public void leave(Player sender) {
         UUID uuid = sender.getUniqueId();
+        PlayerConsumer consumer = new PlayerConsumer(sender);
 
         PlatformDependentModule module = platform.serviceRegistry()
                 .retrieve(PlatformDependentModule.class)
@@ -174,12 +182,12 @@ public class TutorialCommand extends BaseCommand {
         MessageConfig messageConfig = module.configController().getMessageConfig();
 
         if (tutorialController.getByUUID(uuid).isEmpty()) {
-            messageConfig.notInTutorialMessage().send(platform.interRegistry().get(uuid));
+            messageConfig.notInTutorialMessage().send(consumer);
             return;
         }
 
 
-        messageConfig.leftTutorialMessage().send(platform.interRegistry().get(uuid));
+        messageConfig.leftTutorialMessage().send(consumer);
         tutorialController.cancelByUUID(uuid);
     }
 

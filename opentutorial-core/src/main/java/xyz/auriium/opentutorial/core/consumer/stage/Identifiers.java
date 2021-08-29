@@ -44,4 +44,10 @@ public class Identifiers {
     public static final String SOUND_NAME = "sound_name";
     public static final String SOUND_VOLUME = "volume";
     public static final String SOUND_PITCH = "pitch";
+
+    public static final String STRINGS = "strings";
+    public static final String STAY = "stay_length";
+    public static final String FOLLOW = "follow_player";
+
+    public static final String LOC = "location";
 }

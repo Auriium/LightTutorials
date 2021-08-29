@@ -8,10 +8,7 @@ import xyz.auriium.opentutorial.core.event.EventBus;
 import xyz.auriium.opentutorial.core.event.ReduxEventBus;
 import xyz.auriium.opentutorial.core.template.CommonTemplateController;
 import xyz.auriium.opentutorial.core.template.TemplateController;
-import xyz.auriium.opentutorial.core.tutorial.CancellingConduit;
-import xyz.auriium.opentutorial.core.tutorial.CommonTutorialController;
-import xyz.auriium.opentutorial.core.tutorial.ConsumerFailureConduit;
-import xyz.auriium.opentutorial.core.tutorial.TutorialController;
+import xyz.auriium.opentutorial.core.tutorial.*;
 
 import java.util.UUID;
 
@@ -73,7 +70,7 @@ public class CommonDependentModule implements PlatformDependentModule {
         ConsumerFailureConduit consumerFailureConduit = CancellingConduit.launch(platform);
         InternalDependentModule module = CommonInternalModule.launch(platform, registry);
         ConsumerCentralizer consumerCentralizer = new CommonConsumerCentralizer(registry, consumerFailureConduit);
-        TutorialController tutorialController = new CommonTutorialController(platform, module, consumerCentralizer);
+        TutorialController tutorialController = new ReduxTutorialController(platform, module, consumerCentralizer);
         TemplateController templateController = CommonTemplateController.build(module.configController().getTutorialsConfig());
         EventBus eventBus = new ReduxEventBus(registry, tutorialController, consumerFailureConduit);
 

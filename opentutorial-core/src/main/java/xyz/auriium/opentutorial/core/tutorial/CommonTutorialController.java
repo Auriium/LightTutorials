@@ -24,16 +24,16 @@ public class CommonTutorialController implements TutorialController{
     }
 
     @Override
-    public Optional<Tutorial> cancelByUUID(UUID uuid) {
+    public void cancelByUUID(UUID uuid) {
         Tutorial tutorial = map.remove(uuid);
 
         if (tutorial != null) {
-            tutorial.fireCancel();
+            //tutorial.fireCancel();
 
-            return Optional.of(tutorial);
+            //return Optional.of(tutorial);
         }
 
-        return Optional.empty();
+       // return Optional.empty();
     }
 
     @Override
@@ -46,7 +46,7 @@ public class CommonTutorialController implements TutorialController{
 
         if (map.containsKey(owner)) throw new IllegalStateException("User is already in a tutorial: " + owner);
 
-        Tutorial tutorial = new CommonTutorial(owner, new ArrayDeque<>(template.getStages()), centralizer, platform, module);
+        Tutorial tutorial = new CommonTutorial(owner, new ArrayDeque<>(template.getStages()), centralizer, platform, module, this);
         map.put(owner, tutorial);
 
         return tutorial;
@@ -61,7 +61,7 @@ public class CommonTutorialController implements TutorialController{
         Deque<Stage> stages = new ArrayDeque<>();
         stages.add(template.getStages().get(stage));
 
-        Tutorial tutorial = new CommonTutorial(owner, new ArrayDeque<>(stages), centralizer, platform, module);
+        Tutorial tutorial = new CommonTutorial(owner, new ArrayDeque<>(stages), centralizer, platform, module, this);
         map.put(owner, tutorial);
 
         return tutorial;

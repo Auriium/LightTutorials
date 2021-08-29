@@ -12,12 +12,10 @@ import java.util.UUID;
 public interface TutorialController extends UUIDCloseable {
 
     /**
-     * Cancels by UUID if present or does nothing if not
-     *
-     * @param uuid the uuid
-     * @return cancelled tutorial
+     * Cancels a tutorial
+     * @param uuid the uuid of the tutorial
      */
-    Optional<Tutorial> cancelByUUID(UUID uuid);
+    void cancelByUUID(UUID uuid);
 
     /**
      * Gets a tutorial by UUID

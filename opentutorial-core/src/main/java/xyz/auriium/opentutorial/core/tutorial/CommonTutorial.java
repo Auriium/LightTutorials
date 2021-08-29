@@ -19,14 +19,17 @@ public class CommonTutorial implements Tutorial {
     private final Platform platform;
     private final InternalDependentModule module;
 
+    private final TutorialController controller;
+
     private final TutorialStorage storage = new CommonTutorialStorage();
 
-    public CommonTutorial(UUID uuid, Queue<Stage> stageQueue, ConsumerCentralizer consumerCentralizer, Platform platform, InternalDependentModule module) {
+    public CommonTutorial(UUID uuid, Queue<Stage> stageQueue, ConsumerCentralizer consumerCentralizer, Platform platform, InternalDependentModule module, TutorialController controller) {
         this.uuid = uuid;
         this.stageQueue = stageQueue;
         this.consumerCentralizer = consumerCentralizer;
         this.platform = platform;
         this.module = module;
+        this.controller = controller;
     }
 
 
@@ -71,6 +74,6 @@ public class CommonTutorial implements Tutorial {
 
     void stop() {
         storage.closeTutorial();
-        //TODO remove self from map
+        controller.closeSingle(uuid);
     }
 }

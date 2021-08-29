@@ -2,6 +2,9 @@ package xyz.auriium.opentutorial.core.config.templates;
 
 import space.arim.dazzleconf.error.BadValueException;
 import space.arim.dazzleconf.serialiser.FlexibleType;
+import xyz.auriium.openmineplatform.api.binding.location.PlatformLocation;
+import xyz.auriium.openmineplatform.api.binding.location.UnboundPlatformLocation;
+import xyz.auriium.opentutorial.core.consumer.stage.Identifiers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,5 +65,34 @@ public class Interpret {
         }
 
         return strings;
+    }
+
+    public static PlatformLocation convertLocation(FlexibleType type) throws BadValueException {
+        Map<String, FlexibleType> map = type.getMap((key, v) -> Map.entry(key.getString(), v));
+
+        long x = map.get(Identifiers.LOC_X).getLong();
+        long y = map.get(Identifiers.LOC_Y).getLong();
+        long z = map.get(Identifiers.LOC_Z).getLong();
+
+        FlexibleType typeA = map.get(Identifiers.LOC_PITCH);
+        FlexibleType typeB = map.get(Identifiers.LOC_YAW);
+
+        FlexibleType typeC = map.get("world");
+
+        if (typeA != null && typeB != null) {
+            long pitch = typeA.getLong();
+            long yaw = typeB.getLong();
+
+            if (typeC != null) {
+                return UnboundPlatformLocation.of(x, y, z, pitch, yaw, typeC.getString());
+            }
+            return UnboundPlatformLocation.of(x, y, z, pitch, yaw);
+        }
+
+        if (typeC != null) {
+            return UnboundPlatformLocation.of(x, y, z, typeC.getString());
+        }
+
+        return UnboundPlatformLocation.of(x, y, z);
     }
 }

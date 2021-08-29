@@ -14,6 +14,7 @@ import xyz.auriium.opentutorial.core.PlatformDependentModule;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class ListMenu implements GUIProducer{
 
@@ -36,6 +37,7 @@ public class ListMenu implements GUIProducer{
 
         List<GuiItem> guiItems = new ArrayList<>();
 
+
         module.templateController().getTemplates().forEach((name,template) -> {
             GuiItem item = new GuiItem(new SpigotItemBuilder(Material.ENDER_EYE)
                     .setName(colorer.color("&7" + name.toUpperCase()))
@@ -43,11 +45,19 @@ public class ListMenu implements GUIProducer{
                     .addLoreLine(colorer.color("&9Left-Click &7to play this tutorial!"))
                     .toItemStack(), event -> {
 
+                UUID uuid = event.getWhoClicked().getUniqueId();
+
                 if (event.isLeftClick()) {
-                    module.tutorialController().createNew(template,event.getWhoClicked().getUniqueId()).fireNext(); //play
+                    if (module.tutorialController().getByUUID(uuid).isEmpty()) {
+                        module.tutorialController().createNew(template,uuid).fireNext(); //play
+                        event.getWhoClicked().closeInventory();
+                    } else {
+                        event.getWhoClicked().closeInventory();
+                        
+                    }
                 }
 
-                event.getWhoClicked().closeInventory();
+
             });
 
             guiItems.add(item);
