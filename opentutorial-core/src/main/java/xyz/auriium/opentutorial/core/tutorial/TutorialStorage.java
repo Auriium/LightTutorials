@@ -1,5 +1,7 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
+import xyz.auriium.opentutorial.core.consumer.stage.StageLocalValue;
+
 import java.util.Optional;
 
 public interface TutorialStorage {

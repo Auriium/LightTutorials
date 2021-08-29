@@ -4,22 +4,21 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.CommandHelp;
 import co.aikar.commands.annotation.*;
 import org.bukkit.entity.Player;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import xyz.auriium.opentutorial.core.config.messages.MessageConfig;
-import xyz.auriium.opentutorial.core.event.InnerEventBus;
-import xyz.auriium.opentutorial.core.event.chat.ClickableEvent;
-import xyz.auriium.opentutorial.core.platform.UserRegistry;
-import xyz.auriium.opentutorial.core.platform.impl.PlatformDependentLoader;
-import xyz.auriium.opentutorial.core.tutorial.Template;
-import xyz.auriium.opentutorial.core.tutorial.TemplateController;
+import xyz.auriium.openmineplatform.api.Platform;
+import xyz.auriium.openmineplatform.api.interfaceable.Interfaceable;
+import xyz.auriium.openmineplatform.api.plugin.ReloadablePluginState;
+import xyz.auriium.opentutorial.core.MissingServiceSupplier;
+import xyz.auriium.opentutorial.core.PlatformDependentModule;
+import xyz.auriium.opentutorial.core.config.MessageConfig;
+import xyz.auriium.opentutorial.core.event.EventBus;
+import xyz.auriium.opentutorial.core.template.Template;
 import xyz.auriium.opentutorial.core.tutorial.TutorialController;
-import xyz.auriium.opentutorial.spigot.gui.ListMenu;
+import xyz.auriium.opentutorial.core.types.clickable.PlatformlessClickableEvent;
+import xyz.auriium.opentutorial.spigot.hook.command.ListMenu;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * What an ugly class - let's use branch!
@@ -27,18 +26,16 @@ import java.util.stream.Collectors;
 @CommandAlias("tutorial|opentutorial")
 public class TutorialCommand extends BaseCommand {
 
-    private final static Logger logger = LoggerFactory.getLogger("OpenTutorial");
-
-    private final UserRegistry<Player> userRegistry;
-    private final PlatformDependentLoader<Player> reloader;
-
+    private final ReloadablePluginState state;
+    private final Platform platform;
     private final ListMenu listMenu;
 
-    public TutorialCommand(UserRegistry<Player> userRegistry, PlatformDependentLoader<Player> reloader, ListMenu listMenu) {
-        this.userRegistry = userRegistry;
-        this.reloader = reloader;
-        this.listMenu = listMenu;
+    public TutorialCommand(ReloadablePluginState state, Platform platform) {
+        this.state = state;
+        this.platform = platform;
+        this.listMenu = new ListMenu(platform, platform.colorer());
     }
+
 
     @Subcommand("list")
     @CommandPermission("opentutorial.list")
@@ -57,13 +54,19 @@ public class TutorialCommand extends BaseCommand {
     public void reload(@Optional Player player) {
 
         try {
-            reloader.load();
+            state.reload();
 
             SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
             Date date = new Date();
 
             if (player != null) {
-                reloader.getModule().configController().getMessageConfig().reloadMessage().send(userRegistry.wrapUser(player), formatter.format(date));
+                platform.serviceRegistry()
+                        .retrieve(PlatformDependentModule.class)
+                        .orElseThrow(new MissingServiceSupplier("plugin-core"))
+                        .configController()
+                        .getMessageConfig()
+                        .reloadMessage()
+                        .send(new PlayerConsumer(player), formatter.format(date));
             }
 
         } catch (Exception e) {
@@ -77,7 +80,7 @@ public class TutorialCommand extends BaseCommand {
 
             //the tf2 coconut of opentutorial
 
-            logger.error("Error occurred while reloading!",e);
+            platform.logger().error("Error: " + e);
         }
 
     }
@@ -87,15 +90,24 @@ public class TutorialCommand extends BaseCommand {
     @CommandCompletion("@templates")
     public void play(Player sender, Template template, @Optional Player target) {
         Player user = target == null ? sender : target;
+        PlayerConsumer consumer = new PlayerConsumer(user);
 
-        TutorialController tutorialController = reloader.getModule().tutorialController();
+        PlatformDependentModule module = platform.serviceRegistry()
+                .retrieve(PlatformDependentModule.class)
+                .orElseThrow(new MissingServiceSupplier("plugin-core"));
 
-        if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
-            reloader.getModule().configController().getMessageConfig().alreadyInTutorialMessage().send(userRegistry.wrapUser(sender));
+        MessageConfig config = module.configController().getMessageConfig();
+
+        TutorialController controller = module.tutorialController();
+
+        if (controller.getByUUID(user.getUniqueId()).isPresent()) {
+            config.alreadyInTutorialMessage().send(consumer);
             return;
         }
 
-        tutorialController.createNew(template,user.getUniqueId()).fireNext();
+
+        controller.createNew(template,user.getUniqueId()).fireNext();
+        config.playingTutorialMessage().send(consumer);
     }
 
     @Subcommand("playpoint")
@@ -103,17 +115,36 @@ public class TutorialCommand extends BaseCommand {
     @CommandCompletion("@templates")
     public void playPoint(Player sender, Template template, int point, @Optional Player target) {
         Player user = target == null ? sender : target;
-        TutorialController tutorialController = reloader.getModule().tutorialController();
+        PlayerConsumer consumer = new PlayerConsumer(user);
+
+        PlatformDependentModule module = platform.serviceRegistry()
+                .retrieve(PlatformDependentModule.class)
+                .orElseThrow(new MissingServiceSupplier("plugin-core"));
+
+        TutorialController tutorialController = module.tutorialController();
+        UUID uuid = user.getUniqueId();
 
         int subpoint = point - 1;
 
-        if (tutorialController.getByUUID(user.getUniqueId()).isPresent()) {
-            reloader.getModule().configController().getMessageConfig().alreadyInTutorialMessage().send(userRegistry.wrapUser(sender));
+        if (tutorialController.getByUUID(uuid).isPresent()) {
+            module.configController()
+                    .getMessageConfig()
+                    .alreadyInTutorialMessage()
+                    .send(consumer);
+
             return;
         }
 
-        if (template.stageNotPresent(subpoint)) reloader.getModule().configController().getMessageConfig().invalidStageMessage().send(userRegistry.wrapUser(sender),point,template);
-        tutorialController.createStage(template, user.getUniqueId(), subpoint);
+        if (template.stageNotPresent(subpoint)) {
+            module.configController()
+                    .getMessageConfig()
+                    .invalidStageMessage()
+                    .send(consumer,point,template);
+
+            return;
+        }
+
+        tutorialController.createStage(template, uuid, subpoint);
 
     }
 
@@ -121,13 +152,17 @@ public class TutorialCommand extends BaseCommand {
     public void option(Player sender, int option) {
         UUID uuid = sender.getUniqueId();
 
-        TutorialController tutorialController = reloader.getModule().tutorialController();
-        MessageConfig messageConfig = reloader.getModule().configController().getMessageConfig();
-        InnerEventBus bus = reloader.getModule().eventBus();
+        PlatformDependentModule module = platform.serviceRegistry()
+                .retrieve(PlatformDependentModule.class)
+                .orElseThrow(new MissingServiceSupplier("plugin-core"));
+
+        TutorialController tutorialController = module.tutorialController();
+        MessageConfig messageConfig = module.configController().getMessageConfig();
+        EventBus bus = module.eventBus();
 
         tutorialController.getByUUID(uuid).ifPresentOrElse(
-                tutorial -> bus.fire(new ClickableEvent(option, sender.getUniqueId()),tutorial),
-                () -> messageConfig.notInTutorialMessage().send(userRegistry.wrapUser(sender))
+                tutorial -> bus.fire(new PlatformlessClickableEvent(option, sender.getUniqueId()),tutorial),
+                () -> messageConfig.notInTutorialMessage().send(new PlayerConsumer(sender))
         );
 
 
@@ -137,17 +172,22 @@ public class TutorialCommand extends BaseCommand {
     @CommandPermission("opentutorial.quit")
     public void leave(Player sender) {
         UUID uuid = sender.getUniqueId();
+        PlayerConsumer consumer = new PlayerConsumer(sender);
 
-        TutorialController tutorialController = reloader.getModule().tutorialController();
-        MessageConfig messageConfig = reloader.getModule().configController().getMessageConfig();
+        PlatformDependentModule module = platform.serviceRegistry()
+                .retrieve(PlatformDependentModule.class)
+                .orElseThrow(new MissingServiceSupplier("plugin-core"));
+
+        TutorialController tutorialController = module.tutorialController();
+        MessageConfig messageConfig = module.configController().getMessageConfig();
 
         if (tutorialController.getByUUID(uuid).isEmpty()) {
-            messageConfig.notInTutorialMessage().send(userRegistry.wrapUser(sender));
+            messageConfig.notInTutorialMessage().send(consumer);
             return;
         }
 
 
-        messageConfig.leftTutorialMessage().send(userRegistry.wrapUser(sender));
+        messageConfig.leftTutorialMessage().send(consumer);
         tutorialController.cancelByUUID(uuid);
     }
 

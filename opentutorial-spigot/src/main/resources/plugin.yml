@@ -1,4 +1,4 @@
-main: xyz.auriium.opentutorial.spigot.SpigotBootstrap
+main: xyz.auriium.opentutorial.spigot.OpenTutorialBootstrap
 
 name: OpenTutorial
 
@@ -7,3 +7,6 @@ version: ${project.version}
 author: Auriium
 
 api-version: 1.16
+
+softdepend:
+  - HolographicDisplays

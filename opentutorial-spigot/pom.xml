@@ -43,7 +43,12 @@
                             <include>space.arim.dazzleconf</include>
                             <include>xyz.auriium:opentutorial-api</include>
                             <include>xyz.auriium:opentutorial-core</include>
-                            <include>xyz.auriium:beetle-core</include>
+                            <include>xyz.auriium:openmineplatform-api</include>
+                            <include>xyz.auriium:openmineplatform-spigot</include>
+                            <include>xyz.auriium:littlethings-archetypes</include>
+                            <include>xyz.auriium:littlethings-collections</include>
+                            <include>net.kyori</include>
+
                             <include>com.github.stefvanschie.inventoryframework</include>
                         </includes>
                     </artifactSet>
@@ -94,6 +99,11 @@
 
         <!-- Minecraft !-->
         <dependency>
+            <groupId>xyz.auriium</groupId>
+            <artifactId>openmineplatform-spigot</artifactId>
+            <version>1.1.4</version>
+        </dependency>
+        <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
             <version>1.17-R0.1-SNAPSHOT</version>
@@ -108,8 +118,21 @@
             <artifactId>IF</artifactId>
             <version>0.9.9</version>
         </dependency>
+        <dependency>
+            <groupId>com.gmail.filoghost.holographicdisplays</groupId>
+            <artifactId>holographicdisplays-api</artifactId>
+            <version>2.4.0</version>
+            <scope>provided</scope>
+        </dependency>
 
     </dependencies>
+
+    <repositories>
+        <repository>
+            <id>codemc-repo</id>
+            <url>https://repo.codemc.io/repository/maven-public/</url>
+        </repository>
+    </repositories>
 
 
 

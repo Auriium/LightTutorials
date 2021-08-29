@@ -1,5 +1,8 @@
 package xyz.auriium.opentutorial.core.tutorial;
 
+import xyz.auriium.opentutorial.core.consumer.stage.Stage;
+import xyz.auriium.opentutorial.core.template.Template;
+
 import java.util.List;
 
 public class CommonTemplate implements Template {
